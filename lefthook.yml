@@ -7,6 +7,9 @@ pre-commit:
     types:
       glob: "*.{js,ts, jsx, tsx}"
       run: npx tsc --noEmit
+    test:
+      glob: "*.{js,ts, jsx, tsx}"
+      run: yarn test
 commit-msg:
   parallel: true
   commands:
