@@ -1,1 +1,1 @@
-export { add } from './add';
+export { add, multiply, divide } from './arithmetic';
