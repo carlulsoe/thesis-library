@@ -1,5 +1,5 @@
 {
-  "name": "react-native-awesome-library",
+  "name": "thesis-library",
   "version": "0.1.0",
   "description": "test",
   "main": "lib/commonjs/index",
@@ -26,7 +26,7 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace react-native-awesome-library-example",
+    "example": "yarn workspace thesis-library-example",
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -41,14 +41,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/carlulsoe/react-native-awesome-library.git"
+    "url": "git+https://github.com/carlulsoe/thesis-library.git"
   },
   "author": "Carl Ulsøe Christensen <201906950@post.au.dk> (https://github.com/carlulsoe)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/carlulsoe/react-native-awesome-library/issues"
+    "url": "https://github.com/carlulsoe/thesis-library/issues"
   },
-  "homepage": "https://github.com/carlulsoe/react-native-awesome-library#readme",
+  "homepage": "https://github.com/carlulsoe/thesis-library#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

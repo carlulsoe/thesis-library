@@ -1,6 +1,6 @@
-# react-native-awesome-library
+# react-native-thesis-library
 
-test
+This is our thesis library
 
 ## Installation
 
