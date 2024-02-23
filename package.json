@@ -138,6 +138,7 @@
   ],
   "prettier": {
     "quoteProps": "consistent",
+    "endOfLine": "auto",
     "singleQuote": true,
     "tabWidth": 2,
     "trailingComma": "es5",
