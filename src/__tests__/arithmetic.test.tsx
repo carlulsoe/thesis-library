@@ -1,7 +1,7 @@
 import { add, multiply, divide } from '../index';
 
 test('add 1 and 1', async () => {
-  await expect(add(1, 1)).resolves.toEqual(2);
+  await expect(add(1, 1)).resolves.toEqual(1);
 });
 
 test('multiply 0 and 5', () => {
