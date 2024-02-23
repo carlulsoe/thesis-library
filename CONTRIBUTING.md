@@ -89,6 +89,15 @@ We use [TypeScript](https://www.typescriptlang.org/) for type checking, [ESLint]
 
 Our pre-commit hooks verify that the linter and tests pass when committing.
 
+### The Docs
+
+The documentation is written in accordance to [Typedoc.org](https://typedoc.org/). See `src/extra/arightmetic.tsx` for an example.
+
+The documentation is compiled with:
+```sh
+typedoc --out ./docs/documentation ./src --tsconfig ./tsconfig.json
+```
+
 ### Publishing to npm
 
 We use [release-it](https://github.com/release-it/release-it) to make it easier to publish new versions. It handles common tasks like bumping version based on semver, creating tags and releases etc.
