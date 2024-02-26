@@ -8,6 +8,9 @@ pre-commit:
     types:
       glob: "*.{js,ts, jsx, tsx}"
       run: npx tsc --noEmit
+    docs:
+      run: yarn compile_docs
+      stage_fixed: true
 pre-push:
   commands:
     test:
