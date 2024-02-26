@@ -1,1 +1,1 @@
-export { add, multiply, divide, attention, setAttention } from './extra';
+export * from './extra';
