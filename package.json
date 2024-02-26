@@ -44,6 +44,10 @@
     "url": "git+https://github.com/carlulsoe/thesis-library.git"
   },
   "author": "Carl Ulsøe Christensen <201906950@post.au.dk> (https://github.com/carlulsoe)",
+  "contributors": [
+    "Carl Ulsøe Christensen <201906950@post.au.dk> (https://github.com/carlulsoe)",
+    "Freja Østerbøg <201809189@post.au.dk> (https://github.com/frej0887)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/carlulsoe/thesis-library/issues"
