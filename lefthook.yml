@@ -10,7 +10,6 @@ pre-commit:
 pre-push:
   commands:
     test:
-      glob: "*.{ts,tsx}"
       run: yarn test
 commit-msg:
   parallel: true
