@@ -1,4 +1,4 @@
-var attention_id = "";
+var attention_id = '';
 /**
  * Set the current attention
  *

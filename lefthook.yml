@@ -4,6 +4,7 @@ pre-commit:
     lint:
       glob: "*.{js,ts,jsx,tsx}"
       run: npx eslint {staged_files} --fix
+      stage_fixed: true
     types:
       glob: "*.{js,ts, jsx, tsx}"
       run: npx tsc --noEmit
