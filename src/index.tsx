@@ -1,1 +1,1 @@
-export { add, multiply, divide } from './extra';
+export { add, multiply, divide, attention, setAttention } from './extra';
