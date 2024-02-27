@@ -33,7 +33,8 @@
     "clean": "del-cli lib",
     "prepare": "bob build",
     "release": "release-it",
-    "compile_docs": "typedoc --out ./docs/documentation ./src --tsconfig ./tsconfig.json"
+    "compile_docs": "typedoc --out ./docs/documentation ./src --tsconfig ./tsconfig.json",
+    "commit": "git add -A && git commit -m"
   },
   "keywords": [
     "react-native",
@@ -66,6 +67,7 @@
     "@release-it/conventional-changelog": "^5.0.0",
     "@types/jest": "^29.5.5",
     "@types/react": "^18.2.44",
+    "@types/react-test-renderer": "^18.0.7",
     "commitlint": "^17.0.2",
     "del-cli": "^5.1.0",
     "eslint": "^8.51.0",
@@ -77,6 +79,7 @@
     "react": "18.2.0",
     "react-native": "0.73.4",
     "react-native-builder-bob": "^0.20.0",
+    "react-test-renderer": "^18.2.0",
     "release-it": "^15.0.0",
     "typedoc": "^0.25.8",
     "typescript": "^5.2.2"
