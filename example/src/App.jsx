@@ -10,5 +10,5 @@ export default function App() {
     ctx.fill();
   };
 
-  return <Canvas setup={draw} width={300} height={400} />;
+  return <Canvas setup={draw} width={1000} height={800} />;
 }
