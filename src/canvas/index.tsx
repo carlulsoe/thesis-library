@@ -1,2 +1,2 @@
 // @ts-ignore
-export { Canvas } from './canvas.jsx';
+export { Canvas } from './canvas';
