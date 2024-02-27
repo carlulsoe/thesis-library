@@ -9,7 +9,7 @@ export function setAttention(id: string) {
 }
 
 /**
- * get the current attention
+ * Get the current attention
  *
  * @return A Promise of the current device id that has attention
  */

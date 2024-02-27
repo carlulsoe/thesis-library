@@ -167,7 +167,10 @@
     ]
   },
   "dependencies": {
+    "@fluidframework/azure-client": "2.0.0-rc.1.0.3",
+    "@fluidframework/test-runtime-utils": "2.0.0-rc.1.0.3",
     "@types/react": "^18.2.0",
-    "fluid-framework": "2.0.0-rc.1.0.3"
+    "fluid-framework": "2.0.0-rc.1.0.3",
+    "guid-typescript": "^1.0.9"
   }
 }

@@ -2464,6 +2464,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fluidframework/azure-client@npm:2.0.0-rc.1.0.3":
+  version: 2.0.0-rc.1.0.3
+  resolution: "@fluidframework/azure-client@npm:2.0.0-rc.1.0.3"
+  dependencies:
+    "@fluidframework/container-definitions": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/container-loader": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/core-interfaces": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/core-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/driver-definitions": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/driver-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/fluid-static": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/map": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/protocol-definitions": ^3.1.0
+    "@fluidframework/routerlicious-driver": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/runtime-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/server-services-client": ^3.0.0
+    "@fluidframework/telemetry-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    axios: ^1.6.2
+  checksum: 754c3d8abf2570ae753fe5036f03543d82458417c4ad37a87ed11db1ddac03b67bd809d8ea859612e10753e00642c90c951401a8959caaea82aece389a3a764c
+  languageName: node
+  linkType: hard
+
 "@fluidframework/build-common@npm:^2.0.0":
   version: 2.0.3
   resolution: "@fluidframework/build-common@npm:2.0.3"
@@ -2680,6 +2702,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fluidframework/driver-base@npm:>=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0":
+  version: 2.0.0-rc.1.0.3
+  resolution: "@fluidframework/driver-base@npm:2.0.0-rc.1.0.3"
+  dependencies:
+    "@fluid-internal/client-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/core-interfaces": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/core-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/driver-definitions": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/driver-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/protocol-definitions": ^3.1.0
+    "@fluidframework/telemetry-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+  checksum: dbc59aabe356384e13a355aaf5329f0aeb2d49c7015e404a7f012f067faad3cade9130d1bb6c0218d647398dbbd92c539652fbd28e93392abef7e579679861ce
+  languageName: node
+  linkType: hard
+
 "@fluidframework/driver-definitions@npm:>=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0":
   version: 2.0.0-rc.1.0.3
   resolution: "@fluidframework/driver-definitions@npm:2.0.0-rc.1.0.3"
@@ -2811,7 +2848,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluidframework/protocol-base@npm:^3.0.0":
+"@fluidframework/protocol-base@npm:^3.0.0, @fluidframework/protocol-base@npm:~3.0.0":
   version: 3.0.0
   resolution: "@fluidframework/protocol-base@npm:3.0.0"
   dependencies:
@@ -2840,6 +2877,30 @@ __metadata:
     "@fluidframework/runtime-definitions": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
     "@fluidframework/runtime-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
   checksum: b36ec39826355dbd7916d7eda3d19255e46b1a5c6b683a2c9bb8f7ea688e1a88a84a2405453d617b4b04cdc078c1c1ba571cdee846b69c39239f2bb11057ae00
+  languageName: node
+  linkType: hard
+
+"@fluidframework/routerlicious-driver@npm:>=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0":
+  version: 2.0.0-rc.1.0.3
+  resolution: "@fluidframework/routerlicious-driver@npm:2.0.0-rc.1.0.3"
+  dependencies:
+    "@fluid-internal/client-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/core-interfaces": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/core-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/driver-base": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/driver-definitions": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/driver-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/gitresources": ^3.0.0
+    "@fluidframework/protocol-base": ^3.0.0
+    "@fluidframework/protocol-definitions": ^3.1.0
+    "@fluidframework/server-services-client": ^3.0.0
+    "@fluidframework/telemetry-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    cross-fetch: ^3.1.5
+    json-stringify-safe: 5.0.1
+    socket.io-client: ^4.6.1
+    url-parse: ^1.5.8
+    uuid: ^9.0.0
+  checksum: d8c868f83692b690cf5ba524b4fa1247438a2309640592a9f6de4d320129d247e1c8bdefd278d44da966e94b305a97d8468f85abc1204d25a98c851b63a1a8c6
   languageName: node
   linkType: hard
 
@@ -2893,6 +2954,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fluidframework/server-services-client@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@fluidframework/server-services-client@npm:3.0.0"
+  dependencies:
+    "@fluidframework/common-utils": ^3.1.0
+    "@fluidframework/gitresources": ~3.0.0
+    "@fluidframework/protocol-base": ~3.0.0
+    "@fluidframework/protocol-definitions": ^3.1.0
+    axios: ^1.6.2
+    crc-32: 1.2.0
+    debug: ^4.3.4
+    json-stringify-safe: ^5.0.1
+    jsrsasign: ^10.5.25
+    jwt-decode: ^4.0.0
+    querystring: ^0.2.0
+    sillyname: ^0.1.0
+    uuid: ^9.0.0
+  checksum: 52bbc5515323945a5b29bf45f9c409e58d989cc34f9f76bfeee274c8aac6f32c4c23c63fbfbb890bd5e5963d5869da9895095c2e07cfee3ed7c8945038e9279e
+  languageName: node
+  linkType: hard
+
 "@fluidframework/shared-object-base@npm:>=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0":
   version: 2.0.0-rc.1.0.3
   resolution: "@fluidframework/shared-object-base@npm:2.0.0-rc.1.0.3"
@@ -2934,6 +3016,29 @@ __metadata:
     events: ^3.1.0
     uuid: ^9.0.0
   checksum: 819522f823a7522200815b3a26feb1f3916eb2695bf89263f11a3bf16e830360f8a879c4120245d081755181db8b72b04b623c3b6085742693de95beaf307c73
+  languageName: node
+  linkType: hard
+
+"@fluidframework/test-runtime-utils@npm:2.0.0-rc.1.0.3":
+  version: 2.0.0-rc.1.0.3
+  resolution: "@fluidframework/test-runtime-utils@npm:2.0.0-rc.1.0.3"
+  dependencies:
+    "@fluid-internal/client-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/container-definitions": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/core-interfaces": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/core-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/datastore-definitions": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/driver-definitions": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/id-compressor": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/protocol-definitions": ^3.1.0
+    "@fluidframework/routerlicious-driver": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/runtime-definitions": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/runtime-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    "@fluidframework/telemetry-utils": ">=2.0.0-rc.1.0.3 <2.0.0-rc.1.1.0"
+    events: ^3.1.0
+    jsrsasign: ^10.5.25
+    uuid: ^9.0.0
+  checksum: 380adffd685402ef1916a98de370f9c4dd13295cbd141eddf785a8ecdc8412d07ffa8a33101a71ae5b77121e219f0270d856d9384c99f15d6d26d2f8686c7707
   languageName: node
   linkType: hard
 
@@ -4161,6 +4266,13 @@ __metadata:
   dependencies:
     "@sinonjs/commons": ^3.0.0
   checksum: 614d30cb4d5201550c940945d44c9e0b6d64a888ff2cd5b357f95ad6721070d6b8839cd10e15b76bf5e14af0bcc1d8f9ec00d49a46318f1f669a4bec1d7f3148
+  languageName: node
+  linkType: hard
+
+"@socket.io/component-emitter@npm:~3.1.0":
+  version: 3.1.0
+  resolution: "@socket.io/component-emitter@npm:3.1.0"
+  checksum: db069d95425b419de1514dffe945cc439795f6a8ef5b9465715acf5b8b50798e2c91b8719cbf5434b3fe7de179d6cdcd503c277b7871cb3dd03febb69bdd50fa
   languageName: node
   linkType: hard
 
@@ -7177,6 +7289,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"crc-32@npm:1.2.0":
+  version: 1.2.0
+  resolution: "crc-32@npm:1.2.0"
+  dependencies:
+    exit-on-epipe: ~1.0.1
+    printj: ~1.1.0
+  bin:
+    crc32: ./bin/crc32.njs
+  checksum: 7bcde8bea262f6629ac3c70e20bdfa3d058dc77091705ce8620513f76f19b41fc273ddd65a716eef9b4e33fbb61ff7f9b266653d214319aef27e4223789c6b9e
+  languageName: node
+  linkType: hard
+
 "create-jest@npm:^29.7.0":
   version: 29.7.0
   resolution: "create-jest@npm:29.7.0"
@@ -7498,7 +7622,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4":
+"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:~4.3.1, debug@npm:~4.3.2":
   version: 4.3.4
   resolution: "debug@npm:4.3.4"
   dependencies:
@@ -8050,6 +8174,26 @@ __metadata:
   dependencies:
     once: ^1.4.0
   checksum: 530a5a5a1e517e962854a31693dbb5c0b2fc40b46dad2a56a2deec656ca040631124f4795823acc68238147805f8b021abbe221f4afed5ef3c8e8efc2024908b
+  languageName: node
+  linkType: hard
+
+"engine.io-client@npm:~6.5.2":
+  version: 6.5.3
+  resolution: "engine.io-client@npm:6.5.3"
+  dependencies:
+    "@socket.io/component-emitter": ~3.1.0
+    debug: ~4.3.1
+    engine.io-parser: ~5.2.1
+    ws: ~8.11.0
+    xmlhttprequest-ssl: ~2.0.0
+  checksum: a72596fae99afbdb899926fccdb843f8fa790c69085b881dde121285a6935da2c2c665ebe88e0e6aa4285637782df84ac882084ff4892ad2430b059fc0045db0
+  languageName: node
+  linkType: hard
+
+"engine.io-parser@npm:~5.2.1":
+  version: 5.2.2
+  resolution: "engine.io-parser@npm:5.2.2"
+  checksum: 470231215f3136a9259efb1268bc9a71f789af4e8c74da8d3b49ceb149fe3cd5c315bf0cd13d2d8d9c8f0f051c6f93b68e8fa9c89a3b612b9217bf33765c943a
   languageName: node
   linkType: hard
 
@@ -8762,6 +8906,13 @@ __metadata:
     signal-exit: ^3.0.7
     strip-final-newline: ^3.0.0
   checksum: 14fd17ba0ca8c87b277584d93b1d9fc24f2a65e5152b31d5eb159a3b814854283eaae5f51efa9525e304447e2f757c691877f7adff8fde5746aae67eb1edd1cc
+  languageName: node
+  linkType: hard
+
+"exit-on-epipe@npm:~1.0.1":
+  version: 1.0.1
+  resolution: "exit-on-epipe@npm:1.0.1"
+  checksum: e8ab4940416d19f311b3c9226e3725c6c4c6026fe682266ecc0ff33a455d585fe3e4ee757857c7bf1d0491b478cb232b8e395dfb438e65ac87317eda47304c32
   languageName: node
   linkType: hard
 
@@ -9966,6 +10117,13 @@ __metadata:
   version: 15.8.0
   resolution: "graphql@npm:15.8.0"
   checksum: 423325271db8858428641b9aca01699283d1fe5b40ef6d4ac622569ecca927019fce8196208b91dd1d8eb8114f00263fe661d241d0eb40c10e5bfd650f86ec5e
+  languageName: node
+  linkType: hard
+
+"guid-typescript@npm:^1.0.9":
+  version: 1.0.9
+  resolution: "guid-typescript@npm:1.0.9"
+  checksum: 829dd87866800a5138aafa0873994028bbc446eb20ff4cae6452d471a2a3d26f7025bed3eb980692c0f022fd22f95ea7396122b46b45a4b5084958505a4fc50c
   languageName: node
   linkType: hard
 
@@ -12031,7 +12189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-stringify-safe@npm:^5.0.1":
+"json-stringify-safe@npm:5.0.1, json-stringify-safe@npm:^5.0.1":
   version: 5.0.1
   resolution: "json-stringify-safe@npm:5.0.1"
   checksum: 48ec0adad5280b8a96bb93f4563aa1667fd7a36334f79149abd42446d0989f2ddc58274b479f4819f1f00617957e6344c886c55d05a4e15ebb4ab931e4a6a8ee
@@ -12086,6 +12244,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jsrsasign@npm:^10.5.25":
+  version: 10.9.0
+  resolution: "jsrsasign@npm:10.9.0"
+  checksum: 6ddb6943660a3ebe7c72f2089adf16d9644cd68fb775910fd7ca925d9191cad5a84f6975a0e7d337a8b1ea762309abfcffff0b8f4624c23f97921076c6bb9679
+  languageName: node
+  linkType: hard
+
 "jsx-ast-utils@npm:^2.4.1 || ^3.0.0":
   version: 3.3.5
   resolution: "jsx-ast-utils@npm:3.3.5"
@@ -12095,6 +12260,13 @@ __metadata:
     object.assign: ^4.1.4
     object.values: ^1.1.6
   checksum: f4b05fa4d7b5234230c905cfa88d36dc8a58a6666975a3891429b1a8cdc8a140bca76c297225cb7a499fad25a2c052ac93934449a2c31a44fc9edd06c773780a
+  languageName: node
+  linkType: hard
+
+"jwt-decode@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "jwt-decode@npm:4.0.0"
+  checksum: 390e2edcb31a92e86c8cbdd1edeea4c0d62acd371f8a8f0a8878e499390c0ecf4c658b365c4e941e4ef37d0170e4ca650aaa49f99a45c0b9695a235b210154b0
   languageName: node
   linkType: hard
 
@@ -15030,6 +15202,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"printj@npm:~1.1.0":
+  version: 1.1.2
+  resolution: "printj@npm:1.1.2"
+  bin:
+    printj: ./bin/printj.njs
+  checksum: 1c0c66844545415e339356ad62009cdc467819817b1e0341aba428087a1414d46b84089edb4e77ef24705829f8aae6349724b9c7bd89d8690302b2de7a89b315
+  languageName: node
+  linkType: hard
+
 "proc-log@npm:^3.0.0":
   version: 3.0.0
   resolution: "proc-log@npm:3.0.0"
@@ -15239,6 +15420,20 @@ __metadata:
   dependencies:
     side-channel: ^1.0.4
   checksum: e812f3c590b2262548647d62f1637b6989cc56656dc960b893fe2098d96e1bd633f36576f4cd7564dfbff9db42e17775884db96d846bebe4f37420d073ecdc0b
+  languageName: node
+  linkType: hard
+
+"querystring@npm:^0.2.0":
+  version: 0.2.1
+  resolution: "querystring@npm:0.2.1"
+  checksum: 7b83b45d641e75fd39cd6625ddfd44e7618e741c61e95281b57bbae8fde0afcc12cf851924559e5cc1ef9baa3b1e06e22b164ea1397d65dd94b801f678d9c8ce
+  languageName: node
+  linkType: hard
+
+"querystringify@npm:^2.1.1":
+  version: 2.2.0
+  resolution: "querystringify@npm:2.2.0"
+  checksum: 5641ea231bad7ef6d64d9998faca95611ed4b11c2591a8cae741e178a974f6a8e0ebde008475259abe1621cb15e692404e6b6626e927f7b849d5c09392604b15
   languageName: node
   linkType: hard
 
@@ -16583,6 +16778,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sillyname@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "sillyname@npm:0.1.0"
+  checksum: c9f249d0f779279b651cf168645b5acaf0221029aa39ff58508f8303639496ce31086b178e0269b1eabd6a61b316e043b07260c4ae9935daa7df4770c7652fe6
+  languageName: node
+  linkType: hard
+
 "simple-plist@npm:^1.1.0":
   version: 1.4.0
   resolution: "simple-plist@npm:1.4.0"
@@ -16637,6 +16839,28 @@ __metadata:
   version: 4.2.0
   resolution: "smart-buffer@npm:4.2.0"
   checksum: b5167a7142c1da704c0e3af85c402002b597081dd9575031a90b4f229ca5678e9a36e8a374f1814c8156a725d17008ae3bde63b92f9cfd132526379e580bec8b
+  languageName: node
+  linkType: hard
+
+"socket.io-client@npm:^4.6.1":
+  version: 4.7.4
+  resolution: "socket.io-client@npm:4.7.4"
+  dependencies:
+    "@socket.io/component-emitter": ~3.1.0
+    debug: ~4.3.2
+    engine.io-client: ~6.5.2
+    socket.io-parser: ~4.2.4
+  checksum: 7254f441ff5bf82cc301204b71578eff083a701fb6e636b75a42092d7806ada3b58bbb9914e150c22f50606f5b4c7290a5951605c62ff59d6d59f1aad140ead7
+  languageName: node
+  linkType: hard
+
+"socket.io-parser@npm:~4.2.4":
+  version: 4.2.4
+  resolution: "socket.io-parser@npm:4.2.4"
+  dependencies:
+    "@socket.io/component-emitter": ~3.1.0
+    debug: ~4.3.1
+  checksum: 61540ef99af33e6a562b9effe0fad769bcb7ec6a301aba5a64b3a8bccb611a0abdbe25f469933ab80072582006a78ca136bf0ad8adff9c77c9953581285e2263
   languageName: node
   linkType: hard
 
@@ -17455,8 +17679,10 @@ __metadata:
   dependencies:
     "@commitlint/config-conventional": ^17.0.2
     "@evilmartians/lefthook": ^1.6.2
+    "@fluidframework/azure-client": 2.0.0-rc.1.0.3
     "@fluidframework/build-common": ^2.0.0
     "@fluidframework/devtools": 2.0.0-rc.1.0.1
+    "@fluidframework/test-runtime-utils": 2.0.0-rc.1.0.3
     "@react-native/eslint-config": ^0.73.1
     "@release-it/conventional-changelog": ^5.0.0
     "@types/jest": ^29.5.5
@@ -17467,6 +17693,7 @@ __metadata:
     eslint-config-prettier: ^9.0.0
     eslint-plugin-prettier: ^5.0.1
     fluid-framework: 2.0.0-rc.1.0.3
+    guid-typescript: ^1.0.9
     jest: ^29.7.0
     lefthook: ^1.6.2
     prettier: ^3.0.3
@@ -18122,6 +18349,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"url-parse@npm:^1.5.8":
+  version: 1.5.10
+  resolution: "url-parse@npm:1.5.10"
+  dependencies:
+    querystringify: ^2.1.1
+    requires-port: ^1.0.0
+  checksum: fbdba6b1d83336aca2216bbdc38ba658d9cfb8fc7f665eb8b17852de638ff7d1a162c198a8e4ed66001ddbf6c9888d41e4798912c62b4fd777a31657989f7bdf
+  languageName: node
+  linkType: hard
+
 "url@npm:^0.11.0":
   version: 0.11.3
   resolution: "url@npm:0.11.3"
@@ -18759,6 +18996,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ws@npm:~8.11.0":
+  version: 8.11.0
+  resolution: "ws@npm:8.11.0"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ^5.0.2
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 316b33aba32f317cd217df66dbfc5b281a2f09ff36815de222bc859e3424d83766d9eb2bd4d667de658b6ab7be151f258318fb1da812416b30be13103e5b5c67
+  languageName: node
+  linkType: hard
+
 "xcode@npm:^3.0.1":
   version: 3.0.1
   resolution: "xcode@npm:3.0.1"
@@ -18804,6 +19056,13 @@ __metadata:
   version: 11.0.1
   resolution: "xmlbuilder@npm:11.0.1"
   checksum: 7152695e16f1a9976658215abab27e55d08b1b97bca901d58b048d2b6e106b5af31efccbdecf9b07af37c8377d8e7e821b494af10b3a68b0ff4ae60331b415b0
+  languageName: node
+  linkType: hard
+
+"xmlhttprequest-ssl@npm:~2.0.0":
+  version: 2.0.0
+  resolution: "xmlhttprequest-ssl@npm:2.0.0"
+  checksum: 1e98df67f004fec15754392a131343ea92e6ab5ac4d77e842378c5c4e4fd5b6a9134b169d96842cc19422d77b1606b8df84a5685562b3b698cb68441636f827e
   languageName: node
   linkType: hard
 
