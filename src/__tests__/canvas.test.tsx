@@ -6,7 +6,7 @@ test('renders correctly', () => {
   const tree = renderer
     .create(
       <Canvas
-        setup={(ctx) => {
+        configureSetup={(ctx) => {
           ctx.save();
         }}
         height={200}
