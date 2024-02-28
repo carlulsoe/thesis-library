@@ -17710,9 +17710,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"thesis-library-camera-app-example@workspace:cameraAppExample":
+"thesis-library-example-camera-app@workspace:exampleCameraApp":
   version: 0.0.0-use.local
-  resolution: "thesis-library-camera-app-example@workspace:cameraAppExample"
+  resolution: "thesis-library-example-camera-app@workspace:exampleCameraApp"
   dependencies:
     "@babel/core": ^7.20.0
     "@expo/webpack-config": ^19.0.1

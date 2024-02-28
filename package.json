@@ -94,7 +94,7 @@
   },
   "workspaces": [
     "example",
-    "cameraAppExample"
+    "exampleCameraApp"
   ],
   "packageManager": "yarn@3.6.1",
   "jest": {
