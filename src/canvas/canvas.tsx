@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import type { CanvasProps } from './Canvas.types';
 import { handleTouches } from './TouchHandler';
+import { useWindowDimensions } from 'react-native';
 
 /**
- * Creates a canvas in accordance to props of type CanvasProps
- * @param props
+ * Creates a canvas in accordance to the settings in props
+ * @param props See interface for CanvasProps
  * @constructor
  */
 export const Canvas = (props: CanvasProps) => {
@@ -19,8 +20,20 @@ export const Canvas = (props: CanvasProps) => {
       handleTouches(event, context)
     );
 
-    props.configureSetup(context);
+    if (props.setup == undefined) return;
+    props.setup(context);
   }, [props]);
 
-  return <canvas ref={canvasRef} width={props.width} height={props.height} />;
+  const { height, width } = useWindowDimensions();
+  if (props.size !== undefined) {
+    return (
+      <canvas
+        ref={canvasRef}
+        width={props.size.width}
+        height={props.size.height}
+      />
+    );
+  } else {
+    return <canvas ref={canvasRef} width={width} height={height} />;
+  }
 };

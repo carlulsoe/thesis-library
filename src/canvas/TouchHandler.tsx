@@ -45,7 +45,6 @@ export function handleTouches(
   event: TouchEvent,
   context: CanvasRenderingContext2D
 ) {
-  console.log(event);
   let simpleTouchEvent = simplifyTouchEvent(event);
   draw(simpleTouchEvent.touches[0]!, context);
 }

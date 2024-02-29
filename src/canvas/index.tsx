@@ -1,3 +1,3 @@
 // @ts-ignore
 export { Canvas } from './canvas';
-export type { CanvasProps } from './Canvas.types';
+export type { CanvasProps, CanvasSize } from './Canvas.types';
