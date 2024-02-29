@@ -1,5 +1,6 @@
 import React from 'react';
 import { Canvas } from 'thesis-library';
+import { useWindowDimensions } from 'react-native';
 
 export default function App() {
   const draw = (ctx) => {
@@ -10,5 +11,6 @@ export default function App() {
     ctx.fill();
   };
 
-  return <Canvas configureSetup={draw} width={1000} height={800} />;
+  const { height, width } = useWindowDimensions();
+  return <Canvas configureSetup={draw} width={width} height={height} />;
 }
