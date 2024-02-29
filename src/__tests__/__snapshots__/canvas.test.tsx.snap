@@ -1,6 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`renders correctly, no options 1`] = `
+<canvas
+  height={1334}
+  width={750}
+/>
+`;
+
+exports[`renders correctly, setup 1`] = `
+<canvas
+  height={1334}
+  width={750}
+/>
+`;
+
+exports[`renders correctly, setup, size 1`] = `
+<canvas
+  height={200}
+  width={200}
+/>
+`;
+
+exports[`renders correctly, size 1`] = `
 <canvas
   height={200}
   width={200}
