@@ -4,8 +4,8 @@ import { handleTouches } from './TouchHandler';
 import { useWindowDimensions } from 'react-native';
 
 /**
- * Creates a canvas in accordance to props of type CanvasProps
- * @param props
+ * Creates a canvas in accordance to the settings in props
+ * @param props See interface for CanvasProps
  * @constructor
  */
 export const Canvas = (props: CanvasProps) => {
