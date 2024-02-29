@@ -1,5 +1,5 @@
 import React from 'react';
-import { Canvas, CanvasSize } from 'thesis-library';
+import { Canvas } from 'thesis-library';
 
 export default function App() {
   const draw = (ctx) => {
