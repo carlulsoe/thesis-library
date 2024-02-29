@@ -6,11 +6,10 @@ test('renders correctly', () => {
   const tree = renderer
     .create(
       <Canvas
-        configureSetup={(ctx) => {
+        setup={(ctx) => {
           ctx.save();
         }}
-        height={200}
-        width={200}
+        size={{ width: 200, height: 200 }}
       />
     )
     .toJSON();
