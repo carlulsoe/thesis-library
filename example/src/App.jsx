@@ -5,6 +5,7 @@ import { SharedMap } from 'fluid-framework';
 import { View } from 'react-native';
 
 function App() {
+  // Run > `npx tinylicious` before normal start
   const [fluidSharedObjects, setFluidSharedObjects] = React.useState();
 
   React.useEffect(() => {
