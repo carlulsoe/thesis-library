@@ -20,7 +20,7 @@ export const Canvas = (props: CanvasProps) => {
       handleTouches(event, context)
     );
 
-    if (props.setup == undefined) return;
+    if (props.setup === undefined) return;
     props.setup(context);
   }, [props]);
 
