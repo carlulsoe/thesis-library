@@ -2,18 +2,39 @@ import 'react-native-get-random-values';
 import React from 'react';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
 import { SharedMap } from 'fluid-framework';
-import { View } from 'react-native';
+import { Button, View, Text, TextInput } from 'react-native';
 
 function App() {
   // Run > `npx tinylicious` before normal start
-  const [fluidSharedObjects, setFluidSharedObjects] = React.useState();
+  const [fluidSharedObjects, setFluidSharedObjects] = React.useState(null);
+  const [localTimestamp, setLocalTimestamp] = React.useState('Now');
+  const [containerId, setContainerId] = React.useState();
+
+  const Connect = async () => {
+    // 1: Configure the container.
+    const client = new TinyliciousClient();
+    const containerSchema = {
+      initialObjects: { sharedTimestamp: SharedMap },
+    };
+    let container;
+
+    // 2: Get the container from the Fluid service.
+    console.log(containerId);
+    if (containerId) {
+      ({ container } = await client.getContainer(containerId, containerSchema));
+    } else {
+      ({ container } = await client.createContainer(containerSchema));
+      let id = await container.attach();
+      setContainerId(id);
+    }
+
+    // 3: Set the Fluid timestamp object.
+    setFluidSharedObjects(container.initialObjects);
+  };
 
   React.useEffect(() => {
-    GetFluidData().then((data) => setFluidSharedObjects(data));
-  }, []);
-
-  const [localTimestamp, setLocalTimestamp] = React.useState();
-  React.useEffect(() => {
+    console.log(fluidSharedObjects);
+    console.log(containerId);
     if (fluidSharedObjects) {
       // 4: Set the value of the localTimestamp state object that will appear in the UI.
       const { sharedTimestamp } = fluidSharedObjects;
@@ -29,14 +50,41 @@ function App() {
       return () => {
         sharedTimestamp.off('valueChanged', updateLocalTimestamp);
       };
-    } else {
-      return; // Do nothing because there is no Fluid SharedMap object yet.
     }
-  }, [fluidSharedObjects]);
+  }, [fluidSharedObjects, containerId]);
 
   if (localTimestamp) {
     return (
-      <div className="App">
+      <View className="App">
+        <Text>
+          {'\n'}
+          {'\n'}
+          {'\n'}
+        </Text>
+        <TextInput onChange={(e) => setContainerId(e.target.value || '')} />
+        <Button onPress={Connect} title="Connect" />
+
+        <Button
+          onPress={() =>
+            fluidSharedObjects.sharedTimestamp.set(
+              'time',
+              Date.now().toString()
+            )
+          }
+          title="Get Time"
+        />
+        <Text>{localTimestamp.time}</Text>
+      </View>
+    );
+  } else {
+    return <div />;
+  }
+}
+
+export default App;
+
+/*
+
         <button
           onClick={() =>
             fluidSharedObjects.sharedTimestamp.set(
@@ -49,33 +97,4 @@ function App() {
           Get Time
         </button>
         <span>{localTimestamp.time}</span>
-      </div>
-    );
-  } else {
-    return <View />;
-  }
-}
-
-const GetFluidData = async () => {
-  // 1: Configure the container.
-  const client = new TinyliciousClient();
-  const containerSchema = {
-    initialObjects: { sharedTimestamp: SharedMap },
-  };
-
-  // 2: Get the container from the Fluid service.
-  let container;
-  const containerId = window.location.hash.substring(1);
-  if (!containerId) {
-    ({ container } = await client.createContainer(containerSchema));
-    const id = await container.attach();
-    window.location.hash = id;
-  } else {
-    ({ container } = await client.getContainer(containerId, containerSchema));
-  }
-
-  // 3: Return the Fluid timestamp object.
-  return container.initialObjects;
-};
-
-export default App;
+ */
