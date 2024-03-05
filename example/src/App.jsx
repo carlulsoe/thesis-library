@@ -2,7 +2,7 @@ import 'react-native-get-random-values';
 import React from 'react';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
 import { SharedMap } from 'fluid-framework';
-import { Button, View, Text, TextInput } from 'react-native';
+import { Button, View, Text, TextInput, StyleSheet } from 'react-native';
 
 function App() {
   // Run > `npx tinylicious` before normal start
@@ -61,9 +61,12 @@ function App() {
           {'\n'}
           {'\n'}
         </Text>
-        <TextInput onChange={(e) => setContainerId(e.target.value || '')} />
+        <TextInput
+          onChange={(e) => setContainerId(e.target.value || '')}
+          placeholder="Insert ID here"
+        />
         <Button onPress={Connect} title="Connect" />
-
+        <Text style={styles.container}>Session ID: {containerId}</Text>
         <Button
           onPress={() =>
             fluidSharedObjects.sharedTimestamp.set(
@@ -98,3 +101,26 @@ export default App;
         </button>
         <span>{localTimestamp.time}</span>
  */
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  imageContainer: {
+    marginVertical: 20,
+    width: '80%',
+    height: 200,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  image: {
+    flex: 1,
+    width: null,
+    height: null,
+  },
+});
