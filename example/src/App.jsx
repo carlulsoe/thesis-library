@@ -3,6 +3,7 @@ import React from 'react';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
 import { SharedMap } from 'fluid-framework';
 import { Button, View, Text, TextInput, StyleSheet } from 'react-native';
+import { FD } from 'thesis-library';
 
 function App() {
   // Run > `npx tinylicious` before normal start
@@ -77,6 +78,7 @@ function App() {
           title="Get Time"
         />
         <Text>{localTimestamp.time}</Text>
+        <FD />
       </View>
     );
   } else {

@@ -35,7 +35,8 @@
     "prepare": "bob build",
     "release": "release-it",
     "compile_docs": "typedoc --out ./docs/documentation ./src --tsconfig ./tsconfig.json",
-    "commit": "git add -A && git commit -m"
+    "commit": "git add -A && git commit -m",
+    "tiny": "npx tinylicious"
   },
   "keywords": [
     "react-native",
@@ -96,7 +97,7 @@
     "example",
     "exampleCameraApp"
   ],
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@4.1.1",
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
@@ -181,6 +182,10 @@
     "@fluidframework/test-runtime-utils": "2.0.0-rc.1.0.3",
     "@fluidframework/tinylicious-client": "2.0.0-rc.1.0.1",
     "@types/react": "^18.2.0",
+    "expo": "^50.0.8",
+    "expo-camera": "^14.0.5",
+    "expo-face-detector": "^12.6.1",
+    "expo-modules-core": "^1.11.9",
     "fluid-framework": "2.0.0-rc.1.0.3",
     "guid-typescript": "^1.0.9",
     "react-native-get-random-values": "~1.10.0",
