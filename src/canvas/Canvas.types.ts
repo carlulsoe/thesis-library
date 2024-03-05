@@ -1,6 +1,6 @@
 /**
  * The input interface to set up a canvas
- * @property setup An optional function with the canvas's context as it's only parameter, which does the required first-time setup
+ * @property setup An optional function with the canvas's context as it's only parameter, which does the required first-time setup. This uses basic javascript canvas syntax.
  * @property size Sets the wanted canvas size. If not set, defaults to fullscreen. Currently only fullscreen works as expected
  * @interface
  */
