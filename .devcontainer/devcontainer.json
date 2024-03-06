@@ -6,8 +6,10 @@
 	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
 	"features": {
 		"ghcr.io/devcontainers-contrib/features/expo-cli:1": {},
-		"ghcr.io/nordcominc/devcontainer-features/android-sdk:1": {}
+		"ghcr.io/nordcominc/devcontainer-features/android-sdk:1": {},
+		"ghcr.io/devcontainers-contrib/features/gradle-sdkman:2": {}
 	},
+	"runArgs": ["--net=host"],
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
