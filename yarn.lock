@@ -18048,20 +18048,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-vision-camera@npm:^3.9.1":
-  version: 3.9.1
-  resolution: "react-native-vision-camera@npm:3.9.1"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-    react-native-worklets-core: "*"
-  peerDependenciesMeta:
-    react-native-worklets-core:
-      optional: true
-  checksum: 10/042de4ff04256497192470170d23b00e8f992eaa1f68541d4c1a3531d56ddf33ce1ec8a4489f6c3db2a96bb32338054e297af2e631ad0ae660f009f92ee6459f
-  languageName: node
-  linkType: hard
-
 "react-native-web@npm:~0.19.6":
   version: 0.19.10
   resolution: "react-native-web@npm:0.19.10"
@@ -18078,18 +18064,6 @@ __metadata:
     react: ^18.0.0
     react-dom: ^18.0.0
   checksum: 10/923a13b6d6c23039a0bb36d9c1490bc184c308649198e95ea0fdb62ab35983150126c4b07d716a09d42f37be57d14f2669ca9661e9a3faaf856ed7f7f222120e
-  languageName: node
-  linkType: hard
-
-"react-native-worklets-core@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "react-native-worklets-core@npm:0.3.0"
-  dependencies:
-    string-hash-64: "npm:^1.0.3"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10/a79bb0ae0144265685da4a75b1782500459e81061c5972a74047fcf6cbe15c1f9ced174b8a3982c2c5403c245ba519a117a0e74268fa7900312416314083fe6d
   languageName: node
   linkType: hard
 
@@ -19783,13 +19757,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string-hash-64@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "string-hash-64@npm:1.0.3"
-  checksum: 10/39aab30e05dfe2effe9a0807a4987cedb6c04f4dfcda3c4915add5b90d68676a6c583d2ad51683932ac3546a4f64a5e99136521b8f2eb1956d581bd2947a96a9
-  languageName: node
-  linkType: hard
-
 "string-hash@npm:^1.1.3":
   version: 1.1.3
   resolution: "string-hash@npm:1.1.3"
@@ -20386,8 +20353,6 @@ __metadata:
     react-native: "npm:0.73.4"
     react-native-builder-bob: "npm:^0.20.0"
     react-native-get-random-values: "npm:~1.10.0"
-    react-native-vision-camera: "npm:^3.9.1"
-    react-native-worklets-core: "npm:^0.3.0"
     react-test-renderer: "npm:^18.2.0"
     release-it: "npm:^15.0.0"
     tinylicious: "npm:^3.0.0"

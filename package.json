@@ -187,8 +187,6 @@
     "fluid-framework": "2.0.0-rc.1.0.3",
     "guid-typescript": "^1.0.9",
     "react-native-get-random-values": "~1.10.0",
-    "react-native-vision-camera": "^3.9.1",
-    "react-native-worklets-core": "^0.3.0",
     "tinylicious": "^3.0.0"
   }
 }
