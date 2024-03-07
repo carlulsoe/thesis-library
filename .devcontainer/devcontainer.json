@@ -7,7 +7,7 @@
 	"features": {
 		"ghcr.io/devcontainers-contrib/features/expo-cli:1": {},
 		"ghcr.io/nordcominc/devcontainer-features/android-sdk:1": {},
-		"ghcr.io/devcontainers-contrib/features/gradle-sdkman:2": {}
+		//"ghcr.io/devcontainers-contrib/features/gradle-sdkman:2": {"version": "8.3"}
 	},
 	"runArgs": ["--net=host"],
 
