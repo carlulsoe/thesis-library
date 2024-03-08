@@ -27,7 +27,8 @@
   ],
   "scripts": {
     "example": "yarn workspace thesis-library-example",
-    "cameraApp": "yarn workspace thesis-library-camera-app-example",
+    "cameraApp": "yarn workspace thesis-library-example-camera-app",
+    "canvas": "yarn workspace thesis-library-example-canvas",
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -102,14 +103,16 @@
   },
   "workspaces": [
     "example",
-    "exampleCameraApp"
+    "exampleCameraApp",
+    "exampleCanvas"
   ],
   "packageManager": "yarn@4.1.1",
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
       "<rootDir>/example/node_modules",
-      "<rootDir>/cameraAppExample/node_modules",
+      "<rootDir>/exampleCameraApp/node_modules",
+      "<rootDir>/exampleCanvas/node_modules",
       "<rootDir>/lib/"
     ]
   },

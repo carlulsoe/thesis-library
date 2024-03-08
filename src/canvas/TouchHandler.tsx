@@ -1,33 +1,11 @@
+import { mapBetweenRanges } from '../extra/maths';
+
 type SimplifiedTouch = {
   x: number;
   y: number;
   w: number;
   h: number;
 };
-
-type SimplifiedTouchEvent = {
-  ctrlKey: boolean;
-  touches: SimplifiedTouch[];
-};
-
-function simplifyTouchEvent(event: TouchEvent) {
-  let touchList: SimplifiedTouch[] = [];
-  for (let i = 0; i < event.touches.length; i++) {
-    let item = event.touches.item(i)!;
-    touchList[i] = {
-      w: item.radiusX,
-      h: item.radiusY,
-      x: item.clientX - item.radiusX / 2,
-      y: item.clientY - item.radiusY / 2,
-    };
-  }
-
-  const simplifiedTouchEvent: SimplifiedTouchEvent = {
-    ctrlKey: event.ctrlKey,
-    touches: touchList,
-  };
-  return simplifiedTouchEvent;
-}
 
 function draw(touch: SimplifiedTouch, context: CanvasRenderingContext2D) {
   context.beginPath();
@@ -45,6 +23,37 @@ export function handleTouches(
   event: TouchEvent,
   context: CanvasRenderingContext2D
 ) {
-  let simpleTouchEvent = simplifyTouchEvent(event);
-  draw(simpleTouchEvent.touches[0]!, context);
+  let canvas = event.target as HTMLCanvasElement;
+  const clientHeight = canvas.parentElement?.clientHeight!;
+  const clientWidth = canvas.parentElement?.clientWidth!;
+
+  const simpleTouchEvent = () => {
+    const mapToCanvasWidth = (n: number) => {
+      return mapBetweenRanges(0, clientWidth, 0, 1000, n);
+    };
+    const mapToCanvasHeight = (n: number) => {
+      return mapBetweenRanges(0, clientHeight, 0, 1000, n);
+    };
+
+    let touchList: SimplifiedTouch[] = [];
+    for (let i = 0; i < event.touches.length; i++) {
+      let item = event.touches.item(i)!;
+      console.log(item);
+      console.log(mapToCanvasWidth(item.radiusX));
+      touchList[i] = {
+        w: mapToCanvasWidth(item.radiusX),
+        h: mapToCanvasHeight(item.radiusY),
+        x: mapToCanvasWidth(item.clientX - item.radiusX / 2),
+        y: mapToCanvasHeight(item.clientY - item.radiusY / 2),
+      };
+    }
+    return {
+      ctrlKey: event.ctrlKey,
+      touches: touchList,
+    };
+  };
+  if (simpleTouchEvent().touches.length === 1) {
+    event.preventDefault();
+    draw(simpleTouchEvent().touches[0]!, context);
+  }
 }
