@@ -1,7 +1,7 @@
 import 'react-native-get-random-values';
 import React from 'react';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
-import { SharedMap } from 'fluid-framework';
+import { SharedMap, SharedTree } from 'fluid-framework';
 import {
   Button,
   View,
@@ -11,23 +11,44 @@ import {
   type TextInputChangeEventData,
 } from 'react-native';
 
-var attention_id = '';
-/**
- * Set the current attention
- *
- * @param id sets the attention to be the provided id
- */
-export function setAttention(id: string) {
-  attention_id = id;
+export async function useAttention() {
+  const [attention, _reactSetAttention] = React.useState();
+  let setAttention = await GetSharedAttention();
+
+  return [attention, setAttention];
 }
 
-/**
- * Get the current attention
- *
- * @return A Promise of the current device id that has attention
- */
-export function attention(): Promise<string> {
-  return Promise.resolve(attention_id);
+async function ConnectToClient(
+  client: TinyliciousClient,
+  containerId: string | undefined
+) {
+  // 1: Configure the container.
+  const containerSchema = {
+    initialObjects: {
+      attention: SharedTree,
+    },
+  };
+  let container;
+
+  // 2: Get the container from the Fluid service.
+  console.log(containerId);
+  if (containerId) {
+    // TODO check a db here
+    ({ container } = await client.getContainer(containerId, containerSchema));
+  } else {
+    ({ container } = await client.createContainer(containerSchema));
+  }
+  return container;
+}
+
+async function GetSharedAttention() {
+  const [containerId, setContainerId] = React.useState<string>();
+  let container = await ConnectToClient(new TinyliciousClient(), containerId);
+  let id = await container.attach();
+  setContainerId(id);
+
+  let initialObject = container.initialObjects;
+  return initialObject.attention;
 }
 
 export function ShareTimeStamp() {
@@ -116,3 +137,14 @@ export function ShareTimeStamp() {
     return <div />;
   }
 }
+
+/*
+function cdShortCutsFlow() {
+  if (attention changes to not this device) {
+      send marked stuff to buffer
+  }
+  if (attention changes to this device) {
+    read buffer && (check that buffer has changed || clear buffer after insert)
+  }
+}
+*/

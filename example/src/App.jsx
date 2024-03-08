@@ -85,7 +85,7 @@ function App() {
   }
 }
 
-export default ShareTimeStamp;
+export default App;
 
 /*
 
