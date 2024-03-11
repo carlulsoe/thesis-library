@@ -1,7 +1,9 @@
 import 'react-native-get-random-values';
 import React from 'react';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
-import { SharedMap, SharedTree } from 'fluid-framework';
+import { SharedMap } from 'fluid-framework';
+//import {useSyncedString} from '@fluidframework/react';
+
 import {
   Button,
   View,
@@ -18,6 +20,16 @@ export async function useAttention() {
   return [attention, setAttention];
 }
 
+async function GetSharedAttention() {
+  const [containerId, setContainerId] = React.useState<string>();
+  let container = await ConnectToClient(new TinyliciousClient(), containerId);
+  let id = await container.attach();
+  setContainerId(id);
+
+  let initialObject = container.initialObjects;
+  return initialObject.attention;
+}
+
 async function ConnectToClient(
   client: TinyliciousClient,
   containerId: string | undefined
@@ -25,7 +37,7 @@ async function ConnectToClient(
   // 1: Configure the container.
   const containerSchema = {
     initialObjects: {
-      attention: SharedTree,
+      attention: SharedMap,
     },
   };
   let container;
@@ -39,16 +51,6 @@ async function ConnectToClient(
     ({ container } = await client.createContainer(containerSchema));
   }
   return container;
-}
-
-async function GetSharedAttention() {
-  const [containerId, setContainerId] = React.useState<string>();
-  let container = await ConnectToClient(new TinyliciousClient(), containerId);
-  let id = await container.attach();
-  setContainerId(id);
-
-  let initialObject = container.initialObjects;
-  return initialObject.attention;
 }
 
 export function ShareTimeStamp() {

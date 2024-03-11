@@ -1,1 +1,1 @@
-export { attention, setAttention, ShareTimeStamp } from './attention';
+export { ShareTimeStamp } from './attention';
