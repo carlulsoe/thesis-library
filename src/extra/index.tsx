@@ -1,1 +1,1 @@
-export { ShareTimeStamp } from './attention';
+export * from './attention';

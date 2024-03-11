@@ -1,5 +1,5 @@
 import 'react-native-get-random-values';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
 import { SharedMap } from 'fluid-framework';
 //import {useSyncedString} from '@fluidframework/react';
@@ -18,6 +18,25 @@ export async function useAttention() {
   let setAttention = await GetSharedAttention();
 
   return [attention, setAttention];
+}
+
+function IsFocused(setFocused: {
+  (value: React.SetStateAction<boolean>): void;
+  (arg0: boolean): void;
+}) {
+  const focus = document.hasFocus();
+  setFocused(focus);
+}
+
+export function HandleFocus() {
+  const [focused, setFocused] = useState(false);
+  setInterval(() => IsFocused(setFocused), 300);
+  console.log(focused);
+  if (focused) {
+    return <Text>Focused</Text>;
+  } else {
+    return <Text>notFocused</Text>;
+  }
 }
 
 async function GetSharedAttention() {
