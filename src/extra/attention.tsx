@@ -1,5 +1,5 @@
 import 'react-native-get-random-values';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
 import { SharedMap } from 'fluid-framework';
 //import {useSyncedString} from '@fluidframework/react';
@@ -30,6 +30,7 @@ function IsFocused(setFocused: {
 
 export function HandleFocus() {
   const [focused, setFocused] = useState(false);
+  const uuid = self.crypto.randomUUID();
   setInterval(() => IsFocused(setFocused), 300);
   console.log(focused);
   if (focused) {
