@@ -1,55 +1,55 @@
-import React, { useEffect, useRef } from 'react';
-import type { CanvasProps } from './Canvas.types';
-import { handleTouches } from './TouchHandler';
-import { useWindowDimensions } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  StyleSheet,
+  type GestureResponderEvent,
+  Button,
+} from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 
-/**
- * Creates a canvas in accordance to the settings in props
- *
- * Below is an example of a full size canvas containing a dark red box
- * ```
- * export default function App() {
- *   const draw = (ctx) => {
- *     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
- *     ctx.fillStyle = '#600000';
- *     ctx.beginPath();
- *     ctx.rect(40, 20, 50, 70);
- *     ctx.fill();
- *     ctx.save();
- *   };
- *
- *   return <Canvas setup={draw} />;
- * }
- * ```
- * @param props See interface for CanvasProps
- * @constructor
- */
-export const Canvas = (props: CanvasProps) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+export const Canvas = () => {
+  const [path, setPath] = useState('');
+  const addToPath = (s: string) => setPath(path + s);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (canvas == null) return;
-    const context = canvas.getContext('2d');
-    if (context == null) return;
-    canvas.addEventListener('touchmove', (event) =>
-      handleTouches(event, context)
-    );
-
-    if (props.setup === undefined) return;
-    props.setup(context);
-  }, [props]);
-
-  const { height, width } = useWindowDimensions();
-  if (props.size !== undefined) {
-    return (
-      <canvas
-        ref={canvasRef}
-        width={props.size.width}
-        height={props.size.height}
-      />
-    );
-  } else {
-    return <canvas ref={canvasRef} width={width} height={height} />;
+  function handleStart(e: GestureResponderEvent) {
+    //console.log(e.nativeEvent);
+    let x = e.nativeEvent.touches[0]?.locationX;
+    let y = e.nativeEvent.touches[0]?.locationY;
+    addToPath(`M${x} ${y} `);
   }
+  function handleMove(e: GestureResponderEvent) {
+    let x = e.nativeEvent.touches[0]?.locationX;
+    let y = e.nativeEvent.touches[0]?.locationY;
+    addToPath(`L${x} ${y} `);
+  }
+
+  return (
+    <View style={styles.outer}>
+      <View
+        style={styles.container}
+        onTouchStart={handleStart}
+        onTouchMove={handleMove}
+      >
+        <Svg width={1000} height={1000}>
+          <Path d={path} stroke={'red'} fillOpacity={0} />
+        </Svg>
+      </View>
+      <View>
+        <Button onPress={() => setPath('')} title={'Clear Canvas'} />
+        <Button onPress={() => console.log(path)} title={'Print Path'} />
+      </View>
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  outer: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'stretch',
+  },
+});

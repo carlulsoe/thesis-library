@@ -30,7 +30,7 @@ function IsFocused(setFocused: {
 
 export function HandleFocus() {
   const [focused, setFocused] = useState(false);
-  const uuid = self.crypto.randomUUID();
+  //const uuid = self.crypto.randomUUID();
   setInterval(() => IsFocused(setFocused), 300);
   console.log(focused);
   if (focused) {
