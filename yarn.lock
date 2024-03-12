@@ -18329,6 +18329,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-popup-menu@npm:~0.16.1":
+  version: 0.16.1
+  resolution: "react-native-popup-menu@npm:0.16.1"
+  checksum: 10/a1b3de125024c145c6e0b993a7ce896cd29da4be8ca9cd077f7fda7d0a37a17470ba48a018993b9f86b8f1fee19e2bc408b85da82b3148d8b7abfd3a195fea10
+  languageName: node
+  linkType: hard
+
 "react-native-svg@npm:~15.1.0":
   version: 15.1.0
   resolution: "react-native-svg@npm:15.1.0"
@@ -20741,6 +20748,7 @@ __metadata:
     react-native: "npm:0.73.4"
     react-native-builder-bob: "npm:^0.20.0"
     react-native-get-random-values: "npm:~1.10.0"
+    react-native-popup-menu: "npm:~0.16.1"
     react-native-svg: "npm:~15.1.0"
     react-native-web: "npm:~0.19.6"
     react-test-renderer: "npm:^18.2.0"
