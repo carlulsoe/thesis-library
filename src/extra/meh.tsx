@@ -2,6 +2,8 @@ import Detector from './idleDetector';
 import React from 'react';
 
 export function AddDetector() {
-  Detector().then().catch();
+  const uuid = self.crypto.randomUUID();
+  console.log(uuid);
+  Detector(uuid).then().catch();
   return <></>;
 }
