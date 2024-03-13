@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, type GestureResponderEvent } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  type GestureResponderEvent,
+  type LayoutChangeEvent,
+  Platform,
+} from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import {
   MenuProvider,
@@ -8,23 +14,27 @@ import {
   MenuTrigger,
   MenuOption,
 } from 'react-native-popup-menu';
+import { useWindowDimensions } from 'react-native';
 
 export const Canvas = () => {
+  const { height, width } = useWindowDimensions();
   const [currentColor, setColor] = useState(Colors.Black);
   const [oldPaths, setOldPaths] = useState<IPath[]>([]);
   const [currentPath, setCurrentPath] = useState('');
+  const [menuBarHeight, setMenuBarHeight] = useState(0);
   const addToPath = (s: string) => setCurrentPath(currentPath + s);
   const addCurrentToOldPaths = () =>
     setOldPaths([...oldPaths, { path: currentPath, color: currentColor }]);
 
   function handleStart(e: GestureResponderEvent) {
-    let x = e.nativeEvent.touches[0]?.locationX;
-    let y = e.nativeEvent.touches[0]?.locationY;
+    let x = e.nativeEvent.touches[0]?.pageX;
+    let y = e.nativeEvent.touches[0]?.pageY;
     addToPath(`M${x} ${y} `);
   }
+
   function handleMove(e: GestureResponderEvent) {
-    let x = e.nativeEvent.touches[0]?.locationX;
-    let y = e.nativeEvent.touches[0]?.locationY;
+    let x = e.nativeEvent.touches[0]?.pageX;
+    let y = e.nativeEvent.touches[0]?.pageY;
     addToPath(`L${x} ${y} `);
   }
 
@@ -38,6 +48,14 @@ export const Canvas = () => {
     setOldPaths([]);
   }
 
+  function findMenuBarDimensions(event: LayoutChangeEvent) {
+    if (Platform.OS === 'web') {
+      const { height } = event.nativeEvent.layout;
+      setMenuBarHeight(height);
+      console.log(height);
+    }
+  }
+
   // @ts-ignore
   return (
     <MenuProvider>
@@ -48,7 +66,7 @@ export const Canvas = () => {
           onTouchMove={handleMove}
           onTouchEnd={handleEnd}
         >
-          <Svg width={1000} height={1000}>
+          <Svg width={width} height={height - menuBarHeight}>
             {oldPaths.map((path) => (
               <Path
                 key={path.path}
@@ -60,7 +78,7 @@ export const Canvas = () => {
             <Path d={currentPath} stroke={currentColor} fillOpacity={0} />
           </Svg>
         </View>
-        <View>
+        <View onLayout={(e) => findMenuBarDimensions(e)}>
           <Menu>
             <MenuTrigger text={'Options'} style={styles.button} />
             <MenuOptions customStyles={optionsStyles}>
