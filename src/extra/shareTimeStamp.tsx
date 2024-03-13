@@ -2,14 +2,20 @@ import 'react-native-get-random-values';
 import React from 'react';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
 import { SharedMap } from 'fluid-framework';
-import { Button, View, Text, TextInput, StyleSheet } from 'react-native';
-import { ShareTimeStamp, HandleFocus, AddDetector } from 'thesis-library';
+import {
+  Button,
+  View,
+  Text,
+  TextInput,
+  type NativeSyntheticEvent,
+  type TextInputChangeEventData,
+} from 'react-native';
 
-function App() {
-  // Run > `npx tinylicious` before normal start
-  const [fluidSharedObjects, setFluidSharedObjects] = React.useState(null);
-  const [localTimestamp, setLocalTimestamp] = React.useState('Now');
-  const [containerId, setContainerId] = React.useState();
+export function ShareTimeStamp() {
+  const [fluidSharedObjects, setFluidSharedObjects] =
+    React.useState<SharedMap>();
+  const [localTimestamp, setLocalTimestamp] = React.useState({ time: 'Now' });
+  const [containerId, setContainerId] = React.useState<string>();
 
   const Connect = async () => {
     // 1: Configure the container.
@@ -28,19 +34,19 @@ function App() {
       let id = await container.attach();
       setContainerId(id);
     }
-
+    let initialObject = container.initialObjects;
     // 3: Set the Fluid timestamp object.
-    setFluidSharedObjects(container.initialObjects);
+    setFluidSharedObjects(initialObject.sharedTimestamp);
   };
-
+  //@ts-ignore
   React.useEffect(() => {
     console.log(fluidSharedObjects);
     console.log(containerId);
     if (fluidSharedObjects) {
       // 4: Set the value of the localTimestamp state object that will appear in the UI.
-      const { sharedTimestamp } = fluidSharedObjects;
+      const sharedTimestamp = fluidSharedObjects;
       const updateLocalTimestamp = () =>
-        setLocalTimestamp({ time: sharedTimestamp.get('time') });
+        setLocalTimestamp({ time: sharedTimestamp.get('time') || '' });
 
       updateLocalTimestamp();
 
@@ -54,76 +60,40 @@ function App() {
     }
   }, [fluidSharedObjects, containerId]);
 
+  const HandleTextInputChange = (
+    e: NativeSyntheticEvent<TextInputChangeEventData>
+  ) => {
+    let target = e.target;
+    // @ts-ignore
+    let value = target.value;
+    return value;
+  };
+
   if (localTimestamp) {
     return (
-      <View className="App">
+      <View>
         <Text>
           {'\n'}
           {'\n'}
           {'\n'}
         </Text>
         <TextInput
-          onChange={(e) => setContainerId(e.target.value || '')}
+          onChange={(e) => setContainerId(HandleTextInputChange(e))}
           placeholder="Insert ID here"
         />
         <Button onPress={Connect} title="Connect" />
-        <Text style={styles.container}>Session ID: {containerId}</Text>
+        <Text>Session ID: {containerId}</Text>
         <Button
           onPress={() =>
-            fluidSharedObjects.sharedTimestamp.set(
-              'time',
-              Date.now().toString()
-            )
+            fluidSharedObjects &&
+            fluidSharedObjects.set('time', Date.now().toString())
           }
           title="Get Time"
         />
         <Text>{localTimestamp.time}</Text>
-        <HandleFocus />
-        <AddDetector />
       </View>
     );
   } else {
     return <div />;
   }
 }
-
-export default App;
-
-/*
-
-        <button
-          onClick={() =>
-            fluidSharedObjects.sharedTimestamp.set(
-              'time',
-              Date.now().toString()
-            )
-          }
-          title={'hi'}
-        >
-          Get Time
-        </button>
-        <span>{localTimestamp.time}</span>
- */
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  imageContainer: {
-    marginVertical: 20,
-    width: '80%',
-    height: 200,
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  image: {
-    flex: 1,
-    width: null,
-    height: null,
-  },
-});
