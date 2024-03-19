@@ -1,2 +1,2 @@
 export * from './attention';
-export * from './meh';
+export * from './idleDetector';
