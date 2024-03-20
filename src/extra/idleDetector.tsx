@@ -1,5 +1,12 @@
-import { changeHandler } from './changeHandler';
 import { useRef, type MutableRefObject } from 'react';
+import React from 'react';
+
+export function AddDetector() {
+  const uuid = self.crypto.randomUUID();
+  console.log(uuid);
+  Detector(uuid).then().catch();
+  return <></>;
+}
 
 const Detector = async (uuid: any) => {
   const focus = useRef(true);
@@ -14,4 +21,6 @@ const IsFocused = async (focus: MutableRefObject<boolean>, uuid: any) => {
   }
 };
 
-export default Detector;
+const changeHandler = (focus: any, uuid: any) => {
+  console.log(`Focus changed to: ${focus.current}, with ${uuid}.`);
+};
