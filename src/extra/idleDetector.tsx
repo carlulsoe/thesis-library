@@ -1,15 +1,64 @@
 import { useRef, type MutableRefObject } from 'react';
 import React from 'react';
-import { GetSharedAttention } from './attention';
+import { ConnectToClient, GetSharedAttention } from './attention';
 import type { SharedMap } from 'fluid-framework';
-import { View } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  type NativeSyntheticEvent,
+  type TextInputChangeEventData,
+} from 'react-native';
+import TinyliciousClient from '@fluidframework/tinylicious-client';
 
 export function AddDetector() {
-  getAttention();
-  return <View />;
+  return Connector();
 }
 
 const ATTENTION_KEY = 'attention';
+
+const Connector = () => {
+  const [containerId, setContainerId] = React.useState<string>();
+  let client = new TinyliciousClient();
+  const uuid = self.crypto.randomUUID();
+  console.log(uuid);
+
+  getAttention([containerId, setContainerId], uuid, client);
+  return (
+    <View>
+      <TextInput
+        onChange={(e) => setContainerId(HandleTextInputChange(e))}
+        placeholder="Insert ID here"
+      />
+      <Button
+        onPress={() => ConnectToClient(client, containerId)}
+        title="Connect"
+      />
+      <Text>Session ID: {containerId}</Text>
+    </View>
+  );
+};
+
+const getAttention = (
+  state: (
+    | string
+    | React.Dispatch<React.SetStateAction<string | undefined>>
+    | undefined
+  )[],
+  uuid: string,
+  client: TinyliciousClient
+) => {
+  GetSharedAttention(state, client).then(
+    (attention) => {
+      Detector(uuid, attention).then().catch();
+    },
+    (e) => {
+      console.log(e);
+    }
+  );
+};
+
 const Detector = async (uuid: any, attention: SharedMap) => {
   const focus = useRef(true);
   setInterval(() => IsFocused(focus, uuid, attention), 300);
@@ -50,15 +99,11 @@ const IsFocused = async (
   }
 };
 
-const getAttention = () => {
-  const uuid = self.crypto.randomUUID();
-  console.log(uuid);
-  GetSharedAttention().then(
-    (attention) => {
-      Detector(uuid, attention).then().catch();
-    },
-    (e) => {
-      console.log(e);
-    }
-  );
+const HandleTextInputChange = (
+  e: NativeSyntheticEvent<TextInputChangeEventData>
+) => {
+  let target = e.target;
+  // @ts-ignore
+  let value = target.value;
+  return value;
 };

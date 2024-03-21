@@ -6,7 +6,10 @@ import { Text } from 'react-native';
 
 export async function useAttention() {
   const [attention, _reactSetAttention] = React.useState();
-  let SharedAttention = await GetSharedAttention();
+  let SharedAttention = await GetSharedAttention(
+    [attention, _reactSetAttention],
+    new TinyliciousClient()
+  );
   let setAttention = (
     value: `${string}-${string}-${string}-${string}-${string}`
   ) => SharedAttention.set('attention', value);
@@ -33,9 +36,9 @@ export function HandleFocus() {
   }
 }
 
-export async function GetSharedAttention() {
-  const [containerId, setContainerId] = React.useState<string>();
-  let container = await ConnectToClient(new TinyliciousClient(), containerId);
+export async function GetSharedAttention(state: any, client: any) {
+  const [containerId, setContainerId] = state;
+  let container = await ConnectToClient(client, containerId);
   let id = await container.attach();
   setContainerId(id);
 
@@ -43,7 +46,7 @@ export async function GetSharedAttention() {
   return initialObject.attention;
 }
 
-async function ConnectToClient(
+export async function ConnectToClient(
   client: TinyliciousClient,
   containerId: string | undefined
 ) {
