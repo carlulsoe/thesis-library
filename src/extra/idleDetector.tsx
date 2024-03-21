@@ -1,26 +1,64 @@
 import { useRef, type MutableRefObject } from 'react';
 import React from 'react';
+import { GetSharedAttention } from './attention';
+import type { SharedMap } from 'fluid-framework';
+import { View } from 'react-native';
 
 export function AddDetector() {
-  const uuid = self.crypto.randomUUID();
-  console.log(uuid);
-  Detector(uuid).then().catch();
-  return <></>;
+  getAttention();
+  return <View />;
 }
 
-const Detector = async (uuid: any) => {
+const ATTENTION_KEY = 'attention';
+const Detector = async (uuid: any, attention: SharedMap) => {
   const focus = useRef(true);
-  setInterval(() => IsFocused(focus, uuid), 300);
+  setInterval(() => IsFocused(focus, uuid, attention), 300);
+  attention.addListener('valueChanged', (changed, local) => {
+    if (changed.key !== ATTENTION_KEY) {
+      return;
+    }
+    if (local) {
+      // CASE 1: value changed from another to this
+      // TODO
+      console.log('This is in focus');
+      console.log(uuid);
+      return;
+    } else {
+      const itIsAnotherDeviceToAnotherDevice = changed.previousValue !== uuid;
+      if (itIsAnotherDeviceToAnotherDevice) {
+        return;
+      }
+      // CASE 2: value changed from this to another
+      console.log('CASE 2: value changed from this to another');
+      return; //TODO change this to have functionallity
+    }
+  });
 };
 
-const IsFocused = async (focus: MutableRefObject<boolean>, uuid: any) => {
+const IsFocused = async (
+  focus: MutableRefObject<boolean>,
+  uuid: any,
+  attention: SharedMap
+) => {
   let docFocus = document.hasFocus();
   if (focus.current !== docFocus) {
     focus.current = docFocus;
-    changeHandler(focus, uuid);
+    if (focus.current) {
+      attention.set(ATTENTION_KEY, uuid);
+    }
+    console.log(`Focus changed to: ${focus.current}, with ${uuid}.`);
   }
 };
 
-const changeHandler = (focus: any, uuid: any) => {
-  console.log(`Focus changed to: ${focus.current}, with ${uuid}.`);
+const getAttention = () => {
+  const uuid = self.crypto.randomUUID();
+  console.log(uuid);
+  GetSharedAttention().then(
+    (attention) => {
+      Detector(uuid, attention).then().catch();
+    },
+    (e) => {
+      console.log(e);
+    }
+  );
 };

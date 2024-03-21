@@ -33,7 +33,7 @@ export function HandleFocus() {
   }
 }
 
-async function GetSharedAttention() {
+export async function GetSharedAttention() {
   const [containerId, setContainerId] = React.useState<string>();
   let container = await ConnectToClient(new TinyliciousClient(), containerId);
   let id = await container.attach();
