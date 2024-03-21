@@ -9,14 +9,15 @@ import {
   type NativeSyntheticEvent,
 } from 'react-native';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
+import type { ConnectedComponentType } from '../components/Component';
 
 interface ConnectProps {
   containerSchema: any;
   setObjects: Function;
+  objects: ConnectedComponentType;
 }
 
 export const Connect = (props: ConnectProps) => {
-  //const initialObjects = { sharedTimestamp: SharedTree };
   const initialObjects = {
     initialObjects: props.containerSchema,
   };
@@ -56,7 +57,7 @@ export const Connect = (props: ConnectProps) => {
     <View>
       <TextInput onChange={(e) => updateId(e)} placeholder="Insert ID here" />
       <Button onPress={ConnectEitherOr} title="Connect" />
-      <Text style={styles.container}>Session ID: {containerId}</Text>
+      <Text style={styles.container}>{containerId}</Text>
     </View>
   );
 };

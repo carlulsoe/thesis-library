@@ -15,8 +15,9 @@ import {
   MenuOption,
 } from 'react-native-popup-menu';
 import { useWindowDimensions } from 'react-native';
+import type { ConnectedComponentType } from './Component';
 
-export const Canvas = () => {
+export const Canvas: ConnectedComponentType = () => {
   const { height, width } = useWindowDimensions();
   const [currentColor, setColor] = useState(Colors.Black);
   const [oldPaths, setOldPaths] = useState<IPath[]>([]);
@@ -50,9 +51,9 @@ export const Canvas = () => {
 
   function findMenuBarDimensions(event: LayoutChangeEvent) {
     if (Platform.OS === 'web') {
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       const { height } = event.nativeEvent.layout;
       setMenuBarHeight(height);
-      console.log(height);
     }
   }
 

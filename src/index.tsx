@@ -1,2 +1,2 @@
 export * from './extra';
-export * from './canvas';
+export * from './components';
