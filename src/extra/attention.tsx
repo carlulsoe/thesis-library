@@ -1,81 +1,82 @@
-import 'react-native-get-random-values';
-import React, { useState } from 'react';
-import { TinyliciousClient } from '@fluidframework/tinylicious-client';
+import { useRef, type MutableRefObject } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SharedMap } from 'fluid-framework';
-import { Text } from 'react-native';
+import { View } from 'react-native';
+import { Connect } from 'thesis-library';
 
-export async function useAttention() {
-  const [attention, _reactSetAttention] = React.useState();
-  let SharedAttention = await GetSharedAttention(
-    [attention, _reactSetAttention],
-    new TinyliciousClient()
+export function AddDetector() {
+  return Connector();
+}
+
+const ATTENTION_KEY = 'attention';
+
+const Connector = () => {
+  const [fluidSharedObjects, setFluidSharedObjects] = useState(null);
+  const initialObjects = { attention: SharedMap };
+  const uuid = self.crypto.randomUUID();
+  const focus = useRef(true);
+  console.log(uuid);
+  useEffect(() => {
+    if (fluidSharedObjects) {
+      //@ts-ignore
+      const { attention } = fluidSharedObjects.initialObjects;
+      Detector(uuid, attention, focus);
+    }
+  }, [uuid, fluidSharedObjects]);
+
+  return (
+    //@ts-ignore
+    <View className="Attention">
+      <Connect
+        containerSchema={initialObjects}
+        setObjects={setFluidSharedObjects}
+      />
+    </View>
   );
-  let setAttention = (
-    value: `${string}-${string}-${string}-${string}-${string}`
-  ) => SharedAttention.set('attention', value);
-  return [attention, setAttention];
-}
+};
 
-function IsFocused(setFocused: {
-  (value: React.SetStateAction<boolean>): void;
-  (arg0: boolean): void;
-}) {
-  const focus = document.hasFocus();
-  setFocused(focus);
-}
+const Detector = (uuid: any, attention: SharedMap, focus: any) => {
+  setInterval(() => IsFocused(focus, uuid, attention), 300);
+  attention.addListener('valueChanged', (changed, local) => {
+    if (changed.key !== ATTENTION_KEY) {
+      return;
+    }
+    if (local) {
+      const itIsStillThisDevice = changed.previousValue === uuid;
+      // CASE 1: value changed from another to this
+      if (itIsStillThisDevice) {
+        return;
+      }
+      // TODO
+      console.log(
+        `CASE 1: This (${uuid}) is in focus from another (${changed.previousValue})`
+      );
+      return;
+    } else {
+      const itIsAnotherDeviceToAnotherDevice = changed.previousValue !== uuid;
+      if (itIsAnotherDeviceToAnotherDevice) {
+        return;
+      }
+      // CASE 2: value changed from this to another
+      console.log(
+        `CASE 2: value changed from this (${uuid}) to another (${attention.get(ATTENTION_KEY)})`
+      );
+      return; //TODO change this to have functionallity
+    }
+  });
+};
 
-export function HandleFocus() {
-  const [focused, setFocused] = useState(false);
-  //const uuid = self.crypto.randomUUID();
-  setInterval(() => IsFocused(setFocused), 300);
-  console.log(focused);
-  if (focused) {
-    return <Text>Focused</Text>;
-  } else {
-    return <Text>notFocused</Text>;
+const IsFocused = async (
+  focus: MutableRefObject<boolean>,
+  uuid: any,
+  attention: SharedMap
+) => {
+  let docFocus = document.hasFocus();
+  if (focus.current !== docFocus) {
+    focus.current = docFocus;
+    if (focus.current) {
+      attention.set(ATTENTION_KEY, uuid);
+    }
+    console.log(`Focus changed to: ${focus.current}, with ${uuid}.`);
   }
-}
-
-export async function GetSharedAttention(state: any, client: any) {
-  const [containerId, setContainerId] = state;
-  let container = await ConnectToClient(client, containerId);
-  let id = await container.attach();
-  setContainerId(id);
-
-  let initialObject = container.initialObjects;
-  return initialObject.attention;
-}
-
-export async function ConnectToClient(
-  client: TinyliciousClient,
-  containerId: string | undefined
-) {
-  // 1: Configure the container.
-  const containerSchema = {
-    initialObjects: {
-      attention: SharedMap,
-    },
-  };
-  let container;
-
-  // 2: Get the container from the Fluid service.
-  console.log(containerId);
-  if (containerId) {
-    // TODO check a db here
-    ({ container } = await client.getContainer(containerId, containerSchema));
-  } else {
-    ({ container } = await client.createContainer(containerSchema));
-  }
-  return container;
-}
-
-/*
-function cdShortCutsFlow() {
-  if (attention changes to not this device) {
-      send marked stuff to buffer
-  }
-  if (attention changes to this device) {
-    read buffer && (check that buffer has changed || clear buffer after insert)
-  }
-}
-*/
+};
