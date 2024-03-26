@@ -28,26 +28,20 @@ function App() {
     }
   }, [fluidSharedObjects]);
 
+  function updateTime(val) {
+    return fluidSharedObjects.initialObjects.sharedTimestamp.set('time', val);
+  }
+
   if (localTimestamp) {
     return (
       <View className="App">
-        <Text>
-          {'\n'}
-          {'\n'}
-          {'\n'}
-        </Text>
         <Connect
           containerSchema={initialObjects}
           setObjects={setFluidSharedObjects}
         />
         <Button
-          onPress={() =>
-            fluidSharedObjects.initialObjects.sharedTimestamp.set(
-              'time',
-              Date.now().toString()
-            )
-          }
-          title="Get Time"
+          onPress={() => updateTime(Date.now().toString())}
+          title="Get time"
         />
         <Text>{localTimestamp.time}</Text>
       </View>
@@ -59,21 +53,6 @@ function App() {
 
 export default App;
 
-/*
-
-        <button
-          onClick={() =>
-            fluidSharedObjects.sharedTimestamp.set(
-              'time',
-              Date.now().toString()
-            )
-          }
-          title={'hi'}
-        >
-          Get Time
-        </button>
-        <span>{localTimestamp.time}</span>
- */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
