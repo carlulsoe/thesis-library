@@ -21,10 +21,15 @@ export const Connect = (props: ConnectProps) => {
   const initialObjects = {
     initialObjects: props.containerSchema,
   };
-  async function ConnectToContainer(containerId: string) {
+  const [containerId, setContainerId] = React.useState('');
+
+  async function ConnectToContainer(containerIdString: string) {
     let container;
     const client = new TinyliciousClient();
-    ({ container } = await client.getContainer(containerId, initialObjects));
+    ({ container } = await client.getContainer(
+      containerIdString,
+      initialObjects
+    ));
     return container;
   }
 
@@ -36,7 +41,6 @@ export const Connect = (props: ConnectProps) => {
     setContainerId(id);
     return container;
   }
-  const [containerId, setContainerId] = React.useState('');
 
   const ConnectEitherOr = async () => {
     let container;
