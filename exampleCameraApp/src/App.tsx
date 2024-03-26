@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
+import { AddDetector } from 'thesis-library';
 
 export default function PhotoApp() {
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
@@ -58,6 +59,7 @@ export default function PhotoApp() {
           />
         </View>
       )}
+      <AddDetector />
     </View>
   );
 }

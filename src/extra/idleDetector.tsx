@@ -1,16 +1,8 @@
 import { useRef, type MutableRefObject } from 'react';
-import React from 'react';
-import { ConnectToClient, GetSharedAttention } from './attention';
-import type { SharedMap } from 'fluid-framework';
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  type NativeSyntheticEvent,
-  type TextInputChangeEventData,
-} from 'react-native';
-import TinyliciousClient from '@fluidframework/tinylicious-client';
+import React, { useEffect, useState } from 'react';
+import { SharedMap } from 'fluid-framework';
+import { View } from 'react-native';
+import { Connect } from 'thesis-library';
 
 export function AddDetector() {
   return Connector();
@@ -19,48 +11,31 @@ export function AddDetector() {
 const ATTENTION_KEY = 'attention';
 
 const Connector = () => {
-  const [containerId, setContainerId] = React.useState<string>();
-  let client = new TinyliciousClient();
+  const [fluidSharedObjects, setFluidSharedObjects] = useState(null);
+  const initialObjects = { attention: SharedMap };
   const uuid = self.crypto.randomUUID();
+  const focus = useRef(true);
   console.log(uuid);
+  useEffect(() => {
+    if (fluidSharedObjects) {
+      //@ts-ignore
+      const { attention } = fluidSharedObjects.initialObjects;
+      Detector(uuid, attention, focus);
+    }
+  }, [uuid, fluidSharedObjects]);
 
-  getAttention([containerId, setContainerId], uuid, client);
   return (
-    <View>
-      <TextInput
-        onChange={(e) => setContainerId(HandleTextInputChange(e))}
-        placeholder="Insert ID here"
+    //@ts-ignore
+    <View className="Attention">
+      <Connect
+        containerSchema={initialObjects}
+        setObjects={setFluidSharedObjects}
       />
-      <Button
-        onPress={() => ConnectToClient(client, containerId)}
-        title="Connect"
-      />
-      <Text>Session ID: {containerId}</Text>
     </View>
   );
 };
 
-const getAttention = (
-  state: (
-    | string
-    | React.Dispatch<React.SetStateAction<string | undefined>>
-    | undefined
-  )[],
-  uuid: string,
-  client: TinyliciousClient
-) => {
-  GetSharedAttention(state, client).then(
-    (attention) => {
-      Detector(uuid, attention).then().catch();
-    },
-    (e) => {
-      console.log(e);
-    }
-  );
-};
-
-const Detector = async (uuid: any, attention: SharedMap) => {
-  const focus = useRef(true);
+const Detector = (uuid: any, attention: SharedMap, focus: any) => {
   setInterval(() => IsFocused(focus, uuid, attention), 300);
   attention.addListener('valueChanged', (changed, local) => {
     if (changed.key !== ATTENTION_KEY) {
@@ -97,13 +72,4 @@ const IsFocused = async (
     }
     console.log(`Focus changed to: ${focus.current}, with ${uuid}.`);
   }
-};
-
-const HandleTextInputChange = (
-  e: NativeSyntheticEvent<TextInputChangeEventData>
-) => {
-  let target = e.target;
-  // @ts-ignore
-  let value = target.value;
-  return value;
 };
