@@ -24,6 +24,7 @@ export const Connect = (props: ConnectProps) => {
 
   async function ConnectToContainer(containerIdString: string) {
     let container;
+    console.log(containerIdString);
     const client = new TinyliciousClient();
     ({ container } = await client.getContainer(
       containerIdString,

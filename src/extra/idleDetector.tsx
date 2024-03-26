@@ -42,10 +42,15 @@ const Detector = (uuid: any, attention: SharedMap, focus: any) => {
       return;
     }
     if (local) {
+      const itIsStillThisDevice = changed.previousValue === uuid;
       // CASE 1: value changed from another to this
+      if (itIsStillThisDevice) {
+        return;
+      }
       // TODO
-      console.log('This is in focus');
-      console.log(uuid);
+      console.log(
+        `CASE 1: This (${uuid}) is in focus from another (${changed.previousValue})`
+      );
       return;
     } else {
       const itIsAnotherDeviceToAnotherDevice = changed.previousValue !== uuid;
@@ -53,7 +58,9 @@ const Detector = (uuid: any, attention: SharedMap, focus: any) => {
         return;
       }
       // CASE 2: value changed from this to another
-      console.log('CASE 2: value changed from this to another');
+      console.log(
+        `CASE 2: value changed from this (${uuid}) to another (${attention.get(ATTENTION_KEY)})`
+      );
       return; //TODO change this to have functionallity
     }
   });
