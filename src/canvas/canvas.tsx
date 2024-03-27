@@ -15,8 +15,15 @@ import {
   MenuOption,
 } from 'react-native-popup-menu';
 import { useWindowDimensions } from 'react-native';
+import { objEq, uniqueMerge } from '../extra/tools';
 
-export const Canvas = () => {
+interface CanvasProps {
+  val: string;
+  obj: any;
+  sendToRemote: Function;
+}
+
+export const Canvas = (props: CanvasProps) => {
   const { height, width } = useWindowDimensions();
   const [currentColor, setColor] = useState(Colors.Black);
   const [oldPaths, setOldPaths] = useState<IPath[]>([]);
@@ -48,11 +55,36 @@ export const Canvas = () => {
     setOldPaths([]);
   }
 
+  React.useEffect(() => {
+    const obj = props.obj();
+    if (!obj) {
+      return;
+    }
+    let remotePaths: IPath[] = props.val ? JSON.parse(props.val) : [];
+    if (objEq(remotePaths, oldPaths)) {
+      return;
+    }
+    const allPaths = uniqueMerge(remotePaths, oldPaths);
+    const updateLocalTimestamp = () => {
+      props.sendToRemote(JSON.stringify(allPaths));
+      setOldPaths(allPaths);
+    };
+
+    updateLocalTimestamp();
+
+    // 5: Register handlers.
+    obj.on('valueChanged', updateLocalTimestamp);
+
+    // 6: Delete handler registration when the React App component is dismounted.
+    return () => {
+      obj.off('valueChanged', updateLocalTimestamp);
+    };
+  }, [props, oldPaths]);
+
   function findMenuBarDimensions(event: LayoutChangeEvent) {
     if (Platform.OS === 'web') {
       const { height } = event.nativeEvent.layout;
       setMenuBarHeight(height);
-      console.log(height);
     }
   }
 
@@ -150,7 +182,7 @@ enum Colors {
   Black = '#000000',
 }
 
-interface IPath {
+type IPath = {
   color: string;
   path: string;
-}
+};

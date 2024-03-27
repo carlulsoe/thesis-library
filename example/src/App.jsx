@@ -1,8 +1,9 @@
 import 'react-native-get-random-values';
 import React from 'react';
 import { SharedMap } from 'fluid-framework';
-import { Button, View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Connect } from 'thesis-library';
+import { Canvas } from '../../src';
 
 function App() {
   // Run > `npx tinylicious` before normal start
@@ -29,8 +30,16 @@ function App() {
   }, [fluidSharedObjects]);
 
   function updateTime(val) {
-    return fluidSharedObjects.initialObjects.sharedTimestamp.set('time', val);
+    if (fluidSharedObjects) {
+      return fluidSharedObjects.initialObjects.sharedTimestamp.set('time', val);
+    }
   }
+
+  const object = () => {
+    if (fluidSharedObjects) {
+      return fluidSharedObjects.initialObjects.sharedTimestamp;
+    }
+  };
 
   if (localTimestamp) {
     return (
@@ -39,11 +48,16 @@ function App() {
           containerSchema={initialObjects}
           setObjects={setFluidSharedObjects}
         />
-        <Button
+        <Canvas
+          val={localTimestamp.time}
+          sendToRemote={updateTime}
+          obj={object}
+        />
+        {/*<Button
           onPress={() => updateTime(Date.now().toString())}
           title="Get time"
         />
-        <Text>{localTimestamp.time}</Text>
+        <Text>{localTimestamp.time}</Text>*/}
       </View>
     );
   } else {
