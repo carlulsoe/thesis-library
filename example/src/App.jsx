@@ -35,7 +35,7 @@ function App() {
     }
   }
 
-  const object = () => {
+  const sharedObject = () => {
     if (fluidSharedObjects) {
       return fluidSharedObjects.initialObjects.sharedTimestamp;
     }
@@ -49,9 +49,9 @@ function App() {
           setObjects={setFluidSharedObjects}
         />
         <Canvas
-          val={localTimestamp.time}
+          localPaths={localTimestamp.time}
           sendToRemote={updateTime}
-          obj={object}
+          sharedObject={sharedObject}
         />
         {/*<Button
           onPress={() => updateTime(Date.now().toString())}

@@ -18,8 +18,8 @@ import { useWindowDimensions } from 'react-native';
 import { objEq, uniqueMerge } from '../extra/tools';
 
 interface CanvasProps {
-  val: string;
-  obj: any;
+  localPaths: string;
+  sharedObject: any;
   sendToRemote: Function;
 }
 
@@ -56,11 +56,12 @@ export const Canvas = (props: CanvasProps) => {
   }
 
   React.useEffect(() => {
-    const obj = props.obj();
-    if (!obj) {
+    const sharedObject = props.sharedObject();
+    if (!sharedObject) {
       return;
     }
-    let remotePaths: IPath[] = props.val ? JSON.parse(props.val) : [];
+    const localPaths = props.localPaths;
+    let remotePaths: IPath[] = localPaths ? JSON.parse(localPaths) : [];
     if (objEq(remotePaths, oldPaths)) {
       return;
     }
@@ -73,11 +74,11 @@ export const Canvas = (props: CanvasProps) => {
     updateLocalTimestamp();
 
     // 5: Register handlers.
-    obj.on('valueChanged', updateLocalTimestamp);
+    sharedObject.on('valueChanged', updateLocalTimestamp);
 
     // 6: Delete handler registration when the React App component is dismounted.
     return () => {
-      obj.off('valueChanged', updateLocalTimestamp);
+      sharedObject.off('valueChanged', updateLocalTimestamp);
     };
   }, [props, oldPaths]);
 
