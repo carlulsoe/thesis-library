@@ -9,6 +9,7 @@ function App() {
   // Run > `npx tinylicious` before normal start
   const [fluidSharedObjects, setFluidSharedObjects] = React.useState(null);
   const [localTimestamp, setLocalTimestamp] = React.useState('Now');
+  const [containerId, setContainerId] = React.useState('');
   const initialObjects = { sharedTimestamp: SharedMap };
   React.useEffect(() => {
     if (fluidSharedObjects) {
@@ -30,15 +31,11 @@ function App() {
   }, [fluidSharedObjects]);
 
   function updateTime(val) {
-    if (fluidSharedObjects) {
-      return fluidSharedObjects.initialObjects.sharedTimestamp.set('time', val);
-    }
+    return fluidSharedObjects?.initialObjects.sharedTimestamp.set('time', val);
   }
 
   const sharedObject = () => {
-    if (fluidSharedObjects) {
-      return fluidSharedObjects.initialObjects.sharedTimestamp;
-    }
+    return fluidSharedObjects?.initialObjects.sharedTimestamp;
   };
 
   if (localTimestamp) {
@@ -47,6 +44,7 @@ function App() {
         <Connect
           containerSchema={initialObjects}
           setObjects={setFluidSharedObjects}
+          containerId={{ containerId, setContainerId }}
         />
         <Canvas
           localPaths={localTimestamp.time}

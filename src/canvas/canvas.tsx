@@ -84,6 +84,7 @@ export const Canvas = (props: CanvasProps) => {
 
   function findMenuBarDimensions(event: LayoutChangeEvent) {
     if (Platform.OS === 'web') {
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       const { height } = event.nativeEvent.layout;
       setMenuBarHeight(height);
     }

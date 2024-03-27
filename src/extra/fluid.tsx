@@ -1,18 +1,11 @@
 import React from 'react';
-import {
-  Button,
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  type TextInputChangeEventData,
-  type NativeSyntheticEvent,
-} from 'react-native';
+import { Button, View, TextInput, StyleSheet } from 'react-native';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
 
 interface ConnectProps {
   containerSchema: any;
   setObjects: Function;
+  containerId?: { containerId: ''; setContainerId: Function };
 }
 
 export const Connect = (props: ConnectProps) => {
@@ -24,7 +17,6 @@ export const Connect = (props: ConnectProps) => {
 
   async function ConnectToContainer(containerIdString: string) {
     let container;
-    console.log(containerIdString);
     const client = new TinyliciousClient();
     ({ container } = await client.getContainer(
       containerIdString,
@@ -52,21 +44,22 @@ export const Connect = (props: ConnectProps) => {
     props.setObjects(container);
   };
 
-  function updateId(e: NativeSyntheticEvent<TextInputChangeEventData>) {
-    //console.log(e.nativeEvent.text);
-    setContainerId(e.nativeEvent.text || '');
-  }
+  React.useEffect(() => {
+    props.containerId?.setContainerId(containerId);
+  });
 
   return (
     <View>
-      <TextInput onChange={(e) => updateId(e)} placeholder="Insert ID here" />
-      <Button onPress={ConnectEitherOr} title="Connect" />
-      <Text style={styles.container}>Session ID: {containerId}</Text>
+      <TextInput
+        onChange={(e) => setContainerId(e.nativeEvent.text || '')}
+        defaultValue={containerId}
+        placeholder="Insert ID here"
+      />
+      <Button onPress={ConnectEitherOr} title="Create or connect to given ID" />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
+StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
