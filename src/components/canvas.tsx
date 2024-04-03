@@ -122,7 +122,7 @@ export const Canvas = (props: CanvasProps) => {
               />
               <MenuOption
                 onSelect={() => clearCanvas()}
-                text={'Clear canvas'}
+                text={'Clear components'}
               />
               <MenuOption
                 onSelect={() => setColor(Colors.Red)}

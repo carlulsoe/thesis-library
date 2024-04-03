@@ -1,2 +1,2 @@
-export * from './attention';
-export * from './fluid';
+export * from '../attention/attention';
+export * from '../connection/fluid';
