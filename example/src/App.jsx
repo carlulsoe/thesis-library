@@ -8,7 +8,7 @@ import { Canvas } from '../../src';
 function App() {
   // Run > `npx tinylicious` before normal start
   const [fluidSharedObjects, setFluidSharedObjects] = React.useState(null);
-  const [localTimestamp, setLocalTimestamp] = React.useState('Now');
+  const [localTimestamp, setLocalTimestamp] = React.useState({});
   const [containerId, setContainerId] = React.useState('');
   const initialObjects = { sharedTimestamp: SharedMap };
   React.useEffect(() => {
@@ -59,7 +59,7 @@ function App() {
       </View>
     );
   } else {
-    return <div />;
+    return <View />;
   }
 }
 
