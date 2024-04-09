@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -16,22 +16,18 @@ import {
 } from 'react-native-popup-menu';
 import { useWindowDimensions } from 'react-native';
 import { objEq, uniqueMerge } from '../extra/tools';
+import { ConnectionContext } from '../connection/ConnectionContext';
 
-interface CanvasProps {
-  localPaths: string;
-  sharedObject: any;
-  sendToRemote: Function;
-}
-
-export const Canvas = (props: CanvasProps) => {
+export const Canvas = () => {
   const { height, width } = useWindowDimensions();
   const [currentColor, setColor] = useState(Colors.Black);
-  const [oldPaths, setOldPaths] = useState<IPath[]>([]);
+  const [localPaths, setLocalPaths] = useState<IPath[]>([]);
   const [currentPath, setCurrentPath] = useState('');
   const [menuBarHeight, setMenuBarHeight] = useState(0);
   const addToPath = (s: string) => setCurrentPath(currentPath + s);
   const addCurrentToOldPaths = () =>
-    setOldPaths([...oldPaths, { path: currentPath, color: currentColor }]);
+    setLocalPaths([...localPaths, { path: currentPath, color: currentColor }]);
+  const Context = useContext(ConnectionContext);
 
   function handleStart(e: GestureResponderEvent) {
     let x = e.nativeEvent.touches[0]?.pageX;
@@ -52,35 +48,22 @@ export const Canvas = (props: CanvasProps) => {
 
   function clearCanvas() {
     setCurrentPath('');
-    setOldPaths([]);
+    setLocalPaths([]);
   }
 
-  React.useEffect(() => {
-    const sharedObject = props.sharedObject();
-    if (!sharedObject) {
+  function syncCanvas() {
+    if (Context?.container == null) return;
+    let remotePaths: IPath[] = Context.get('paths')
+      ? JSON.parse(Context.get('paths'))
+      : [];
+    if (objEq(remotePaths, localPaths)) {
       return;
     }
-    const localPaths = props.localPaths;
-    let remotePaths: IPath[] = localPaths ? JSON.parse(localPaths) : [];
-    if (objEq(remotePaths, oldPaths)) {
-      return;
-    }
-    const allPaths = uniqueMerge(remotePaths, oldPaths);
-    const updateLocalTimestamp = () => {
-      props.sendToRemote(JSON.stringify(allPaths));
-      setOldPaths(allPaths);
-    };
+    const allPaths = uniqueMerge(remotePaths, localPaths);
 
-    updateLocalTimestamp();
-
-    // 5: Register handlers.
-    sharedObject.on('valueChanged', updateLocalTimestamp);
-
-    // 6: Delete handler registration when the React App component is dismounted.
-    return () => {
-      sharedObject.off('valueChanged', updateLocalTimestamp);
-    };
-  }, [props, oldPaths]);
+    Context.set('paths', JSON.stringify(allPaths));
+    setLocalPaths(allPaths);
+  }
 
   function findMenuBarDimensions(event: LayoutChangeEvent) {
     if (Platform.OS === 'web') {
@@ -101,7 +84,7 @@ export const Canvas = (props: CanvasProps) => {
           onTouchEnd={handleEnd}
         >
           <Svg width={width} height={height - menuBarHeight}>
-            {oldPaths.map((path) => (
+            {localPaths.map((path) => (
               <Path
                 key={path.path}
                 d={path.path}
@@ -140,6 +123,7 @@ export const Canvas = (props: CanvasProps) => {
                 onSelect={() => setColor(Colors.Black)}
                 text={'Black stroke'}
               />
+              <MenuOption onSelect={syncCanvas} text={'Update canvas'} />
             </MenuOptions>
           </Menu>
         </View>

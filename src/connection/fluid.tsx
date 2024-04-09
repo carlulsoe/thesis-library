@@ -1,64 +1,68 @@
-import React from 'react';
-import { Button, View, TextInput, StyleSheet } from 'react-native';
+import React, { type PropsWithChildren } from 'react';
+import { Button, StyleSheet, TextInput } from 'react-native';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
+import { type IFluidContainer, SharedMap } from 'fluid-framework';
+import { ConnectionContext } from './ConnectionContext';
 
 interface ConnectProps {
   containerSchema: any;
-  setObjects: Function;
   containerId?: { containerId: ''; setContainerId: Function };
 }
-
-export const Connect = (props: ConnectProps) => {
-  //const initialObjects = { sharedTimestamp: SharedTree };
+export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   const initialObjects = {
-    initialObjects: props.containerSchema,
+    initialObjects: { sharedMap: SharedMap },
   };
+
   const [containerId, setContainerId] = React.useState('');
+  const [container, setContainer] = React.useState<IFluidContainer | null>(
+    null
+  );
 
   async function ConnectToContainer(containerIdString: string) {
-    let container;
     const client = new TinyliciousClient();
-    ({ container } = await client.getContainer(
-      containerIdString,
-      initialObjects
-    ));
-    return container;
+    setContainer(
+      (await client.getContainer(containerIdString, initialObjects)).container
+    );
   }
 
   async function CreateContainer() {
-    let container;
     const client = new TinyliciousClient();
-    ({ container } = await client.createContainer(initialObjects));
-    let id = await container.attach();
-    setContainerId(id);
-    return container;
+    let tmpContainer = (await client.createContainer(initialObjects)).container;
+    setContainerId(await tmpContainer.attach());
+    setContainer(tmpContainer);
   }
 
   const ConnectEitherOr = async () => {
-    let container;
-    if (containerId) {
-      container = await ConnectToContainer(containerId);
-    } else {
-      container = await CreateContainer();
-    }
-    props.setObjects(container);
+    await (containerId ? ConnectToContainer(containerId) : CreateContainer());
   };
 
   React.useEffect(() => {
     props.containerId?.setContainerId(containerId);
   });
 
+  const dictSetter = (key: string, val: string) => {
+    container?.initialObjects.sharedMap.set(key, val);
+  };
+
+  const dictGetter = (key: string) => {
+    return container?.initialObjects.sharedMap.get(key);
+  };
+
   return (
-    <View>
+    <ConnectionContext.Provider
+      value={{ set: dictSetter, get: dictGetter, container: container }}
+    >
       <TextInput
         onChange={(e) => setContainerId(e.nativeEvent.text || '')}
         defaultValue={containerId}
         placeholder="Insert ID here"
       />
       <Button onPress={ConnectEitherOr} title="Create or connect to given ID" />
-    </View>
+      {props.children}
+    </ConnectionContext.Provider>
   );
 };
+
 StyleSheet.create({
   container: {
     flex: 1,
