@@ -80,3 +80,5 @@ lib/
 # examples
 */ios/
 */android/
+*/.env
+.env

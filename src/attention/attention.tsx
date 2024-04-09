@@ -4,22 +4,13 @@ import { SharedMap } from 'fluid-framework';
 import { View } from 'react-native';
 import { Connect } from 'thesis-library';
 
-export function AddDetector() {
-  let dp = { receivingFunction: receive, sendingFunction: sending };
-  return Connector(dp);
+export function AddDetector(props: DetectorProps) {
+  return Connector(props);
 }
 
 interface DetectorProps {
   receivingFunction: Function;
   sendingFunction: Function;
-}
-
-function receive() {
-  console.log('received');
-}
-
-function sending() {
-  console.log('sending');
 }
 
 const ATTENTION_KEY = 'attention';
