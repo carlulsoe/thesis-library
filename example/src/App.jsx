@@ -1,8 +1,10 @@
 import 'react-native-get-random-values';
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useContext } from 'react';
+import { View, StyleSheet, Button, Text } from 'react-native';
 import { Connect } from 'thesis-library';
 import { Canvas } from '../../src';
+import { ConnectionContext } from '../../src/connection/ConnectionContext';
+import { useAutoUpdater } from '../../src/connection/useAutoUpdater';
 
 function App() {
   // Run > `npx tinylicious` before normal start
@@ -11,16 +13,26 @@ function App() {
   return (
     <View className="App">
       <Connect containerSchema={initialMap}>
-        <Canvas />
+        {/*<Canvas />*/}
+        <Time />
       </Connect>
-      {/*<Button
-        onPress={() => updateTime(Date.now().toString())}
-        title="Get time"
-      />
-      <Text>{localTimestamp.time}</Text>*/}
     </View>
   );
 }
+
+const Time = () => {
+  const [value, setValue] = useAutoUpdater('time');
+
+  return (
+    <View>
+      <Button
+        onPress={() => setValue(Date.now().toString())}
+        title="Get time"
+      />
+      <Text>{value}</Text>
+    </View>
+  );
+};
 
 export default App;
 StyleSheet.create({

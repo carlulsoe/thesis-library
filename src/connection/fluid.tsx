@@ -41,16 +41,25 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   });
 
   const dictSetter = (key: string, val: string) => {
-    container?.initialObjects.sharedMap.set(key, val);
+    console.log('setting');
+    if (!container)
+      throw new Error("Can't set when container has not been defined");
+    container.initialObjects.sharedMap.set(key, val);
   };
 
   const dictGetter = (key: string) => {
-    return container?.initialObjects.sharedMap.get(key);
+    console.log('getting');
+    if (!container) return '';
+    return container.initialObjects.sharedMap.get(key);
   };
 
   return (
     <ConnectionContext.Provider
-      value={{ set: dictSetter, get: dictGetter, container: container }}
+      value={{
+        set: dictSetter,
+        get: dictGetter,
+        container: container,
+      }}
     >
       <TextInput
         onChange={(e) => setContainerId(e.nativeEvent.text || '')}
