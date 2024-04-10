@@ -53,12 +53,9 @@ export const Canvas = () => {
 
   function syncCanvas() {
     if (Context?.container == null) return;
-    let remotePaths: IPath[] = Context.get('paths')
-      ? JSON.parse(Context.get('paths'))
-      : [];
-    if (objEq(remotePaths, localPaths)) {
-      return;
-    }
+    const paths = Context.get('paths');
+    let remotePaths: IPath[] = paths ? JSON.parse(paths) : [];
+    if (objEq(remotePaths, localPaths)) return;
     const allPaths = uniqueMerge(remotePaths, localPaths);
 
     Context.set('paths', JSON.stringify(allPaths));
