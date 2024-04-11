@@ -1,8 +1,10 @@
-import { useRef, type MutableRefObject } from 'react';
-import React, { useEffect, useState } from 'react';
+import { useContext, useRef, type MutableRefObject } from 'react';
+import React from 'react';
 import { SharedMap } from 'fluid-framework';
 import { View } from 'react-native';
 import { Connect } from 'thesis-library';
+//import * as faceapi from 'face-api.js';
+import { ConnectionContext } from '../connection/ConnectionContext';
 
 export function AddDetector(props: DetectorProps) {
   return Connector(props);
@@ -16,66 +18,67 @@ interface DetectorProps {
 const ATTENTION_KEY = 'attention';
 
 const Connector = (dp: DetectorProps) => {
-  const [fluidSharedObjects, setFluidSharedObjects] = useState(null);
-  const initialObjects = { attention: SharedMap };
+  const initialMap = { attention: String };
   const uuid = self.crypto.randomUUID();
   const focus = useRef(true);
-  console.log(uuid);
-  useEffect(() => {
-    if (fluidSharedObjects) {
-      //@ts-ignore
-      const { attention } = fluidSharedObjects.initialObjects;
-      Detector(uuid, attention, focus, dp);
-    }
-  }, [uuid, fluidSharedObjects, dp]);
 
   return (
     //@ts-ignore
     <View className="Attention">
-      <Connect
-        containerSchema={initialObjects}
-        setObjects={setFluidSharedObjects}
-      />
+      <Connect containerSchema={initialMap}>
+        <Detector uuid={uuid} focus={focus} dp={dp} />
+      </Connect>
     </View>
   );
 };
 
-const Detector = (
-  uuid: any,
-  attention: SharedMap,
-  focus: any,
-  dp: DetectorProps
-) => {
-  setInterval(() => IsFocused(focus, uuid, attention), 300);
-  attention.addListener('valueChanged', (changed, local) => {
+interface FocusProps {
+  dp: DetectorProps;
+  uuid: any;
+  focus: any;
+}
+
+const Detector = (fp: FocusProps) => {
+  const context = useContext(ConnectionContext);
+  const container = context?.container;
+  const initialObject = container?.initialObjects;
+  if (initialObject === undefined) {
+    return <></>;
+  }
+  const sharedMap: SharedMap = initialObject.sharedMap;
+
+  setInterval(() => IsFocused(fp.focus, fp.uuid, sharedMap), 300);
+  sharedMap.addListener('valueChanged', (changed, local) => {
     if (changed.key !== ATTENTION_KEY) {
       return;
     }
     if (local) {
-      const itIsStillThisDevice = changed.previousValue === uuid;
+      const itIsStillThisDevice = changed.previousValue === fp.uuid;
       // CASE 1: value changed from another to this
       if (itIsStillThisDevice) {
         return;
       }
       // TODO
       console.log(
-        `CASE 1: This (${uuid}) is in focus from another (${changed.previousValue})`
+        `CASE 1: This (${fp.uuid}) is in focus from another (${changed.previousValue})`
       );
-      dp.receivingFunction();
+      fp.dp.receivingFunction();
       return;
     } else {
-      const itIsAnotherDeviceToAnotherDevice = changed.previousValue !== uuid;
+      const itIsAnotherDeviceToAnotherDevice =
+        changed.previousValue !== fp.uuid;
       if (itIsAnotherDeviceToAnotherDevice) {
         return;
       }
       // CASE 2: value changed from this to another
       console.log(
-        `CASE 2: value changed from this (${uuid}) to another (${attention.get(ATTENTION_KEY)})`
+        `CASE 2: value changed from this (${fp.uuid}) to another (${context?.get(ATTENTION_KEY)})`
       );
-      dp.sendingFunction();
+      fp.dp.sendingFunction();
       return; //TODO change this to have functionallity
     }
   });
+  return <></>;
 };
 
 const IsFocused = async (
@@ -84,6 +87,12 @@ const IsFocused = async (
   attention: SharedMap
 ) => {
   let docFocus = document.hasFocus();
+  const facereq = async () => {
+    // TODO add face dectection.
+    //const detection = await faceapi.detectSingleFace();
+    //console.log(detection);
+  };
+  facereq();
   if (focus.current !== docFocus) {
     focus.current = docFocus;
     if (focus.current) {

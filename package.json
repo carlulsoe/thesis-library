@@ -36,8 +36,8 @@
     "prepare": "bob build",
     "release": "release-it",
     "compile_docs": "typedoc --out ./docs/documentation ./src --tsconfig ./tsconfig.json",
-    "commit": "git add -A && git commit -m",
-    "tiny": "npx tinylicious"
+    "tiny": "npx tinylicious",
+    "fix": "yarn lint --fix"
   },
   "keywords": [
     "react-native",
@@ -198,6 +198,7 @@
     "expo": "^50.0.8",
     "expo-camera": "^14.0.5",
     "expo-status-bar": "~1.11.1",
+    "face-api.js": "^0.22.2",
     "fluid-framework": "2.0.0-rc.1.0.3",
     "guid-typescript": "^1.0.9",
     "react": "18.2.0",

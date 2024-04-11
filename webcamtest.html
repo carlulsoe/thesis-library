@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webcam Image Capture</title>
+</head>
+<body>
+    <!-- Hidden video element to capture webcam feed -->
+    <video id="video" style="display: none;"></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <button id="captureButton">Capture</button>
+    <img id="image" src="" alt="Captured Image">
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const captureButton = document.getElementById('captureButton');
+        const image = document.getElementById('image');
+
+        // Access webcam
+        async function initCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                await video.play();
+            } catch (err) {
+                console.error("Error accessing webcam:", err);
+            }
+        }
+
+        // Capture image
+        function captureImage() {
+            const context = canvas.getContext('2d');
+            // Set canvas dimensions to match video stream
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            // Draw video frame onto canvas
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            // Convert canvas to image and display
+            image.src = canvas.toDataURL('image/png');
+        }
+
+        // Initialize webcam and set up capture button
+        initCamera().then(() => {
+            captureButton.addEventListener('click', captureImage);
+        });
+    </script>
+</body>
+</html>

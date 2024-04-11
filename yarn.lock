@@ -7108,6 +7108,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tensorflow/tfjs-core@npm:1.7.0":
+  version: 1.7.0
+  resolution: "@tensorflow/tfjs-core@npm:1.7.0"
+  dependencies:
+    "@types/offscreencanvas": "npm:~2019.3.0"
+    "@types/seedrandom": "npm:2.4.27"
+    "@types/webgl-ext": "npm:0.0.30"
+    "@types/webgl2": "npm:0.0.4"
+    node-fetch: "npm:~2.1.2"
+    seedrandom: "npm:2.4.3"
+  checksum: 10/684afd266564ae2c9e9b6e559de3570c8c4f0d73d62be5be04b7497d90bbbbd6859622c82656b2bab715392b1d6a2b74e8b1fedbc999df51723c543eac8dac1f
+  languageName: node
+  linkType: hard
+
 "@tiny-calc/nano@npm:0.0.0-alpha.5":
   version: 0.0.0-alpha.5
   resolution: "@tiny-calc/nano@npm:0.0.0-alpha.5"
@@ -7541,6 +7555,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/offscreencanvas@npm:~2019.3.0":
+  version: 2019.3.0
+  resolution: "@types/offscreencanvas@npm:2019.3.0"
+  checksum: 10/3d47566fd6c1fea45d74c271939aef37eda51d48c393085f3b3b445759fdb35c7345979bcb3cd236bd50a7800c07222fb598c45e50837ef25d19790a7bb89d0d
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.2
   resolution: "@types/parse-json@npm:4.0.2"
@@ -7600,6 +7621,13 @@ __metadata:
   version: 0.16.8
   resolution: "@types/scheduler@npm:0.16.8"
   checksum: 10/6c091b096daa490093bf30dd7947cd28e5b2cd612ec93448432b33f724b162587fed9309a0acc104d97b69b1d49a0f3fc755a62282054d62975d53d7fd13472d
+  languageName: node
+  linkType: hard
+
+"@types/seedrandom@npm:2.4.27":
+  version: 2.4.27
+  resolution: "@types/seedrandom@npm:2.4.27"
+  checksum: 10/5fbca09b8cf0b26fea32627e9f9ead81ddafc4c075170d243fecb00d06ccdd8c5c6ec14932d8069e2aa024b34d3bb234ff400fbeec86ab9790f95705975c70a9
   languageName: node
   linkType: hard
 
@@ -7667,6 +7695,20 @@ __metadata:
   version: 1.3.5
   resolution: "@types/triple-beam@npm:1.3.5"
   checksum: 10/519b6a1b30d4571965c9706ad5400a200b94e4050feca3e7856e3ea7ac00ec9903e32e9a10e2762d0f7e472d5d03e5f4b29c16c0bd8c1f77c8876c683b2231f1
+  languageName: node
+  linkType: hard
+
+"@types/webgl-ext@npm:0.0.30":
+  version: 0.0.30
+  resolution: "@types/webgl-ext@npm:0.0.30"
+  checksum: 10/1a7515ad70dce92f4be65495e4c636414295406fea1e8c7dd510d8e1ed2a8ea19d8bafd298053d6f0d5ef7a06d0a9f8b73633d6ab5c301e85a4ef178e3685e79
+  languageName: node
+  linkType: hard
+
+"@types/webgl2@npm:0.0.4":
+  version: 0.0.4
+  resolution: "@types/webgl2@npm:0.0.4"
+  checksum: 10/2f3b60fbbed1fb4a6ef427adf1ea061bdfa575061e973cb5a3f70a9b86d6449b04a342d874f9aaec8bbbf0c1200b2f753f322c95315b702e96c504a6282b6874
   languageName: node
   linkType: hard
 
@@ -12659,6 +12701,16 @@ __metadata:
     iconv-lite: "npm:^0.4.24"
     tmp: "npm:^0.0.33"
   checksum: 10/776dff1d64a1d28f77ff93e9e75421a81c062983fd1544279d0a32f563c0b18c52abbb211f31262e2827e48edef5c9dc8f960d06dd2d42d1654443b88568056b
+  languageName: node
+  linkType: hard
+
+"face-api.js@npm:^0.22.2":
+  version: 0.22.2
+  resolution: "face-api.js@npm:0.22.2"
+  dependencies:
+    "@tensorflow/tfjs-core": "npm:1.7.0"
+    tslib: "npm:^1.11.1"
+  checksum: 10/ec8c9f50946c41bb8fe99084f85b29f70fa6f8a4f133c98fa8c119b1de7104dbb6f64449f561e5113d4e67256605a56c16ec3598b2b4ac583d9b21390aa04c7b
   languageName: node
   linkType: hard
 
@@ -17867,6 +17919,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-fetch@npm:~2.1.2":
+  version: 2.1.2
+  resolution: "node-fetch@npm:2.1.2"
+  checksum: 10/e3f30db1f20a831cc9eefad478e40222fc74add1acfd7064de745355a2e72684ad9d44bda1199f5c00aa7c6775bbc882c01722956d63638b7843ab681713467b
+  languageName: node
+  linkType: hard
+
 "node-forge@npm:^1, node-forge@npm:^1.2.1, node-forge@npm:^1.3.1":
   version: 1.3.1
   resolution: "node-forge@npm:1.3.1"
@@ -20757,6 +20816,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"seedrandom@npm:2.4.3":
+  version: 2.4.3
+  resolution: "seedrandom@npm:2.4.3"
+  checksum: 10/6ae498bef0b61f340d7f5bac58cae426341b7821dfa664ed94e3ac3ca8a5466dd50f7dbcdf85f29d927eefc68f810f949bf762bde61aaf770a4f1613ec892c55
+  languageName: node
+  linkType: hard
+
 "select-hose@npm:^2.0.0":
   version: 2.0.0
   resolution: "select-hose@npm:2.0.0"
@@ -22220,6 +22286,7 @@ __metadata:
     expo: "npm:^50.0.8"
     expo-camera: "npm:^14.0.5"
     expo-status-bar: "npm:~1.11.1"
+    face-api.js: "npm:^0.22.2"
     fluid-framework: "npm:2.0.0-rc.1.0.3"
     guid-typescript: "npm:^1.0.9"
     jest: "npm:^29.7.0"

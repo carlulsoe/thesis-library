@@ -7,6 +7,8 @@ import {
   S3Client,
   GetObjectCommand,
   type GetObjectCommandInput,
+  type PutObjectCommandInput,
+  PutObjectCommand,
 } from '@aws-sdk/client-s3';
 
 export default function PhotoApp() {
@@ -98,6 +100,17 @@ export default function PhotoApp() {
   }
 
   async function sending() {
+    if (selectedImage === undefined) {
+      return;
+    }
+    const input: PutObjectCommandInput = {
+      // GetObjectRequest
+      Bucket: 'thesis', // required
+      Key: 'test.jpg', // required
+      Body: selectedImage,
+    };
+    await S3.send(new PutObjectCommand(input));
+
     console.log('sending');
   }
 
