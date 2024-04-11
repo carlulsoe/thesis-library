@@ -1,29 +1,31 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import {
-  View,
-  StyleSheet,
   type GestureResponderEvent,
   type LayoutChangeEvent,
   Platform,
+  StyleSheet,
+  useWindowDimensions,
+  View,
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import {
-  MenuProvider,
   Menu,
-  MenuOptions,
-  MenuTrigger,
   MenuOption,
+  MenuOptions,
+  MenuProvider,
+  MenuTrigger,
 } from 'react-native-popup-menu';
-import { useWindowDimensions } from 'react-native';
 import { objEq, uniqueMerge } from '../extra/tools';
 import { ConnectionContext } from '../connection/ConnectionContext';
+import { useAutoUpdater } from '../connection/useAutoUpdater';
 
 export const Canvas = () => {
   const { height, width } = useWindowDimensions();
   const [currentColor, setColor] = useState(Colors.Black);
-  const [localPaths, setLocalPaths] = useState<IPath[]>([]);
   const [currentPath, setCurrentPath] = useState('');
   const [menuBarHeight, setMenuBarHeight] = useState(0);
+  const [localPaths, setLocalPaths] = useState<IPath[]>([]);
+  const [paths, setPaths] = useAutoUpdater('paths');
   const addToPath = (s: string) => setCurrentPath(currentPath + s);
   const addCurrentToOldPaths = () =>
     setLocalPaths([...localPaths, { path: currentPath, color: currentColor }]);
@@ -51,16 +53,19 @@ export const Canvas = () => {
     setLocalPaths([]);
   }
 
-  function syncCanvas() {
+  const mergePaths = useCallback(() => {
     if (Context?.container == null) return;
-    const paths = Context.get('paths');
     let remotePaths: IPath[] = paths ? JSON.parse(paths) : [];
     if (objEq(remotePaths, localPaths)) return;
-    const allPaths = uniqueMerge(remotePaths, localPaths);
+    return uniqueMerge(remotePaths, localPaths);
+  }, [Context?.container, localPaths, paths]);
 
-    Context.set('paths', JSON.stringify(allPaths));
+  React.useEffect(() => {
+    let allPaths = mergePaths();
+    if (!allPaths) return;
     setLocalPaths(allPaths);
-  }
+    setPaths(JSON.stringify(allPaths));
+  }, [mergePaths, paths, setPaths]);
 
   function findMenuBarDimensions(event: LayoutChangeEvent) {
     if (Platform.OS === 'web') {
@@ -120,7 +125,10 @@ export const Canvas = () => {
                 onSelect={() => setColor(Colors.Black)}
                 text={'Black stroke'}
               />
-              <MenuOption onSelect={syncCanvas} text={'Update canvas'} />
+              <MenuOption
+                onSelect={() => setPaths(mergePaths())}
+                text={'Update canvas'}
+              />
             </MenuOptions>
           </Menu>
         </View>

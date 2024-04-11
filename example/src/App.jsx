@@ -1,9 +1,8 @@
 import 'react-native-get-random-values';
-import React, { useContext } from 'react';
+import React from 'react';
 import { View, StyleSheet, Button, Text } from 'react-native';
 import { Connect } from 'thesis-library';
 import { Canvas } from '../../src';
-import { ConnectionContext } from '../../src/connection/ConnectionContext';
 import { useAutoUpdater } from '../../src/connection/useAutoUpdater';
 
 function App() {
@@ -13,8 +12,8 @@ function App() {
   return (
     <View className="App">
       <Connect containerSchema={initialMap}>
-        {/*<Canvas />*/}
         <Time />
+        <Canvas />
       </Connect>
     </View>
   );
