@@ -1,8 +1,9 @@
 import React, { type PropsWithChildren } from 'react';
-import { Button, StyleSheet, TextInput } from 'react-native';
+import { Button, StyleSheet, TextInput, View } from 'react-native';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
 import { type IFluidContainer, SharedMap } from 'fluid-framework';
 import { ConnectionContext } from './ConnectionContext';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 interface ConnectProps {
   containerSchema: any;
@@ -59,37 +60,35 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
         container: container,
       }}
     >
-      <TextInput
-        onChange={(e) => setContainerId(e.nativeEvent.text || '')}
-        defaultValue={containerId}
-        placeholder="Insert ID here"
-      />
-      <Button onPress={ConnectEitherOr} title="Create or connect to given ID" />
+      <View style={sheet.container}>
+        <Button
+          onPress={() => Clipboard.setString(containerId)}
+          title="Copy ID"
+        />
+        <TextInput
+          onChange={(e) => setContainerId(e.nativeEvent.text || '')}
+          defaultValue={containerId}
+          placeholder="Insert ID here"
+          style={sheet.input}
+        />
+        <Button
+          onPress={ConnectEitherOr}
+          title="Create or connect to given ID"
+        />
+      </View>
       {props.children}
     </ConnectionContext.Provider>
   );
 };
 
-StyleSheet.create({
+const sheet = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  imageContainer: {
-    marginVertical: 20,
-    width: '80%',
-    height: 200,
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  image: {
-    flex: 1,
-    width: null,
-    height: null,
+  input: {
+    flexGrow: 2,
+    marginLeft: 5,
   },
 });

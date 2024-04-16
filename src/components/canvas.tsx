@@ -78,69 +78,64 @@ export const Canvas = () => {
   // @ts-ignore
   return (
     <MenuProvider>
-      <View style={styles.outer}>
-        <View
-          style={styles.container}
-          onTouchStart={handleStart}
-          onTouchMove={handleMove}
-          onTouchEnd={handleEnd}
-        >
-          <Svg width={width} height={height - menuBarHeight}>
-            {localPaths.map((path) => (
-              <Path
-                key={path.path}
-                d={path.path}
-                stroke={path.color}
-                fillOpacity={0}
-              />
-            ))}
-            <Path d={currentPath} stroke={currentColor} fillOpacity={0} />
-          </Svg>
-        </View>
-        <View onLayout={(e) => findMenuBarDimensions(e)}>
-          <Menu>
-            <MenuTrigger text={'Options'} style={styles.button} />
-            <MenuOptions customStyles={optionsStyles}>
-              <MenuOption
-                onSelect={() => console.log(currentPath)}
-                text={'Print path to console'}
-              />
-              <MenuOption
-                onSelect={() => clearCanvas()}
-                text={'Clear components'}
-              />
-              <MenuOption
-                onSelect={() => setColor(Colors.Red)}
-                text={'Red stroke'}
-              />
-              <MenuOption
-                onSelect={() => setColor(Colors.Green)}
-                text={'Green stroke'}
-              />
-              <MenuOption
-                onSelect={() => setColor(Colors.Blue)}
-                text={'Blue stroke'}
-              />
-              <MenuOption
-                onSelect={() => setColor(Colors.Black)}
-                text={'Black stroke'}
-              />
-              <MenuOption
-                onSelect={() => setPaths(mergePaths())}
-                text={'Update canvas'}
-              />
-            </MenuOptions>
-          </Menu>
-        </View>
+      <View
+        style={styles.container}
+        onTouchStart={handleStart}
+        onTouchMove={handleMove}
+        onTouchEnd={handleEnd}
+      >
+        <Svg width={width} height={height - menuBarHeight}>
+          {localPaths.map((path) => (
+            <Path
+              key={path.path}
+              d={path.path}
+              stroke={path.color}
+              fillOpacity={0}
+            />
+          ))}
+          <Path d={currentPath} stroke={currentColor} fillOpacity={0} />
+        </Svg>
+      </View>
+      <View onLayout={(e) => findMenuBarDimensions(e)}>
+        <Menu>
+          <MenuTrigger text={'Options'} style={styles.button} />
+          <MenuOptions customStyles={optionsStyles}>
+            <MenuOption
+              onSelect={() => console.log(currentPath)}
+              text={'Print path to console'}
+            />
+            <MenuOption
+              onSelect={() => clearCanvas()}
+              text={'Clear components'}
+            />
+            <MenuOption
+              onSelect={() => setColor(Colors.Red)}
+              text={'Red stroke'}
+            />
+            <MenuOption
+              onSelect={() => setColor(Colors.Green)}
+              text={'Green stroke'}
+            />
+            <MenuOption
+              onSelect={() => setColor(Colors.Blue)}
+              text={'Blue stroke'}
+            />
+            <MenuOption
+              onSelect={() => setColor(Colors.Black)}
+              text={'Black stroke'}
+            />
+            <MenuOption
+              onSelect={() => setPaths(mergePaths())}
+              text={'Update canvas'}
+            />
+          </MenuOptions>
+        </Menu>
       </View>
     </MenuProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  outer: {
-    flex: 1,
-  },
   container: {
     flex: 1,
     justifyContent: 'center',

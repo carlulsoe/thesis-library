@@ -1,6 +1,6 @@
 import 'react-native-get-random-values';
 import React from 'react';
-import { View, StyleSheet, Button, Text } from 'react-native';
+import { View, Button, Text } from 'react-native';
 import { Connect } from 'thesis-library';
 import { Canvas } from '../../src';
 import { useAutoUpdater } from '../../src/connection/useAutoUpdater';
@@ -34,26 +34,3 @@ const Time = () => {
 };
 
 export default App;
-StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  imageContainer: {
-    marginVertical: 20,
-    width: '80%',
-    height: 200,
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  image: {
-    flex: 1,
-    width: null,
-    height: null,
-  },
-});
