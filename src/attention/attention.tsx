@@ -3,7 +3,7 @@ import React from 'react';
 import { SharedMap } from 'fluid-framework';
 import { View } from 'react-native';
 import { Connect } from 'thesis-library';
-//import * as faceapi from 'face-api.js';
+import * as faceapi from 'face-api.js';
 import { ConnectionContext } from '../connection/ConnectionContext';
 
 export function AddDetector(props: DetectorProps) {
@@ -14,19 +14,83 @@ interface DetectorProps {
   receivingFunction: Function;
   sendingFunction: Function;
 }
-
 const ATTENTION_KEY = 'attention';
 
 const Connector = (dp: DetectorProps) => {
   const initialMap = { attention: String };
   const uuid = self.crypto.randomUUID();
   const focus = useRef(true);
+  const videoRef = useRef();
+  const captureImage = () => {
+    const video = videoRef.current;
+
+    // Check if the video element exists
+    if (video) {
+      // Create a canvas element to capture the image
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+
+      // Draw the current frame from the video onto the canvas
+      ctx?.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // Convert the canvas to a data URL representing the image
+      //const imageDataUrl = canvas.toDataURL('image/jpeg');
+      const detection = faceDetect(canvas)
+        .then((value) => {
+          if (undefined === value) {
+            return 0;
+          }
+          return value.score;
+        })
+        .catch((error) => {
+          console.error(error);
+          return 0;
+        });
+      console.log(detection);
+      // Do something with the image data URL (e.g., send it to a server)
+      //await faceapi.detectSingleFace(ctx);
+      return detection;
+    } else {
+      console.log('Video element does not exist.');
+    }
+  };
+
+  // Get access to the webcam stream when the component mounts
+  React.useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        // Set the video stream as the source for the video element
+        videoRef.current.srcObject = stream;
+        console.log('Accessed webcam');
+      })
+      .catch((error) => {
+        console.error('Error accessing webcam:', error);
+      });
+  }, []);
 
   return (
     //@ts-ignore
     <View className="Attention">
+      <div>
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          muted
+          style={{ display: 'none' }}
+        />
+        <button onClick={captureImage}>Capture Image</button>
+      </div>
       <Connect containerSchema={initialMap}>
-        <Detector uuid={uuid} focus={focus} dp={dp} />
+        <Detector
+          uuid={uuid}
+          focus={focus}
+          dp={dp}
+          captureImage={captureImage}
+        />
       </Connect>
     </View>
   );
@@ -36,6 +100,7 @@ interface FocusProps {
   dp: DetectorProps;
   uuid: any;
   focus: any;
+  captureImage: Function;
 }
 
 const Detector = (fp: FocusProps) => {
@@ -47,7 +112,10 @@ const Detector = (fp: FocusProps) => {
   }
   const sharedMap: SharedMap = initialObject.sharedMap;
 
-  setInterval(() => IsFocused(fp.focus, fp.uuid, sharedMap), 300);
+  setInterval(
+    () => IsFocused(fp.focus, fp.uuid, sharedMap, fp.captureImage),
+    300
+  );
   sharedMap.addListener('valueChanged', (changed, local) => {
     if (changed.key !== ATTENTION_KEY) {
       return;
@@ -84,15 +152,14 @@ const Detector = (fp: FocusProps) => {
 const IsFocused = async (
   focus: MutableRefObject<boolean>,
   uuid: any,
-  attention: SharedMap
+  attention: SharedMap,
+  captureImage: Function
 ) => {
   let docFocus = document.hasFocus();
-  const facereq = async () => {
-    // TODO add face dectection.
-    //const detection = await faceapi.detectSingleFace();
-    //console.log(detection);
-  };
-  facereq();
+
+  // TODO add face dectection.
+  const detection = captureImage();
+  console.log(detection);
   if (focus.current !== docFocus) {
     focus.current = docFocus;
     if (focus.current) {
@@ -101,3 +168,17 @@ const IsFocused = async (
     console.log(`Focus changed to: ${focus.current}, with ${uuid}.`);
   }
 };
+
+async function faceDetect(img: any) {
+  await faceapi.nets.tinyFaceDetector.loadFromUri('/assets/models');
+  const inputSize = 384;
+  const scoreThreshold = 0.5;
+  const detection = await faceapi.detectSingleFace(
+    img,
+    new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold })
+  );
+  if (detection === undefined) {
+    console.log('no detection');
+  }
+  return detection;
+}
