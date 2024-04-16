@@ -100,7 +100,7 @@ interface FocusProps {
   dp: DetectorProps;
   uuid: any;
   focus: any;
-  captureImage: Function;
+  captureImage: () => Promise<number> | undefined;
 }
 
 const Detector = (fp: FocusProps) => {
@@ -153,15 +153,20 @@ const IsFocused = async (
   focus: MutableRefObject<boolean>,
   uuid: any,
   attention: SharedMap,
-  captureImage: Function
+  captureImage: () => Promise<number> | undefined
 ) => {
   let docFocus = document.hasFocus();
 
-  // TODO add face dectection.
+  // TODO add face dectection.IsFocused
   const detection = captureImage();
-  console.log(detection);
-  if (focus.current !== docFocus) {
-    focus.current = docFocus;
+  let docFocusPlusFaceDetectFocus;
+  if (detection !== undefined) {
+    docFocusPlusFaceDetectFocus = docFocus || (await detection) >= 0.8;
+  } else {
+    docFocusPlusFaceDetectFocus = docFocus;
+  }
+  if (focus.current !== docFocusPlusFaceDetectFocus) {
+    focus.current = docFocusPlusFaceDetectFocus;
     if (focus.current) {
       attention.set(ATTENTION_KEY, uuid);
     }
