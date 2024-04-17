@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
-import { AddDetector } from 'thesis-library';
+import { MultiDeviceAttention } from 'thesis-library';
 import {
   S3Client,
   GetObjectCommand,
@@ -117,7 +117,10 @@ export default function PhotoApp() {
 
   return (
     <View style={styles.container}>
-      <AddDetector receivingFunction={receive} sendingFunction={sending}>
+      <MultiDeviceAttention
+        receivingFunction={receive}
+        sendingFunction={sending}
+      >
         <Text style={styles.title}>Simple Photo App</Text>
         <Button title="Pick a Photo" onPress={pickImage} />
         {selectedImage && (
@@ -129,7 +132,7 @@ export default function PhotoApp() {
             />
           </View>
         )}
-      </AddDetector>
+      </MultiDeviceAttention>
     </View>
   );
 }

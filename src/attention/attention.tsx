@@ -11,22 +11,24 @@ import * as faceapi from 'face-api.js';
 import { ConnectionContext } from '../connection/ConnectionContext';
 
 interface DetectorProps {
-  receivingFunction: Function;
-  sendingFunction: Function;
+  receivingFunction?: Function;
+  sendingFunction?: Function;
+  initialMap?: object;
 }
 
 const ATTENTION_KEY = 'attention';
 
-export function AddDetector({
+export function MultiDeviceAttention({
   children,
   receivingFunction,
   sendingFunction,
+  initialMap,
 }: PropsWithChildren<DetectorProps>) {
   const dp = {
     receivingFunction: receivingFunction,
     sendingFunction: sendingFunction,
+    initialMap: initialMap,
   };
-  const initialMap = { attention: String };
   const uuid = self.crypto.randomUUID();
   const focus = useRef(true);
   const loadedModel: MutableRefObject<boolean> = useRef(false);
@@ -79,15 +81,24 @@ export function AddDetector({
       });
   }, []);
 
+  React.useEffect(() => {
+    if (!initialMap) {
+      initialMap = { ATTENTION_KEY: null };
+    } else if (!(ATTENTION_KEY in initialMap)) {
+      // @ts-ignore
+      initialMap[ATTENTION_KEY] = null;
+    }
+  }, []);
+
   return (
     //@ts-ignore
     <View className="Attention">
       <Connect containerSchema={initialMap}>
         {children}
         <Detector
+          dp={dp}
           uuid={uuid}
           focus={focus}
-          dp={dp}
           captureImage={captureImage}
         />
       </Connect>
@@ -139,6 +150,7 @@ const Detector = (fp: FocusProps) => {
       console.log(
         `CASE 1: This (${fp.uuid}) is in focus from another (${changed.previousValue})`
       );
+      if (!fp.dp.receivingFunction) return;
       fp.dp.receivingFunction();
       return;
     } else {
@@ -151,6 +163,7 @@ const Detector = (fp: FocusProps) => {
       console.log(
         `CASE 2: value changed from this (${fp.uuid}) to another (${context?.get(ATTENTION_KEY)})`
       );
+      if (!fp.dp.sendingFunction) return;
       fp.dp.sendingFunction();
       return;
     }
