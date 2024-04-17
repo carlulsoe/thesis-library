@@ -116,18 +116,19 @@ export default function PhotoApp() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Simple Photo App</Text>
-      <Button title="Pick a Photo" onPress={pickImage} />
-      {selectedImage && (
-        <View style={styles.imageContainer}>
-          <Image
-            source={{ uri: selectedImage }}
-            style={styles.image}
-            alt="Picked Image"
-          />
-        </View>
-      )}
-      <AddDetector receivingFunction={receive} sendingFunction={sending} />
+      <AddDetector receivingFunction={receive} sendingFunction={sending}>
+        <Text style={styles.title}>Simple Photo App</Text>
+        <Button title="Pick a Photo" onPress={pickImage} />
+        {selectedImage && (
+          <View style={styles.imageContainer}>
+            <Image
+              source={{ uri: selectedImage }}
+              style={styles.image}
+              alt="Picked Image"
+            />
+          </View>
+        )}
+      </AddDetector>
     </View>
   );
 }

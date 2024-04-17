@@ -1,4 +1,9 @@
-import { useContext, useRef, type MutableRefObject } from 'react';
+import {
+  useContext,
+  useRef,
+  type MutableRefObject,
+  type PropsWithChildren,
+} from 'react';
 import React from 'react';
 import { SharedMap } from 'fluid-framework';
 import { View } from 'react-native';
@@ -6,53 +11,59 @@ import { Connect } from 'thesis-library';
 import * as faceapi from 'face-api.js';
 import { ConnectionContext } from '../connection/ConnectionContext';
 
-export function AddDetector(props: DetectorProps) {
-  return Connector(props);
-}
-
 interface DetectorProps {
   receivingFunction: Function;
   sendingFunction: Function;
 }
+
 const ATTENTION_KEY = 'attention';
 
-const Connector = (dp: DetectorProps) => {
+export function AddDetector({
+  children,
+  receivingFunction,
+  sendingFunction,
+}: PropsWithChildren<DetectorProps>) {
+  const dp = {
+    receivingFunction: receivingFunction,
+    sendingFunction: sendingFunction,
+  };
   const initialMap = { attention: String };
   const uuid = self.crypto.randomUUID();
   const focus = useRef(true);
   const videoRef = useRef();
   const captureImage = () => {
-    const video = videoRef.current;
+    if (!videoRef.current) {
+      console.log('Video element does not exist.');
+      return;
+    }
+
+    const video: HTMLVideoElement = videoRef.current;
 
     // Check if the video element exists
-    if (video) {
-      // Create a canvas element to capture the image
-      const canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const ctx = canvas.getContext('2d');
+    // Create a canvas element to capture the image
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d');
 
-      // Draw the current frame from the video onto the canvas
-      ctx?.drawImage(video, 0, 0, canvas.width, canvas.height);
+    // Draw the current frame from the video onto the canvas
+    ctx?.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      // Convert the canvas to a data URL representing the image
-      //const imageDataUrl = canvas.toDataURL('image/jpeg');
-      const detection = faceDetect(canvas)
-        .then((value) => {
-          if (undefined === value) {
-            return 0;
-          }
-          return value.score;
-        })
-        .catch((error) => {
-          console.error(error);
+    // Convert the canvas to a data URL representing the image
+    //const imageDataUrl = canvas.toDataURL('image/jpeg');
+    const detection = faceDetect(canvas)
+      .then((value) => {
+        if (undefined === value) {
           return 0;
-        });
-      //console.log(detection);
-      return detection;
-    } else {
-      console.log('Video element does not exist.');
-    }
+        }
+        return value.score;
+      })
+      .catch((error) => {
+        console.error(error);
+        return 0;
+      });
+    //console.log(detection);
+    return detection;
   };
 
   // Get access to the webcam stream when the component mounts
@@ -89,10 +100,11 @@ const Connector = (dp: DetectorProps) => {
           dp={dp}
           captureImage={captureImage}
         />
+        {children}
       </Connect>
     </View>
   );
-};
+}
 
 interface FocusProps {
   dp: DetectorProps;
