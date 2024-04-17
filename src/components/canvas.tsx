@@ -1,8 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react';
 import {
   type GestureResponderEvent,
-  type LayoutChangeEvent,
-  Platform,
   StyleSheet,
   useWindowDimensions,
   View,
@@ -23,7 +21,6 @@ export const Canvas = () => {
   const { height, width } = useWindowDimensions();
   const [currentColor, setColor] = useState(Colors.Black);
   const [currentPath, setCurrentPath] = useState('');
-  const [menuBarHeight, setMenuBarHeight] = useState(0);
   const [localPaths, setLocalPaths] = useState<IPath[]>([]);
   const [paths, setPaths] = useAutoUpdater('paths');
   const addToPath = (s: string) => setCurrentPath(currentPath + s);
@@ -38,6 +35,7 @@ export const Canvas = () => {
   }
 
   function handleMove(e: GestureResponderEvent) {
+    console.log('ah');
     let x = e.nativeEvent.touches[0]?.pageX;
     let y = e.nativeEvent.touches[0]?.pageY;
     addToPath(`L${x} ${y} `);
@@ -67,15 +65,7 @@ export const Canvas = () => {
     setPaths(JSON.stringify(allPaths));
   }, [mergePaths, paths, setPaths]);
 
-  function findMenuBarDimensions(event: LayoutChangeEvent) {
-    if (Platform.OS === 'web') {
-      // eslint-disable-next-line @typescript-eslint/no-shadow
-      const { height } = event.nativeEvent.layout;
-      setMenuBarHeight(height);
-    }
-  }
-
-  // @ts-ignore
+  // TODO: Error in height on canvas
   return (
     <MenuProvider>
       <View
@@ -84,7 +74,7 @@ export const Canvas = () => {
         onTouchMove={handleMove}
         onTouchEnd={handleEnd}
       >
-        <Svg width={width} height={height - menuBarHeight}>
+        <Svg width={width} height={height}>
           {localPaths.map((path) => (
             <Path
               key={path.path}
@@ -96,7 +86,7 @@ export const Canvas = () => {
           <Path d={currentPath} stroke={currentColor} fillOpacity={0} />
         </Svg>
       </View>
-      <View onLayout={(e) => findMenuBarDimensions(e)}>
+      <View>
         <Menu>
           <MenuTrigger text={'Options'} style={styles.button} />
           <MenuOptions customStyles={optionsStyles}>
