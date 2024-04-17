@@ -48,9 +48,7 @@ const Connector = (dp: DetectorProps) => {
           console.error(error);
           return 0;
         });
-      console.log(detection);
-      // Do something with the image data URL (e.g., send it to a server)
-      //await faceapi.detectSingleFace(ctx);
+      //console.log(detection);
       return detection;
     } else {
       console.log('Video element does not exist.');
@@ -108,6 +106,7 @@ const Detector = (fp: FocusProps) => {
   const container = context?.container;
   const initialObject = container?.initialObjects;
   if (initialObject === undefined) {
+    console.log('initial Object is undefined');
     return <></>;
   }
   const sharedMap: SharedMap = initialObject.sharedMap;
@@ -161,7 +160,7 @@ const IsFocused = async (
   const detection = captureImage();
   let docFocusPlusFaceDetectFocus;
   if (detection !== undefined) {
-    docFocusPlusFaceDetectFocus = docFocus || (await detection) >= 0.8;
+    docFocusPlusFaceDetectFocus = docFocus && (await detection) >= 0.8;
   } else {
     docFocusPlusFaceDetectFocus = docFocus;
   }
