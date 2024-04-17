@@ -93,6 +93,7 @@ export default function PhotoApp() {
     reader.onload = function (event) {
       // Get Data URI
       const dataURI = event.target?.result;
+      if (typeof dataURI !== 'string') return;
       setSelectedImage(dataURI);
     };
     reader.readAsDataURL(imageBlob);
