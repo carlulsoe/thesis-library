@@ -82,7 +82,7 @@ export async function faceDetect(
   loadedModel: MutableRefObject<boolean>
 ) {
   if (!loadedModel.current) {
-    console.log('loading model.');
+    console.log('loading model.'); //TODO fix that this spams server for the model.
     await faceapi.nets.tinyFaceDetector.loadFromUri('/assets/models');
     loadedModel.current = true;
   }
