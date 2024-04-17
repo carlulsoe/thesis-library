@@ -1,7 +1,11 @@
 import 'react-native-get-random-values';
 import React from 'react';
-import { Canvas } from '../../src';
+import { Canvas, MultiDeviceAttention } from '../../src';
 
 export default function App() {
-  return <Canvas />;
+  return (
+    <MultiDeviceAttention>
+      <Canvas variable={'paths'} />
+    </MultiDeviceAttention>
+  );
 }

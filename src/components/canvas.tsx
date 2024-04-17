@@ -17,12 +17,16 @@ import { objEq, uniqueMerge } from '../extra/tools';
 import { ConnectionContext } from '../connection/ConnectionContext';
 import { useAutoUpdater } from '../connection/useAutoUpdater';
 
-export const Canvas = () => {
+interface CanvasProps {
+  variable: string;
+}
+
+export const Canvas = (props: CanvasProps) => {
   const { height, width } = useWindowDimensions();
   const [currentColor, setColor] = useState(Colors.Black);
   const [currentPath, setCurrentPath] = useState('');
   const [localPaths, setLocalPaths] = useState<IPath[]>([]);
-  const [paths, setPaths] = useAutoUpdater('paths');
+  const [paths, setPaths] = useAutoUpdater(props.variable);
   const addToPath = (s: string) => setCurrentPath(currentPath + s);
   const addCurrentToOldPaths = () =>
     setLocalPaths([...localPaths, { path: currentPath, color: currentColor }]);
@@ -35,7 +39,6 @@ export const Canvas = () => {
   }
 
   function handleMove(e: GestureResponderEvent) {
-    console.log('ah');
     let x = e.nativeEvent.touches[0]?.pageX;
     let y = e.nativeEvent.touches[0]?.pageY;
     addToPath(`L${x} ${y} `);
