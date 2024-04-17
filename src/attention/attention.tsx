@@ -30,6 +30,7 @@ export function AddDetector({
   const initialMap = { attention: String };
   const uuid = self.crypto.randomUUID();
   const focus = useRef(true);
+  const loadedModel: MutableRefObject<boolean> = useRef(false);
   const videoRef = useRef();
   const captureImage = () => {
     if (!videoRef.current) {
@@ -51,7 +52,7 @@ export function AddDetector({
 
     // Convert the canvas to a data URL representing the image
     //const imageDataUrl = canvas.toDataURL('image/jpeg');
-    const detection = faceDetect(canvas)
+    const detection = faceDetect(canvas, loadedModel)
       .then((value) => {
         if (undefined === value) {
           return 0;
@@ -184,8 +185,12 @@ const IsFocused = async (
   }
 };
 
-async function faceDetect(img: any) {
-  await faceapi.nets.tinyFaceDetector.loadFromUri('/assets/models');
+async function faceDetect(img: any, loadedModel: MutableRefObject<boolean>) {
+  if (!loadedModel.current) {
+    console.log('loading model.');
+    await faceapi.nets.tinyFaceDetector.loadFromUri('/assets/models');
+    loadedModel.current = true;
+  }
   const inputSize = 384;
   const scoreThreshold = 0.5;
   const detection = await faceapi.detectSingleFace(
