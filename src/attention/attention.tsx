@@ -83,6 +83,15 @@ export function AddDetector({
   return (
     //@ts-ignore
     <View className="Attention">
+      <Connect containerSchema={initialMap}>
+        {children}
+        <Detector
+          uuid={uuid}
+          focus={focus}
+          dp={dp}
+          captureImage={captureImage}
+        />
+      </Connect>
       <div>
         <video
           ref={videoRef}
@@ -91,17 +100,7 @@ export function AddDetector({
           muted
           style={{ display: 'none' }}
         />
-        <button onClick={captureImage}>Capture Image</button>
       </div>
-      <Connect containerSchema={initialMap}>
-        <Detector
-          uuid={uuid}
-          focus={focus}
-          dp={dp}
-          captureImage={captureImage}
-        />
-        {children}
-      </Connect>
     </View>
   );
 }

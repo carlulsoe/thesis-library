@@ -60,6 +60,7 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
         container: container,
       }}
     >
+      {props.children}
       <View style={sheet.container}>
         <Button
           onPress={() => Clipboard.setString(containerId)}
@@ -76,7 +77,6 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
           title="Create or connect to given ID"
         />
       </View>
-      {props.children}
     </ConnectionContext.Provider>
   );
 };
