@@ -1,10 +1,9 @@
-import {
-  useContext,
-  useRef,
+import React, {
   type MutableRefObject,
   type PropsWithChildren,
+  useContext,
+  useRef,
 } from 'react';
-import React from 'react';
 import { SharedMap } from 'fluid-framework';
 import { View } from 'react-native';
 import { Connect } from 'thesis-library';
@@ -30,7 +29,7 @@ export function AddDetector({
   const initialMap = { attention: String };
   const uuid = self.crypto.randomUUID();
   const focus = useRef(true);
-  const videoRef = useRef();
+  const videoRef = useRef<HTMLVideoElement>(null);
   const captureImage = () => {
     if (!videoRef.current) {
       console.log('Video element does not exist.');
@@ -51,7 +50,8 @@ export function AddDetector({
 
     // Convert the canvas to a data URL representing the image
     //const imageDataUrl = canvas.toDataURL('image/jpeg');
-    const detection = faceDetect(canvas)
+    //console.log(detection);
+    return faceDetect(canvas)
       .then((value) => {
         if (undefined === value) {
           return 0;
@@ -62,8 +62,6 @@ export function AddDetector({
         console.error(error);
         return 0;
       });
-    //console.log(detection);
-    return detection;
   };
 
   // Get access to the webcam stream when the component mounts
@@ -72,6 +70,7 @@ export function AddDetector({
       .getUserMedia({ video: true })
       .then((stream) => {
         // Set the video stream as the source for the video element
+        // @ts-ignore
         videoRef.current.srcObject = stream;
         console.log('Accessed webcam');
       })
@@ -93,12 +92,13 @@ export function AddDetector({
         />
       </Connect>
       <div>
+        {/*@ts-ignore*/}
         <video
           ref={videoRef}
           autoPlay
           playsInline
           muted
-          style={{ display: 'none' }}
+          style={styles.notVisible}
         />
       </div>
     </View>
@@ -136,7 +136,6 @@ const Detector = (fp: FocusProps) => {
       if (itIsStillThisDevice) {
         return;
       }
-      // TODO
       console.log(
         `CASE 1: This (${fp.uuid}) is in focus from another (${changed.previousValue})`
       );
@@ -153,7 +152,7 @@ const Detector = (fp: FocusProps) => {
         `CASE 2: value changed from this (${fp.uuid}) to another (${context?.get(ATTENTION_KEY)})`
       );
       fp.dp.sendingFunction();
-      return; //TODO change this to have functionallity
+      return;
     }
   });
   return <></>;
@@ -197,3 +196,7 @@ async function faceDetect(img: any) {
   }
   return detection;
 }
+
+const styles = {
+  notVisible: { display: 'none' },
+};
