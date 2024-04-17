@@ -1,6 +1,6 @@
 export interface DetectorProps {
-  receivingFunction?: Function;
-  sendingFunction?: Function;
+  receivingFunction?: () => void;
+  sendingFunction?: () => void;
   initialMap?: object;
 }
 
@@ -8,7 +8,12 @@ export interface FocusProps {
   dp: DetectorProps;
   uuid: any;
   focus: any;
-  captureImage: () => Promise<number> | undefined;
+  multiUserSharing?: MultiUserSharingProps;
+}
+
+export interface MultiUserSharingProps {
+  receivingFunction?: () => void;
+  sendingFunction?: () => void;
 }
 
 export const ATTENTION_KEY = 'attention';

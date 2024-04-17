@@ -1,12 +1,13 @@
-import React, {
-  type MutableRefObject,
-  type PropsWithChildren,
-  useRef,
-} from 'react';
-import { View } from 'react-native';
-import { Connect, type DetectorProps } from 'thesis-library';
-import { Detector, faceDetect } from './detector';
-import { ATTENTION_KEY } from '../extra/props';
+import React, { type PropsWithChildren, useRef } from 'react';
+import { View, Text } from 'react-native';
+import {
+  Connect,
+  Detector,
+  ATTENTION_KEY,
+  type DetectorProps,
+  type MultiUserSharingProps,
+} from 'thesis-library';
+import { useAutoUpdater } from '../connection/useAutoUpdater';
 
 export function MultiDeviceAttention({
   children,
@@ -14,65 +15,17 @@ export function MultiDeviceAttention({
   sendingFunction,
   initialMap,
 }: PropsWithChildren<DetectorProps>) {
-  const dp = {
+  const detectorProp = {
     receivingFunction: receivingFunction,
     sendingFunction: sendingFunction,
     initialMap: initialMap,
   };
   const uuid = self.crypto.randomUUID();
   const focus = useRef(true);
-  const loadedModel: MutableRefObject<boolean> = useRef(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const captureImage = () => {
-    if (!videoRef.current) {
-      console.log('Video element does not exist.');
-      return;
-    }
-
-    const video: HTMLVideoElement = videoRef.current;
-
-    // Check if the video element exists
-    // Create a canvas element to capture the image
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const ctx = canvas.getContext('2d');
-
-    // Draw the current frame from the video onto the canvas
-    ctx?.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    // Convert the canvas to a data URL representing the image
-    //const imageDataUrl = canvas.toDataURL('image/jpeg');
-    return faceDetect(canvas, loadedModel)
-      .then((value) => {
-        if (undefined === value) {
-          return 0;
-        }
-        return value.score;
-      })
-      .catch((error) => {
-        console.error(error);
-        return 0;
-      });
-  };
-
-  // Get access to the webcam stream when the component mounts
-  React.useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then((stream) => {
-        // Set the video stream as the source for the video element
-        // @ts-ignore
-        videoRef.current.srcObject = stream;
-        console.log('Accessed webcam');
-      })
-      .catch((error) => {
-        console.error('Error accessing webcam:', error);
-      });
-  }, []);
 
   React.useEffect(() => {
     if (!initialMap) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       initialMap = { ATTENTION_KEY: null };
     } else if (!(ATTENTION_KEY in initialMap)) {
       // @ts-ignore
@@ -80,30 +33,44 @@ export function MultiDeviceAttention({
     }
   }, []);
 
+  const [timestamp, setTimestamp] = useAutoUpdater('time');
+
+  const sending = () => {
+    setTimestamp(Date.now().toString());
+  };
+
+  const receiving = () => {
+    console.log(timestamp);
+    return timestamp;
+  };
+  const MultiUserSharing: MultiUserSharingProps = {
+    sendingFunction: sending,
+    receivingFunction: receiving,
+  };
   return (
     //@ts-ignore
     <View className="Attention">
-      {/* Own stuff */}
+      <Text>Own</Text>
       <Connect containerSchema={initialMap}>
         {children}
-        <Detector
-          dp={dp}
+        {/*<FaceDetection
           uuid={uuid}
           focus={focus}
-          captureImage={captureImage}
+          dp={detectorProp}
+          multiUserSharing={MultiUserSharing}
+        />*/}
+        <Detector
+          uuid={uuid}
+          focus={focus}
+          dp={detectorProp}
+          multiUserSharing={MultiUserSharing}
         />
       </Connect>
-      {/* Shared stuff */}
+      <Text>Shared</Text>
       {/* <Connect containerSchema={initialMap} /> */}
       <div>
         {/*@ts-ignore*/}
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          muted
-          style={styles.notVisible}
-        />
+        <video autoPlay playsInline muted style={styles.notVisible} />
       </div>
     </View>
   );
