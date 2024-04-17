@@ -23,7 +23,8 @@
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__",
-    "!**/.*"
+    "!**/.*",
+    "assets"
   ],
   "scripts": {
     "example": "yarn workspace thesis-library-example",
