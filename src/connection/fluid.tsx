@@ -4,11 +4,8 @@ import { TinyliciousClient } from '@fluidframework/tinylicious-client';
 import { type IFluidContainer, SharedMap } from 'fluid-framework';
 import { ConnectionContext } from './ConnectionContext';
 import Clipboard from '@react-native-clipboard/clipboard';
+import type { ConnectProps } from '../extra';
 
-interface ConnectProps {
-  containerSchema: any;
-  containerId?: { containerId: ''; setContainerId: Function };
-}
 export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   const initialObjects = {
     initialObjects: { sharedMap: SharedMap },
@@ -57,7 +54,7 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
       value={{
         set: dictSetter,
         get: dictGetter,
-        container: container,
+        sharedMap: container?.initialObjects.sharedMap,
       }}
     >
       {props.children}

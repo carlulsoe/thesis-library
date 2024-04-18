@@ -3,55 +3,33 @@ import { View, Text } from 'react-native';
 import {
   Connect,
   Detector,
-  ATTENTION_KEY,
   type DetectorProps,
   type MultiUserSharingProps,
 } from 'thesis-library';
-import { useAutoUpdater } from '../connection/useAutoUpdater';
 
 export function MultiDeviceAttention({
   children,
   receivingFunction,
   sendingFunction,
-  initialMap,
 }: PropsWithChildren<DetectorProps>) {
-  const detectorProp = {
-    receivingFunction: receivingFunction,
-    sendingFunction: sendingFunction,
-    initialMap: initialMap,
-  };
   const uuid = self.crypto.randomUUID();
   const focus = useRef(true);
 
-  React.useEffect(() => {
-    if (!initialMap) {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      initialMap = { ATTENTION_KEY: null };
-    } else if (!(ATTENTION_KEY in initialMap)) {
-      // @ts-ignore
-      initialMap[ATTENTION_KEY] = null;
-    }
-  }, []);
-
-  const [timestamp, setTimestamp] = useAutoUpdater('time');
-
-  const sending = () => {
-    setTimestamp(Date.now().toString());
+  const detectorProp: DetectorProps = {
+    receivingFunction: receivingFunction,
+    sendingFunction: sendingFunction,
   };
 
-  const receiving = () => {
-    console.log(timestamp);
-    return timestamp;
-  };
   const MultiUserSharing: MultiUserSharingProps = {
-    sendingFunction: sending,
-    receivingFunction: receiving,
+    sendingFunction: () => {},
+    receivingFunction: () => {},
   };
+
   return (
     //@ts-ignore
     <View className="Attention">
       <Text>Own</Text>
-      <Connect containerSchema={initialMap}>
+      <Connect>
         {children}
         {/*<FaceDetection
           uuid={uuid}

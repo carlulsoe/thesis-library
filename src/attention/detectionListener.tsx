@@ -1,6 +1,6 @@
 import type { IValueChanged } from 'fluid-framework';
 import { type FocusProps, ATTENTION_KEY } from '../extra';
-import type { Context } from '/workspaces/thesis-library/src/connection/ConnectionContext';
+import type { Context } from '../connection/ConnectionContext';
 
 export function detectorListener(fp: FocusProps, context: Context | null) {
   return (changed: IValueChanged, local: boolean) => {
@@ -13,11 +13,7 @@ export function detectorListener(fp: FocusProps, context: Context | null) {
       if (itIsStillThisDevice) {
         return;
       }
-      console.log(
-        `CASE 1: This (${fp.uuid}) is in focus from another (${changed.previousValue})`
-      );
-      if (!fp.dp.receivingFunction) return;
-      if (context === null) return;
+      if (!fp.dp.receivingFunction || !context) return;
       fp.dp.receivingFunction(context);
       return;
     } else {
@@ -27,11 +23,7 @@ export function detectorListener(fp: FocusProps, context: Context | null) {
         return;
       }
       // CASE 2: value changed from this to another
-      console.log(
-        `CASE 2: value changed from this (${fp.uuid}) to another (${context?.get(ATTENTION_KEY)})`
-      );
-      if (!fp.dp.sendingFunction) return;
-      if (context === null) return;
+      if (!fp.dp.sendingFunction || !context) return;
       fp.dp.sendingFunction(context);
       // @ts-ignore TODO fix later
       fp.multiUserSharing?.sendingFunction();

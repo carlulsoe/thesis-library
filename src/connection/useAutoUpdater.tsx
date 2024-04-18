@@ -5,8 +5,8 @@ export function useAutoUpdater(key: string): [string, Function] {
   const Context = useContext(ConnectionContext);
   const [value, setValue] = React.useState('');
   React.useEffect(() => {
-    if (Context == null || Context.container == null) return;
-    const sharedMap = Context.container.initialObjects.sharedMap;
+    if (Context == null || Context.sharedMap == null) return;
+    const sharedMap = Context.sharedMap;
 
     const update = () => setValue(Context.get(key));
     update();
@@ -15,6 +15,6 @@ export function useAutoUpdater(key: string): [string, Function] {
       sharedMap.off('valueChanged', update);
     };
   });
-  if (!Context?.container) return ['', () => null];
+  if (!Context?.sharedMap) return ['', () => null];
   return [value, (v: string) => Context?.set(key, v)];
 }

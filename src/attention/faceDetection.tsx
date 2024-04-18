@@ -13,8 +13,7 @@ import { detectorListener } from './detectionListener';
 
 export const FaceDetection = (fp: FocusProps) => {
   const context = useContext(ConnectionContext);
-  const container = context?.container;
-  const initialObject = container?.initialObjects;
+  const sharedMap: SharedMap = context?.sharedMap!;
   const videoRef = useRef<HTMLVideoElement>(null);
   React.useEffect(() => {
     navigator.mediaDevices
@@ -31,11 +30,10 @@ export const FaceDetection = (fp: FocusProps) => {
       });
   }, []);
 
-  if (initialObject === undefined) {
+  if (!context || context.sharedMap) {
     console.log('initial Object is undefined');
     return <></>;
   }
-  const sharedMap: SharedMap = initialObject.sharedMap;
 
   // Get access to the webcam stream when the component mounts
 

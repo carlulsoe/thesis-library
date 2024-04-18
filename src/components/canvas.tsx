@@ -55,11 +55,11 @@ export const Canvas = (props: CanvasProps) => {
   }
 
   const mergePaths = useCallback(() => {
-    if (Context?.container == null) return;
+    if (Context?.sharedMap == null) return;
     let remotePaths: IPath[] = paths ? JSON.parse(paths) : [];
     if (objEq(remotePaths, localPaths)) return;
     return uniqueMerge(remotePaths, localPaths);
-  }, [Context?.container, localPaths, paths]);
+  }, [Context?.sharedMap, localPaths, paths]);
 
   React.useEffect(() => {
     let allPaths = mergePaths();

@@ -7,12 +7,8 @@ import { detectorListener } from './detectionListener';
 
 export const Detector = (fp: FocusProps) => {
   const context = useContext(ConnectionContext);
-  const container = context?.container;
-  const initialObject = container?.initialObjects;
-  if (initialObject === undefined) {
-    return <></>;
-  }
-  const sharedMap: SharedMap = initialObject.sharedMap;
+  const sharedMap = context?.sharedMap;
+  if (!sharedMap) return <></>;
 
   setInterval(() => IsFocused(fp.focus, fp.uuid, sharedMap), 300);
   sharedMap.addListener('valueChanged', detectorListener(fp, context));
