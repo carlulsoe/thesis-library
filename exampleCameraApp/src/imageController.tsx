@@ -8,13 +8,13 @@ import {
 import type { Context } from '../../src/connection/ConnectionContext';
 
 export function ImageController(
+  selectedImage: string | undefined,
   setSelectedImage: (
     value:
       | ((prevState: string | undefined) => string | undefined)
       | string
       | undefined
-  ) => void,
-  selectedImage: string | undefined
+  ) => void
 ) {
   const ACCOUNT_ID = process.env.EXPO_PUBLIC_ACCOUNT_ID;
   const ACCESS_KEY_ID = process.env.EXPO_PUBLIC_ACCESS_KEY_ID;
@@ -37,11 +37,18 @@ export function ImageController(
     });
   }
 
-  async function receive(_context: Context) {
+  const fileKeyName = 'fileKey';
+
+  async function receive(context: Context) {
+    let fileKey = context.get(fileKeyName);
+    if (fileKey === null) return;
+    if (fileKey === undefined) return;
+    if (fileKey === '') return;
+    if (fileKey === 'null') return;
     const input: GetObjectCommandInput = {
       // GetObjectRequest
       Bucket: 'thesis', // required
-      Key: 'map.jpg', // required
+      Key: fileKey, // required
     };
     const { Body } = await S3.send(new GetObjectCommand(input));
     // Convert image data to Base64 encoded string
@@ -64,18 +71,19 @@ export function ImageController(
     console.log('received');
   }
 
-  async function sending(_context: Context) {
+  async function sending(context: Context) {
     if (selectedImage === undefined) {
       return;
     }
+    const key = 'map.jpg';
     const input: PutObjectCommandInput = {
       // GetObjectRequest
       Bucket: 'thesis', // required
-      Key: 'test.jpg', // required
+      Key: key, // required
       Body: selectedImage,
     };
     await S3.send(new PutObjectCommand(input));
-
+    context.set(fileKeyName, key);
     console.log('sending');
   }
 
