@@ -41,6 +41,10 @@ export function ImageController(
 
   async function receive(context: Context) {
     let fileKey = context.get(fileKeyName);
+    if (fileKey === null) return;
+    if (fileKey === undefined) return;
+    if (fileKey === '') return;
+    if (fileKey === 'null') return;
     const input: GetObjectCommandInput = {
       // GetObjectRequest
       Bucket: 'thesis', // required
