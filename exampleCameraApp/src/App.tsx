@@ -46,7 +46,7 @@ export default function PhotoApp() {
       console.error('Error picking an image', error);
     }
   };
-  const { receive, sending } = ImageController(setSelectedImage, selectedImage);
+  const { receive, sending } = ImageController(selectedImage, setSelectedImage);
 
   return (
     <View style={styles.container}>

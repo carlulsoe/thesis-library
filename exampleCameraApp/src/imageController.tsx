@@ -8,13 +8,13 @@ import {
 import type { Context } from '../../src/connection/ConnectionContext';
 
 export function ImageController(
+  selectedImage: string | undefined,
   setSelectedImage: (
     value:
       | ((prevState: string | undefined) => string | undefined)
       | string
       | undefined
-  ) => void,
-  selectedImage: string | undefined
+  ) => void
 ) {
   const ACCOUNT_ID = process.env.EXPO_PUBLIC_ACCOUNT_ID;
   const ACCESS_KEY_ID = process.env.EXPO_PUBLIC_ACCESS_KEY_ID;
