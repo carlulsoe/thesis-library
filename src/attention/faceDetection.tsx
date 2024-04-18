@@ -9,6 +9,7 @@ import { ConnectionContext } from '../connection/ConnectionContext';
 import { SharedMap } from 'fluid-framework';
 import * as faceapi from 'face-api.js';
 import { ATTENTION_KEY } from '../extra';
+import { detectorListener } from './detectionListener';
 
 export const FaceDetection = (fp: FocusProps) => {
   const context = useContext(ConnectionContext);
@@ -42,39 +43,7 @@ export const FaceDetection = (fp: FocusProps) => {
     () => IsFocused(fp.focus, fp.uuid, sharedMap, () => captureImage(videoRef)),
     300
   );
-  sharedMap.addListener('valueChanged', (changed, local) => {
-    if (changed.key !== ATTENTION_KEY) {
-      return;
-    }
-    if (local) {
-      const itIsStillThisDevice = changed.previousValue === fp.uuid;
-      // CASE 1: value changed from another to this
-      if (itIsStillThisDevice) {
-        return;
-      }
-      console.log(
-        `CASE 1: This (${fp.uuid}) is in focus from another (${changed.previousValue})`
-      );
-      if (!fp.dp.receivingFunction) return;
-      fp.dp.receivingFunction();
-      return;
-    } else {
-      const itIsAnotherDeviceToAnotherDevice =
-        changed.previousValue !== fp.uuid;
-      if (itIsAnotherDeviceToAnotherDevice) {
-        return;
-      }
-      // CASE 2: value changed from this to another
-      console.log(
-        `CASE 2: value changed from this (${fp.uuid}) to another (${context?.get(ATTENTION_KEY)})`
-      );
-      if (!fp.dp.sendingFunction) return;
-      fp.dp.sendingFunction();
-      // @ts-ignore TODO fix later
-      fp.multiUserSharing?.sendingFunction();
-      return;
-    }
-  });
+  sharedMap.addListener('valueChanged', detectorListener(fp, context));
   return <></>;
 };
 const IsFocused = async (
