@@ -17,7 +17,8 @@ export function detectorListener(fp: FocusProps, context: Context | null) {
         `CASE 1: This (${fp.uuid}) is in focus from another (${changed.previousValue})`
       );
       if (!fp.dp.receivingFunction) return;
-      fp.dp.receivingFunction();
+      if (context === null) return;
+      fp.dp.receivingFunction(context);
       return;
     } else {
       const itIsAnotherDeviceToAnotherDevice =
@@ -30,7 +31,8 @@ export function detectorListener(fp: FocusProps, context: Context | null) {
         `CASE 2: value changed from this (${fp.uuid}) to another (${context?.get(ATTENTION_KEY)})`
       );
       if (!fp.dp.sendingFunction) return;
-      fp.dp.sendingFunction();
+      if (context === null) return;
+      fp.dp.sendingFunction(context);
       // @ts-ignore TODO fix later
       fp.multiUserSharing?.sendingFunction();
       return;

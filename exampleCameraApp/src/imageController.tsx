@@ -5,6 +5,7 @@ import {
   type PutObjectCommandInput,
   S3Client,
 } from '@aws-sdk/client-s3';
+import type { Context } from '../../src/connection/ConnectionContext';
 
 export function ImageController(
   setSelectedImage: (
@@ -36,7 +37,7 @@ export function ImageController(
     });
   }
 
-  async function receive() {
+  async function receive(_context: Context) {
     const input: GetObjectCommandInput = {
       // GetObjectRequest
       Bucket: 'thesis', // required
@@ -63,7 +64,7 @@ export function ImageController(
     console.log('received');
   }
 
-  async function sending() {
+  async function sending(_context: Context) {
     if (selectedImage === undefined) {
       return;
     }
