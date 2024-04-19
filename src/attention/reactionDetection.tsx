@@ -5,7 +5,7 @@ import type { SharedMap } from 'fluid-framework';
 import { ATTENTION_KEY, type FocusProps } from '../extra';
 import { detectorListener } from './detectionListener';
 
-export const Detector = (fp: FocusProps) => {
+export const BrowserDetection = (fp: FocusProps) => {
   const context = useContext(ConnectionContext);
   const sharedMap = context?.sharedMap;
   if (!sharedMap) return <></>;

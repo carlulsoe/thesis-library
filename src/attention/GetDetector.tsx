@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Detector,
+  BrowserDetection,
   type DetectorProps,
   type MultiUserSharingProps,
 } from 'thesis-library';
@@ -12,7 +12,7 @@ export function GetDetector(
   MultiUserSharing: MultiUserSharingProps
 ) {
   return (
-    <Detector
+    <BrowserDetection
       uuid={uuid}
       focus={focus}
       dp={detectorProp}
