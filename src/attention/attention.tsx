@@ -2,10 +2,10 @@ import React, { type PropsWithChildren, useRef } from 'react';
 import { View, Text } from 'react-native';
 import {
   Connect,
-  Detector,
   type DetectorProps,
   type MultiUserSharingProps,
 } from 'thesis-library';
+import { GetDetector } from './GetDetector';
 
 export function MultiDeviceAttention({
   children,
@@ -47,19 +47,3 @@ export function MultiDeviceAttention({
 const styles = {
   notVisible: { display: 'none' },
 };
-
-function GetDetector(
-  uuid: string,
-  focus: React.MutableRefObject<boolean>,
-  detectorProp: DetectorProps,
-  MultiUserSharing: MultiUserSharingProps
-) {
-  return (
-    <Detector
-      uuid={uuid}
-      focus={focus}
-      dp={detectorProp}
-      multiUserSharing={MultiUserSharing}
-    />
-  );
-}
