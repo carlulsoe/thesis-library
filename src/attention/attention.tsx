@@ -25,14 +25,7 @@ export function MultiDeviceAttention({
     receivingFunction: () => {},
   };
 
-  const detector = (
-    <Detector
-      uuid={uuid}
-      focus={focus}
-      dp={detectorProp}
-      multiUserSharing={MultiUserSharing}
-    />
-  );
+  const detector = GetDetector(uuid, focus, detectorProp, MultiUserSharing);
   return (
     //@ts-ignore
     <View className="Attention">
@@ -54,3 +47,19 @@ export function MultiDeviceAttention({
 const styles = {
   notVisible: { display: 'none' },
 };
+
+function GetDetector(
+  uuid: string,
+  focus: React.MutableRefObject<boolean>,
+  detectorProp: DetectorProps,
+  MultiUserSharing: MultiUserSharingProps
+) {
+  return (
+    <Detector
+      uuid={uuid}
+      focus={focus}
+      dp={detectorProp}
+      multiUserSharing={MultiUserSharing}
+    />
+  );
+}
