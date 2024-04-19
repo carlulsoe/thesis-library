@@ -39,12 +39,6 @@ export function MultiDeviceAttention({
       <Text>Own</Text>
       <Connect>
         {children}
-        {/*<FaceDetection
-          uuid={uuid}
-          focus={focus}
-          dp={detectorProp}
-          multiUserSharing={MultiUserSharing}
-        />*/}
         {detector}
       </Connect>
       <Text>Shared</Text>
