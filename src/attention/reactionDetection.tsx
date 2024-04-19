@@ -1,8 +1,7 @@
 import React from 'react';
-import { ConnectionContext } from '../connection/ConnectionContext';
+import { ConnectionContext, ATTENTION_KEY, type FocusProps } from '../extra';
 import { type MutableRefObject, useContext } from 'react';
 import type { SharedMap } from 'fluid-framework';
-import { ATTENTION_KEY, type FocusProps } from '../extra';
 import { detectorListener } from './detectionListener';
 
 export const BrowserDetection = (fp: FocusProps) => {

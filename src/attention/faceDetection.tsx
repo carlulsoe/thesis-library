@@ -5,10 +5,9 @@ import React, {
   useContext,
   useRef,
 } from 'react';
-import { ConnectionContext } from '../connection/ConnectionContext';
 import { SharedMap } from 'fluid-framework';
 import * as faceapi from 'face-api.js';
-import { ATTENTION_KEY } from '../extra';
+import { ConnectionContext, ATTENTION_KEY } from '../extra';
 import { detectorListener } from './detectionListener';
 
 export const FaceDetection = (fp: FocusProps) => {

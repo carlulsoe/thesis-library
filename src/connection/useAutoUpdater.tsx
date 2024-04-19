@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ConnectionContext } from './ConnectionContext';
+import { ConnectionContext } from '../extra';
 
 export function useAutoUpdater(key: string): [string, Function] {
   const Context = useContext(ConnectionContext);

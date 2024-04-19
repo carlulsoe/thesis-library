@@ -2,9 +2,8 @@ import React, { type PropsWithChildren } from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
 import { type IFluidContainer, SharedMap } from 'fluid-framework';
-import { ConnectionContext } from './ConnectionContext';
 import Clipboard from '@react-native-clipboard/clipboard';
-import type { ConnectProps } from '../extra';
+import { ConnectionContext, type ConnectProps } from '../extra';
 
 export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   const initialObjects = {

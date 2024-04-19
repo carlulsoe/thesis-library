@@ -1,4 +1,4 @@
-import type { Context } from '../connection/ConnectionContext';
+import type { Context } from '../extra';
 
 export interface DetectorProps {
   receivingFunction?: (context: Context) => void;

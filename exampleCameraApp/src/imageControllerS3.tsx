@@ -5,7 +5,7 @@ import {
   type PutObjectCommandInput,
   S3Client,
 } from '@aws-sdk/client-s3';
-import type { Context } from '../../src/connection/ConnectionContext';
+import type { Context } from 'thesis-library';
 
 export function ImageController(
   selectedImage: string | undefined,

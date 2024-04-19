@@ -14,7 +14,7 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import { objEq, uniqueMerge } from '../extra/tools';
-import { ConnectionContext } from '../connection/ConnectionContext';
+import { ConnectionContext } from '../extra';
 import { useAutoUpdater } from '../connection/useAutoUpdater';
 
 interface CanvasProps {

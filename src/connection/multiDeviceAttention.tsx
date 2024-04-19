@@ -6,7 +6,7 @@ import {
   type FocusProps,
   type MultiUserSharingProps,
 } from 'thesis-library';
-import { GetDetector } from './GetDetector';
+import { GetDetector } from '../attention/GetDetector';
 
 export function MultiDeviceAttention({
   children,
