@@ -3,7 +3,7 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
 import { MultiDeviceAttention } from 'thesis-library';
-import { ImageController } from './imageController';
+import { ImageController } from './imageControllerS3';
 
 export default function PhotoApp() {
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
