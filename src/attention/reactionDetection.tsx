@@ -20,7 +20,7 @@ const IsFocused = async (
   uuid: any,
   attention: SharedMap
 ) => {
-  let docFocus = document.hasFocus(); // TODO a better name for this file could be documentDetection, documentFocusDetection, browserDetection, or browserFocusDetection
+  let docFocus = document.hasFocus();
   if (focus.current !== docFocus) {
     focus.current = docFocus;
     if (focus.current) {

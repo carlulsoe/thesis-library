@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import {
   Connect,
   type DetectorProps,
+  type FocusProps,
   type MultiUserSharingProps,
 } from 'thesis-library';
 import { GetDetector } from './GetDetector';
@@ -24,8 +25,13 @@ export function MultiDeviceAttention({
     sendingFunction: () => {},
     receivingFunction: () => {},
   };
-
-  const detector = GetDetector(uuid, focus, detectorProp, MultiUserSharing);
+  const fp: FocusProps = {
+    dp: detectorProp,
+    uuid: uuid,
+    focus: focus,
+    multiUserSharing: MultiUserSharing,
+  };
+  const detector = GetDetector(fp);
   return (
     //@ts-ignore
     <View className="Attention">
