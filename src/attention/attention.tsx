@@ -25,6 +25,14 @@ export function MultiDeviceAttention({
     receivingFunction: () => {},
   };
 
+  const detector = (
+    <Detector
+      uuid={uuid}
+      focus={focus}
+      dp={detectorProp}
+      multiUserSharing={MultiUserSharing}
+    />
+  );
   return (
     //@ts-ignore
     <View className="Attention">
@@ -37,12 +45,7 @@ export function MultiDeviceAttention({
           dp={detectorProp}
           multiUserSharing={MultiUserSharing}
         />*/}
-        <Detector
-          uuid={uuid}
-          focus={focus}
-          dp={detectorProp}
-          multiUserSharing={MultiUserSharing}
-        />
+        {detector}
       </Connect>
       <Text>Shared</Text>
       {/* <Connect containerSchema={initialMap} /> */}
