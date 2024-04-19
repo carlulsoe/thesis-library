@@ -1,8 +1,7 @@
 import 'react-native-get-random-values';
 import React from 'react';
-import { Animated, Button, Text } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import { MultiDeviceAttention } from '../../src';
-import View = Animated.View;
 import { useAutoUpdater } from '../../src/connection/useAutoUpdater';
 
 function App() {
