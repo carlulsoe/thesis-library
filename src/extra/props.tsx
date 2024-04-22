@@ -6,7 +6,7 @@ export interface DetectorProps {
 }
 
 export interface FocusProps {
-  dp: DetectorProps;
+  detectorProps: DetectorProps;
   uuid: any;
   focus: any;
   multiUserSharing?: MultiUserSharingProps;

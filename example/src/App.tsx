@@ -1,8 +1,8 @@
 import 'react-native-get-random-values';
 import React from 'react';
 import { Button, Text, View } from 'react-native';
-import { MultiDeviceAttention } from '../../src';
-import { useAutoUpdater } from '../../src/connection/useAutoUpdater';
+import { MultiDeviceAttention } from 'thesis-library';
+import { useAutoUpdater } from 'thesis-library';
 
 function App() {
   // Run > `npx tinylicious` before normal start

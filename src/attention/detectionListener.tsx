@@ -13,8 +13,8 @@ export function detectorListener(fp: FocusProps, context: Context) {
       if (itIsStillThisDevice) {
         return;
       }
-      if (!fp.dp.receivingFunction || !context) return;
-      fp.dp.receivingFunction(context);
+      if (!fp.detectorProps.receivingFunction || !context) return;
+      fp.detectorProps.receivingFunction(context);
       return;
     } else {
       const itIsAnotherDeviceToAnotherDevice =
@@ -23,8 +23,8 @@ export function detectorListener(fp: FocusProps, context: Context) {
         return;
       }
       // CASE 2: value changed from this to another
-      if (!fp.dp.sendingFunction || !context) return;
-      fp.dp.sendingFunction(context);
+      if (!fp.detectorProps.sendingFunction || !context) return;
+      fp.detectorProps.sendingFunction(context);
       // @ts-ignore TODO fix later
       fp.multiUserSharing?.sendingFunction();
       return;
