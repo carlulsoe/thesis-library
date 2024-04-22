@@ -1,6 +1,11 @@
 import React, { type PropsWithChildren, useRef } from 'react';
 import { View, Text } from 'react-native';
-import { Connect, type DetectorProps } from 'thesis-library';
+import {
+  Connect,
+  type DetectorProps,
+  type FocusProps,
+  type MultiUserSharingProps,
+} from 'thesis-library';
 import { GetDetector } from '../attention/GetDetector';
 import { DataHandler } from './dataHandler';
 
