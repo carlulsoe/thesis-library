@@ -1,20 +1,29 @@
-import 'react-native-get-random-values';
-import React from 'react';
-import { Button, Text, View } from 'react-native';
-import { MultiDeviceAttention } from 'thesis-library';
-import { useAutoUpdater } from 'thesis-library';
+import React, { useState } from 'react';
+import { Text } from 'react-native';
+import { type Context, MultiDeviceAttention } from 'thesis-library';
 
-function App() {
+export default function App() {
   // Run > `npx tinylicious` before normal start
+  const [time, setTime] = useState('');
+
+  const sender = (context: Context) => {
+    context.set('time', Date.now().toString());
+    setTime(context.get('time'));
+  };
+
+  const receiver = async (context: Context) => {
+    await new Promise((f) => setTimeout(f, 50));
+    setTime(context.get('time'));
+  };
 
   return (
-    <MultiDeviceAttention>
-      <Time />
+    <MultiDeviceAttention receivingFunction={receiver} sendingFunction={sender}>
+      <Text>{time}</Text>
     </MultiDeviceAttention>
   );
 }
 
-const Time = () => {
+/*const Time = () => {
   const [value, setValue] = useAutoUpdater('time');
 
   return (
@@ -26,6 +35,4 @@ const Time = () => {
       <Text>{value}</Text>
     </View>
   );
-};
-
-export default App;
+};*/
