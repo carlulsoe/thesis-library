@@ -1,5 +1,5 @@
 import React, { type PropsWithChildren, useRef } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import {
   Connect,
   type DetectorProps,
@@ -34,12 +34,10 @@ export function MultiDeviceAttention({
   return (
     //@ts-ignore
     <View className="Attention">
-      <Text>Own</Text>
       <Connect>
         {children}
         {detector}
       </Connect>
-      <Text>Shared</Text>
       {/* <Connect containerSchema={initialMap} /> */}
       <div>
         {/*@ts-ignore*/}
