@@ -14,7 +14,7 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import { objEq, uniqueMerge } from '../extra/tools';
-import { ConnectionContext } from '../extra';
+import { OptionalConnectionContext } from '../extra';
 import { useAutoUpdater } from '../connection/useAutoUpdater';
 
 interface CanvasProps {
@@ -30,7 +30,7 @@ export const Canvas = (props: CanvasProps) => {
   const addToPath = (s: string) => setCurrentPath(currentPath + s);
   const addCurrentToOldPaths = () =>
     setLocalPaths([...localPaths, { path: currentPath, color: currentColor }]);
-  const Context = useContext(ConnectionContext);
+  const Context = useContext(OptionalConnectionContext);
 
   function handleStart(e: GestureResponderEvent) {
     let x = e.nativeEvent.touches[0]?.pageX;

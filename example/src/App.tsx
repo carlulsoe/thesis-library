@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { Text } from 'react-native';
-import { type Context, MultiDeviceAttention } from 'thesis-library';
+import { type ConnectionContext, MultiDeviceAttention } from 'thesis-library';
 
 export default function App() {
   // Run > `npx tinylicious` before normal start
   const [time, setTime] = useState('');
 
-  const sender = (context: Context) => {
+  const sender = (context: ConnectionContext) => {
     context.set('time', Date.now().toString());
     setTime(context.get('time'));
   };
 
-  const receiver = async (context: Context) => {
-    await new Promise((f) => setTimeout(f, 50));
+  const receiver = async (context: ConnectionContext) => {
     setTime(context.get('time'));
   };
 

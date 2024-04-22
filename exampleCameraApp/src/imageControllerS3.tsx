@@ -5,7 +5,7 @@ import {
   type PutObjectCommandInput,
   S3Client,
 } from '@aws-sdk/client-s3';
-import type { Context } from 'thesis-library';
+import type { ConnectionContext } from 'thesis-library';
 
 export function ImageController(
   selectedImage: string | undefined,
@@ -39,7 +39,7 @@ export function ImageController(
 
   const fileKeyName = 'fileKey';
 
-  async function receive(context: Context) {
+  async function receive(context: ConnectionContext) {
     let fileKey = context.get(fileKeyName);
     if (fileKey === null) return;
     if (fileKey === undefined) return;
@@ -71,7 +71,7 @@ export function ImageController(
     console.log('received');
   }
 
-  async function sending(context: Context) {
+  async function sending(context: ConnectionContext) {
     if (selectedImage === undefined) {
       return;
     }

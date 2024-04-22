@@ -7,11 +7,11 @@ import React, {
 } from 'react';
 import { SharedMap } from 'fluid-framework';
 import * as faceapi from 'face-api.js';
-import { ConnectionContext, ATTENTION_KEY } from '../extra';
+import { OptionalConnectionContext, ATTENTION_KEY } from '../extra';
 import { detectorListener } from './detectionListener';
 
 export const FaceDetection = (fp: FocusProps) => {
-  const context = useContext(ConnectionContext);
+  const context = useContext(OptionalConnectionContext);
   const sharedMap: SharedMap = context?.sharedMap!;
   const videoRef = useRef<HTMLVideoElement>(null);
   React.useEffect(() => {

@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { ConnectionContext } from '../extra';
+import { OptionalConnectionContext } from '../extra';
 
 export function useAutoUpdater(key: string): [string, Function] {
-  const Context = useContext(ConnectionContext);
+  const Context = useContext(OptionalConnectionContext);
   const [value, setValue] = React.useState('');
   React.useEffect(() => {
     if (Context == null || Context.sharedMap == null) return;

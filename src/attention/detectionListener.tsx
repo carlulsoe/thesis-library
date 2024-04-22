@@ -1,8 +1,8 @@
 import type { IValueChanged } from 'fluid-framework';
 import { type FocusProps, ATTENTION_KEY } from '../extra';
-import { type Context } from '../extra';
+import { type ConnectionContext } from '../extra';
 
-export function detectorListener(fp: FocusProps, context: Context) {
+export function detectorListener(fp: FocusProps, context: ConnectionContext) {
   return (changed: IValueChanged, local: boolean) => {
     if (changed.key !== ATTENTION_KEY) {
       return;

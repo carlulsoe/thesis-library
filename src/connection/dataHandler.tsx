@@ -1,5 +1,9 @@
 import Peer from 'peerjs';
-import { ATTENTION_KEY, type Context, type FocusProps } from '../extra';
+import {
+  ATTENTION_KEY,
+  type ConnectionContext,
+  type FocusProps,
+} from '../extra';
 
 export function DataHandler(
   FocusProps: FocusProps,
@@ -9,7 +13,7 @@ export function DataHandler(
     return FocusProps;
   } else {
     const peer = new Peer(FocusProps.uuid);
-    const newSending = (context: Context) => {
+    const newSending = (context: ConnectionContext) => {
       let conn = peer.connect(context.get(ATTENTION_KEY));
       conn.send(FocusProps.sendingFunction());
     };

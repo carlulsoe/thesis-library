@@ -3,7 +3,7 @@ import { Button, StyleSheet, TextInput, View } from 'react-native';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
 import { type IFluidContainer, SharedMap } from 'fluid-framework';
 import Clipboard from '@react-native-clipboard/clipboard';
-import { ConnectionContext, type ConnectProps } from '../extra';
+import { OptionalConnectionContext, type ConnectProps } from '../extra';
 
 export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   const initialObjects = {
@@ -40,20 +40,20 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   const dictSetter = (key: string, val: string) => {
     if (!container)
       throw new Error("Can't set when container has not been defined");
-    container.initialObjects.sharedMap.set(key, val);
+    (container.initialObjects.sharedMap as SharedMap).set(key, val);
   };
 
   const dictGetter = (key: string) => {
     if (!container) return '';
-    return container.initialObjects.sharedMap.get(key);
+    return (container.initialObjects.sharedMap as SharedMap).get(key);
   };
 
   return (
-    <ConnectionContext.Provider
+    <OptionalConnectionContext.Provider
       value={{
         set: dictSetter,
         get: dictGetter,
-        sharedMap: container?.initialObjects.sharedMap,
+        sharedMap: container?.initialObjects.sharedMap as SharedMap,
       }}
     >
       {props.children}
@@ -73,7 +73,7 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
           title="Create or connect to given ID"
         />
       </View>
-    </ConnectionContext.Provider>
+    </OptionalConnectionContext.Provider>
   );
 };
 

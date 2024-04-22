@@ -1,6 +1,11 @@
 import React, { type PropsWithChildren, useRef } from 'react';
 import { View } from 'react-native';
-import { Connect, type DetectorProps, type FocusProps } from 'thesis-library';
+import {
+  Connect,
+  type ConnectionContext,
+  type DetectorProps,
+  type FocusProps,
+} from 'thesis-library';
 import { GetDetector } from '../attention/GetDetector';
 import { DataHandler } from './dataHandler';
 
@@ -13,7 +18,10 @@ export function MultiDeviceAttention({
   const uuid = self.crypto.randomUUID();
   const focus = useRef(true);
   const fp: FocusProps = {
-    receivingFunction: receivingFunction,
+    receivingFunction: async (context: ConnectionContext) => {
+      await new Promise((f) => setTimeout(f, 50));
+      receivingFunction(context);
+    },
     sendingFunction: sendingFunction,
     uuid: uuid,
     focus: focus,
