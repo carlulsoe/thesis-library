@@ -1,20 +1,20 @@
-import type { Context } from '../extra';
-
 export interface DetectorProps {
-  receivingFunction?: (context: Context) => void;
-  sendingFunction?: (context: Context) => void;
+  receivingFunction: Function;
+  sendingFunction: Function;
+  transferMethod?: any;
 }
 
 export interface FocusProps {
-  detectorProps: DetectorProps;
+  receivingFunction: Function;
+  sendingFunction: Function;
   uuid: any;
   focus: any;
   multiUserSharing?: MultiUserSharingProps;
 }
 
 export interface MultiUserSharingProps {
-  receivingFunction?: () => void;
-  sendingFunction?: () => void;
+  receivingFunction: Function;
+  sendingFunction: Function;
 }
 
 export const ATTENTION_KEY = 'attention';

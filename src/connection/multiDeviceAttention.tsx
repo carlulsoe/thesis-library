@@ -2,27 +2,30 @@ import React, { type PropsWithChildren, useRef } from 'react';
 import { View, Text } from 'react-native';
 import { Connect, type DetectorProps } from 'thesis-library';
 import { GetDetector } from '../attention/GetDetector';
+import { DataHandler } from './dataHandler';
 
 export function MultiDeviceAttention({
   children,
   receivingFunction,
   sendingFunction,
+  transferMethod,
 }: PropsWithChildren<DetectorProps>) {
   const uuid = self.crypto.randomUUID();
   const focus = useRef(true);
 
-  const detector = GetDetector({
-    detectorProps: {
-      receivingFunction: receivingFunction,
-      sendingFunction: sendingFunction,
-    },
-    multiUserSharing: {
-      sendingFunction: () => {},
-      receivingFunction: () => {},
-    },
-    focus: focus,
+  const MultiUserSharing: MultiUserSharingProps = {
+    sendingFunction: () => {},
+    receivingFunction: () => {},
+  };
+  const fp: FocusProps = {
+    receivingFunction: receivingFunction,
+    sendingFunction: sendingFunction,
     uuid: uuid,
-  });
+    focus: focus,
+    multiUserSharing: MultiUserSharing,
+  };
+  let newFp = DataHandler(fp, transferMethod);
+  const detector = GetDetector(newFp);
   return (
     //@ts-ignore
     <View className="Attention">

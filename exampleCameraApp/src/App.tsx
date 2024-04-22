@@ -53,6 +53,7 @@ export default function PhotoApp() {
       <MultiDeviceAttention
         receivingFunction={receive}
         sendingFunction={sending}
+        transferMethod={'S3'}
       >
         <Text style={styles.title}>Simple Photo App</Text>
         <Button title="Pick a Photo" onPress={pickImage} />
