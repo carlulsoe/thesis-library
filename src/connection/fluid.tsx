@@ -3,7 +3,6 @@ import { Button, StyleSheet, TextInput, View } from 'react-native';
 import {
   TinyliciousClient,
   type TinyliciousClientProps,
-  type TinyliciousConnectionConfig,
 } from '@fluidframework/tinylicious-client';
 import { type IFluidContainer, SharedMap } from 'fluid-framework';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -18,14 +17,14 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   const [container, setContainer] = React.useState<IFluidContainer | null>(
     null
   );
+  const clientProps: TinyliciousClientProps = {
+    connection: {
+      domain: 'https://6643-85-203-223-235.ngrok-free.app',
+      port: 443,
+    },
+  };
 
   async function ConnectToContainer(containerIdString: string) {
-    const connectionConfig: TinyliciousConnectionConfig = {
-      domain: 'https://6643-85-203-223-235.ngrok-free.app',
-    };
-    const clientProps: TinyliciousClientProps = {
-      connection: connectionConfig,
-    };
     const client = new TinyliciousClient(clientProps);
     setContainer(
       (await client.getContainer(containerIdString, initialObjects)).container
@@ -33,7 +32,7 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   }
 
   async function CreateContainer() {
-    const client = new TinyliciousClient();
+    const client = new TinyliciousClient(clientProps);
     let tmpContainer = (await client.createContainer(initialObjects)).container;
     setContainerId(await tmpContainer.attach());
     setContainer(tmpContainer);
