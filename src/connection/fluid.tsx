@@ -17,15 +17,20 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   const [container, setContainer] = React.useState<IFluidContainer | null>(
     null
   );
-  const TINYLICIOUS_DOMAIN = process.env.EXPO_PUBLIC_TINYLICIOUS_DOMAIN
-    ? process.env.EXPO_PUBLIC_TINYLICIOUS_DOMAIN
-    : 'http://localhost';
-  const clientProps: TinyliciousClientProps = {
-    connection: {
-      domain: TINYLICIOUS_DOMAIN,
-      port: 443,
-    },
-  };
+
+  let clientProps: TinyliciousClientProps;
+  if (false && process.env.EXPO_PUBLIC_TINYLICIOUS_DOMAIN) {
+    clientProps = {
+      connection: {
+        domain: process.env.EXPO_PUBLIC_TINYLICIOUS_DOMAIN,
+        port: 443,
+      },
+    };
+  } else {
+    clientProps = {
+      connection: {},
+    };
+  }
 
   async function ConnectToContainer(containerIdString: string) {
     const client = new TinyliciousClient(clientProps);
