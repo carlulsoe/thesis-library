@@ -1,2 +1,2 @@
 export * from './faceDetection';
-export * from './reactionDetection';
+export * from './browserDetection';
