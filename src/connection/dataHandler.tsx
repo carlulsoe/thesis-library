@@ -23,7 +23,13 @@ export function DataHandler(
         FocusProps.receivingFunction(data);
       });
     });
-    FocusProps.sendingFunction = newSending;
-    return FocusProps;
+    let fp: FocusProps = {
+      focus: FocusProps.focus,
+      uuid: FocusProps.uuid,
+      receivingFunction: FocusProps.receivingFunction,
+      sendingFunction: newSending,
+      multiUserSharing: FocusProps.multiUserSharing,
+    };
+    return fp;
   }
 }

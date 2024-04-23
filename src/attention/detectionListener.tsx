@@ -14,7 +14,7 @@ export function detectorListener(fp: FocusProps, context: ConnectionContext) {
         return;
       }
       if (!fp.receivingFunction || !context) return;
-      fp.receivingFunction(context);
+      //fp.receivingFunction(context);
       return;
     } else {
       const itIsAnotherDeviceToAnotherDevice =
@@ -25,7 +25,6 @@ export function detectorListener(fp: FocusProps, context: ConnectionContext) {
       // CASE 2: value changed from this to another
       if (!fp.sendingFunction || !context) return;
       fp.sendingFunction(context);
-      // @ts-ignore TODO fix later
       fp.multiUserSharing?.sendingFunction();
       return;
     }
