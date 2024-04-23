@@ -8,7 +8,7 @@ import React, {
 import { SharedMap } from 'fluid-framework';
 import * as faceapi from 'face-api.js';
 import { OptionalConnectionContext, ATTENTION_KEY } from '../extra';
-import { detectorListener } from './detectionListener';
+import { detectionListener } from './detectionListener';
 
 export const FaceDetection = (fp: FocusProps) => {
   const context = useContext(OptionalConnectionContext);
@@ -40,7 +40,7 @@ export const FaceDetection = (fp: FocusProps) => {
     () => IsFocused(fp.focus, fp.uuid, sharedMap, () => captureImage(videoRef)),
     300
   );
-  sharedMap.addListener('valueChanged', detectorListener(fp, context));
+  sharedMap.addListener('valueChanged', () => detectionListener(fp, context));
   return <></>;
 };
 const IsFocused = async (

@@ -6,7 +6,7 @@ import {
 } from '../extra';
 import { type MutableRefObject, useContext } from 'react';
 import type { SharedMap } from 'fluid-framework';
-import { detectorListener } from './detectionListener';
+import { detectionListener } from './detectionListener';
 
 export const DetectAll = (fp: FocusProps) => {
   const context = useContext(OptionalConnectionContext);
@@ -14,7 +14,7 @@ export const DetectAll = (fp: FocusProps) => {
   if (!sharedMap) return <></>;
 
   setInterval(() => IsFocused(fp.focus, fp.uuid, sharedMap), 300);
-  sharedMap.addListener('valueChanged', detectorListener(fp, context));
+  sharedMap.addListener('valueChanged', detectionListener(fp, context));
   return <></>;
 };
 
