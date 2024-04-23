@@ -29,21 +29,17 @@ export function MultiDeviceAttention({
   let newFp = DataHandler(fp, transferMethod);
   const detector = GetDetector(newFp);
   return (
-    //@ts-ignore
-    <View className="Attention">
+    <View>
       <Connect>
         {children}
         {detector}
       </Connect>
       {/* <Connect containerSchema={initialMap} /> */}
       <div>
-        {/*@ts-ignore*/}
-        <video autoPlay playsInline muted style={styles.notVisible} />
+        <video autoPlay playsInline muted style={notVisibleStyle} />
       </div>
     </View>
   );
 }
 
-const styles = {
-  notVisible: { display: 'none' },
-};
+const notVisibleStyle = { display: 'none' };
