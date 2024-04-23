@@ -17,9 +17,12 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   const [container, setContainer] = React.useState<IFluidContainer | null>(
     null
   );
+  const TINYLICIOUS_DOMAIN = process.env.EXPO_PUBLIC_TINYLICIOUS_DOMAIN
+    ? process.env.EXPO_PUBLIC_TINYLICIOUS_DOMAIN
+    : 'http://localhost';
   const clientProps: TinyliciousClientProps = {
     connection: {
-      domain: 'https://6643-85-203-223-235.ngrok-free.app',
+      domain: TINYLICIOUS_DOMAIN,
       port: 443,
     },
   };
