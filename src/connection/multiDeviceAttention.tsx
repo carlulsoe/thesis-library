@@ -26,8 +26,9 @@ export function MultiDeviceAttention({
     uuid: uuid,
     focus: focus,
   };
-  let newFp = DataHandler(fp, transferMethod);
-  const detector = GetDetector(newFp);
+  const detector = transferMethod
+    ? GetDetector(DataHandler(fp, transferMethod))
+    : GetDetector(fp);
   return (
     <View>
       <Connect>

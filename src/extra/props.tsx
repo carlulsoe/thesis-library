@@ -1,7 +1,7 @@
 export interface DetectorProps {
   receivingFunction: Function;
   sendingFunction: Function;
-  transferMethod?: any;
+  transferMethod?: string;
 }
 
 export interface FocusProps {

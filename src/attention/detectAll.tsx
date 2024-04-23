@@ -14,7 +14,7 @@ export const DetectAll = (fp: FocusProps) => {
   if (!sharedMap) return <></>;
 
   setInterval(() => IsFocused(fp.focus, fp.uuid, sharedMap), 300);
-  sharedMap.addListener('valueChanged', () => detectionListener(fp, context));
+  sharedMap.addListener('valueChanged', detectionListener(fp, context));
   return <></>;
 };
 

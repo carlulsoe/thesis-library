@@ -3,9 +3,8 @@ import { type FocusProps, ATTENTION_KEY } from '../extra';
 import { type ConnectionContext } from '../extra';
 
 export function detectionListener(fp: FocusProps, context: ConnectionContext) {
-  if (!context || !fp.receivingFunction || !fp.sendingFunction) return;
-
   return (changed: IValueChanged, local: boolean) => {
+    if (!context || !fp.receivingFunction || !fp.sendingFunction) return;
     if (changed.key !== ATTENTION_KEY) return;
     if (local) {
       // CASE 1a: Nothing happened

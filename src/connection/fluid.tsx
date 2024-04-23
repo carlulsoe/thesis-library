@@ -19,7 +19,7 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   );
 
   let clientProps: TinyliciousClientProps;
-  if (false && process.env.EXPO_PUBLIC_TINYLICIOUS_DOMAIN) {
+  if (process.env.EXPO_PUBLIC_TINYLICIOUS_DOMAIN) {
     clientProps = {
       connection: {
         domain: process.env.EXPO_PUBLIC_TINYLICIOUS_DOMAIN,
@@ -55,8 +55,7 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   });
 
   const dictSetter = (key: string, val: string) => {
-    if (!container)
-      throw new Error("Can't set when container has not been defined");
+    if (!container) throw new Error('Container not defined');
     (container.initialObjects.sharedMap as SharedMap).set(key, val);
   };
 

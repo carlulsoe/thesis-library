@@ -40,7 +40,7 @@ export const FaceDetection = (fp: FocusProps) => {
     () => IsFocused(fp.focus, fp.uuid, sharedMap, () => captureImage(videoRef)),
     300
   );
-  sharedMap.addListener('valueChanged', () => detectionListener(fp, context));
+  sharedMap.addListener('valueChanged', detectionListener(fp, context));
   return <></>;
 };
 const IsFocused = async (
