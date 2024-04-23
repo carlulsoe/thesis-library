@@ -21,7 +21,7 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
 
   async function ConnectToContainer(containerIdString: string) {
     const connectionConfig: TinyliciousConnectionConfig = {
-      domain: 'https://82d9-85-203-223-235.ngrok-free.app',
+      domain: 'https://6643-85-203-223-235.ngrok-free.app',
     };
     const clientProps: TinyliciousClientProps = {
       connection: connectionConfig,
