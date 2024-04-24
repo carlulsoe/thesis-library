@@ -110,12 +110,15 @@
   ],
   "packageManager": "yarn@4.1.1",
   "jest": {
-    "preset": "react-native",
+    "preset": "jest-expo",
     "modulePathIgnorePatterns": [
       "<rootDir>/example/node_modules",
       "<rootDir>/exampleCameraApp/node_modules",
       "<rootDir>/exampleCanvas/node_modules",
       "<rootDir>/lib/"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
     ]
   },
   "commitlint": {
