@@ -49,7 +49,7 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
     setContainerId(await tmpContainer.attach());
     setContainer(tmpContainer);
     if (!props.toOtherUsers && props.focusProp) {
-      const internalDetector = GetDetector(props.focusProp);
+      const internalDetector = GetDetector(props.focusProp); //TODO make this always synced!!!!
       setMultiuserComponent(
         <View>
           <Text>To other users</Text>
