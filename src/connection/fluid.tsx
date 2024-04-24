@@ -7,6 +7,7 @@ import {
 import { type IFluidContainer, SharedMap } from 'fluid-framework';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { OptionalConnectionContext, type ConnectProps } from '../extra';
+import { GetDetector } from '../attention/GetDetector';
 
 export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   const initialObjects = {
@@ -47,11 +48,12 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
     let tmpContainer = (await client.createContainer(initialObjects)).container;
     setContainerId(await tmpContainer.attach());
     setContainer(tmpContainer);
-    if (!props.toOtherUsers) {
+    if (!props.toOtherUsers && props.focusProp) {
+      const internalDetector = GetDetector(props.focusProp);
       setMultiuserComponent(
         <View>
-          <Text>External</Text>
-          <Connect toOtherUsers={true} />
+          <Text>To other users</Text>
+          <Connect toOtherUsers={true}>{internalDetector}</Connect>
         </View>
       );
     }

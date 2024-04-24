@@ -22,4 +22,5 @@ export const ATTENTION_KEY = 'attention';
 export interface ConnectProps {
   containerId?: { containerId: ''; setContainerId: Function };
   toOtherUsers: boolean;
+  focusProp?: FocusProps;
 }
