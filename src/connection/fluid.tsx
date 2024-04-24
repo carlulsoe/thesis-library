@@ -47,11 +47,11 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
     let tmpContainer = (await client.createContainer(initialObjects)).container;
     setContainerId(await tmpContainer.attach());
     setContainer(tmpContainer);
-    if (!props.multiuser) {
+    if (!props.toOtherUsers) {
       setMultiuserComponent(
         <View>
-          <Text />
-          <Connect multiuser={true} />
+          <Text>External</Text>
+          <Connect toOtherUsers={true} />
         </View>
       );
     }

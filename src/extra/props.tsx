@@ -21,5 +21,5 @@ export const ATTENTION_KEY = 'attention';
 
 export interface ConnectProps {
   containerId?: { containerId: ''; setContainerId: Function };
-  multiuser: boolean;
+  toOtherUsers: boolean;
 }

@@ -31,7 +31,7 @@ export function MultiDeviceAttention({
     : GetDetector(fp);
   return (
     <View>
-      <Connect multiuser={false}>
+      <Connect toOtherUsers={false}>
         {children}
         {detector}
       </Connect>
