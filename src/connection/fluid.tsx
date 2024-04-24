@@ -1,5 +1,5 @@
-import React, { type PropsWithChildren } from 'react';
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import React, { type PropsWithChildren, useState } from 'react';
+import { Button, StyleSheet, TextInput, View, Text } from 'react-native';
 import {
   TinyliciousClient,
   type TinyliciousClientProps,
@@ -16,6 +16,9 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   const [containerId, setContainerId] = React.useState('');
   const [container, setContainer] = React.useState<IFluidContainer | null>(
     null
+  );
+  let [multiuserComponent, setMultiuserComponent] = useState<React.JSX.Element>(
+    <></>
   );
 
   let clientProps: TinyliciousClientProps;
@@ -44,6 +47,14 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
     let tmpContainer = (await client.createContainer(initialObjects)).container;
     setContainerId(await tmpContainer.attach());
     setContainer(tmpContainer);
+    if (!props.multiuser) {
+      setMultiuserComponent(
+        <View>
+          <Text />
+          <Connect multiuser={true} />
+        </View>
+      );
+    }
   }
 
   const ConnectEitherOr = async () => {
@@ -65,31 +76,34 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   };
 
   return (
-    <OptionalConnectionContext.Provider
-      value={{
-        set: dictSetter,
-        get: dictGetter,
-        sharedMap: container?.initialObjects.sharedMap as SharedMap,
-      }}
-    >
-      {props.children}
-      <View style={sheet.container}>
-        <Button
-          onPress={() => Clipboard.setString(containerId)}
-          title="Copy ID"
-        />
-        <TextInput
-          onChange={(e) => setContainerId(e.nativeEvent.text || '')}
-          defaultValue={containerId}
-          placeholder="Insert ID here"
-          style={sheet.input}
-        />
-        <Button
-          onPress={ConnectEitherOr}
-          title="Create or connect to given ID"
-        />
-      </View>
-    </OptionalConnectionContext.Provider>
+    <View>
+      <OptionalConnectionContext.Provider
+        value={{
+          set: dictSetter,
+          get: dictGetter,
+          sharedMap: container?.initialObjects.sharedMap as SharedMap,
+        }}
+      >
+        {props.children}
+        <View style={sheet.container}>
+          <Button
+            onPress={() => Clipboard.setString(containerId)}
+            title="Copy ID"
+          />
+          <TextInput
+            onChange={(e) => setContainerId(e.nativeEvent.text || '')}
+            defaultValue={containerId}
+            placeholder="Insert ID here"
+            style={sheet.input}
+          />
+          <Button
+            onPress={ConnectEitherOr}
+            title="Create or connect to given ID"
+          />
+        </View>
+      </OptionalConnectionContext.Provider>
+      {multiuserComponent}
+    </View>
   );
 };
 
