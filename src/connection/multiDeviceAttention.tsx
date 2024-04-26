@@ -26,7 +26,7 @@ export function MultiDeviceAttention({
     uuid: uuid,
     focus: focus,
   };
-  const uuid2other = self.crypto.randomUUID();
+  /*const uuid2other = self.crypto.randomUUID();
   const focus2other = useRef(true);
   const fp2other: FocusProps = {
     receivingFunction: async (context: ConnectionContext) => {
@@ -36,13 +36,13 @@ export function MultiDeviceAttention({
     sendingFunction: sendingFunction,
     uuid: uuid2other,
     focus: focus2other,
-  };
+  };*/
   const detector = transferMethod
     ? GetDetector(DataHandler(fp, transferMethod))
     : GetDetector(fp);
   return (
     <View>
-      <Connect toOtherUsers={false} focusProp={fp2other}>
+      <Connect toOtherUsers={false} focusProp={fp}>
         {children}
         {detector}
       </Connect>

@@ -7,7 +7,7 @@ import {
 import { type IFluidContainer, SharedMap } from 'fluid-framework';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { OptionalConnectionContext, type ConnectProps } from '../extra';
-import { GetDetector } from '../attention/GetDetector';
+import { FullyConnected } from '../attention/FullyConnected';
 
 export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   const initialObjects = {
@@ -18,9 +18,9 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   const [container, setContainer] = React.useState<IFluidContainer | null>(
     null
   );
-  let [multiuserComponent, setMultiuserComponent] = useState<React.JSX.Element>(
-    <></>
-  );
+  const [multiuserComponent, setMultiuserComponent] =
+    useState<React.JSX.Element>();
+  const [isMain, setIsMain] = useState(false);
 
   let clientProps: TinyliciousClientProps;
   if (process.env.EXPO_PUBLIC_TINYLICIOUS_DOMAIN) {
@@ -48,15 +48,7 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
     let tmpContainer = (await client.createContainer(initialObjects)).container;
     setContainerId(await tmpContainer.attach());
     setContainer(tmpContainer);
-    if (!props.toOtherUsers && props.focusProp) {
-      const internalDetector = GetDetector(props.focusProp);
-      setMultiuserComponent(
-        <View>
-          <Text>To other users</Text>
-          <Connect toOtherUsers={true}>{internalDetector}</Connect>
-        </View>
-      );
-    }
+    setIsMain(true);
   }
 
   const ConnectEitherOr = async () => {
@@ -66,6 +58,41 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   React.useEffect(() => {
     props.containerId?.setContainerId(containerId);
   });
+
+  React.useEffect(() => {
+    if (
+      //!props.focusProp ||
+      !container?.initialObjects.sharedMap ||
+      multiuserComponent !== undefined ||
+      props.toOtherUsers ||
+      !isMain
+    )
+      return;
+    const internalDetector = (
+      <FullyConnected
+        ownContext={{
+          set: dictSetter,
+          get: dictGetter,
+          sharedMap: container?.initialObjects.sharedMap as SharedMap,
+        }}
+        sending={props.focusProp?.sendingFunction}
+        receiving={props.focusProp?.receivingFunction}
+      />
+    );
+    setMultiuserComponent(
+      <View>
+        <Text>To other users</Text>
+        <Connect toOtherUsers={true}>{internalDetector}</Connect>
+      </View>
+    );
+  }, [
+    props.toOtherUsers,
+    props.focusProp,
+    dictSetter,
+    dictGetter,
+    container?.initialObjects.sharedMap,
+    multiuserComponent,
+  ]);
 
   const dictSetter = (key: string, val: string) => {
     if (!container) throw new Error('Container not defined');

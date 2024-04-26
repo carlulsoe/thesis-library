@@ -21,17 +21,3 @@ export default function App() {
     </MultiDeviceAttention>
   );
 }
-
-/*const Time = () => {
-  const [value, setValue] = useAutoUpdater('time');
-
-  return (
-    <View>
-      <Button
-        onPress={() => setValue(Date.now().toString())}
-        title="Get time"
-      />
-      <Text>{value}</Text>
-    </View>
-  );
-};*/
