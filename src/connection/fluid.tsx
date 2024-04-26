@@ -59,6 +59,16 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
     props.containerId?.setContainerId(containerId);
   });
 
+  const dictSetter = (key: string, val: string) => {
+    if (!container) throw new Error('Container not defined');
+    (container.initialObjects.sharedMap as SharedMap).set(key, val);
+  };
+
+  const dictGetter = (key: string) => {
+    if (!container) return '';
+    return (container.initialObjects.sharedMap as SharedMap).get(key);
+  };
+
   React.useEffect(() => {
     if (
       //!props.focusProp ||
@@ -93,16 +103,6 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
     container?.initialObjects.sharedMap,
     multiuserComponent,
   ]);
-
-  const dictSetter = (key: string, val: string) => {
-    if (!container) throw new Error('Container not defined');
-    (container.initialObjects.sharedMap as SharedMap).set(key, val);
-  };
-
-  const dictGetter = (key: string) => {
-    if (!container) return '';
-    return (container.initialObjects.sharedMap as SharedMap).get(key);
-  };
 
   return (
     <View>
