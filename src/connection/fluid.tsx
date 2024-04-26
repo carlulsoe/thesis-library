@@ -102,6 +102,7 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
     dictGetter,
     container?.initialObjects.sharedMap,
     multiuserComponent,
+    isMain,
   ]);
 
   return (
