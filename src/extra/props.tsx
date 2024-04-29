@@ -1,3 +1,5 @@
+import type { ConnectionContext } from './OptionalConnectionContext';
+
 export interface DetectorProps {
   receivingFunction: Function;
   sendingFunction: Function;
@@ -23,4 +25,10 @@ export interface ConnectProps {
   containerId?: { containerId: ''; setContainerId: Function };
   toOtherUsers: boolean;
   focusProp?: FocusProps;
+}
+
+export interface FullyConnectedProps {
+  ownSharedContext: ConnectionContext;
+  sending?: Function;
+  receiving?: Function;
 }

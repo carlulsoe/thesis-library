@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren, useState } from 'react';
+import React, { type PropsWithChildren, useCallback, useState } from 'react';
 import { Button, StyleSheet, TextInput, View, Text } from 'react-native';
 import {
   TinyliciousClient,
@@ -59,15 +59,21 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
     props.containerId?.setContainerId(containerId);
   });
 
-  const dictSetter = (key: string, val: string) => {
-    if (!container) throw new Error('Container not defined');
-    (container.initialObjects.sharedMap as SharedMap).set(key, val);
-  };
+  const dictSetter = useCallback(
+    (key: string, val: string) => {
+      if (!container) throw new Error('Container not defined');
+      (container.initialObjects.sharedMap as SharedMap).set(key, val);
+    },
+    [container]
+  );
 
-  const dictGetter = (key: string) => {
-    if (!container) return '';
-    return (container.initialObjects.sharedMap as SharedMap).get(key);
-  };
+  const dictGetter = useCallback(
+    (key: string) => {
+      if (!container) return '';
+      return (container.initialObjects.sharedMap as SharedMap).get(key);
+    },
+    [container]
+  );
 
   React.useEffect(() => {
     if (
@@ -80,7 +86,7 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
       return;
     const internalDetector = (
       <FullyConnected
-        ownContext={{
+        ownSharedContext={{
           set: dictSetter,
           get: dictGetter,
           sharedMap: container?.initialObjects.sharedMap as SharedMap,
