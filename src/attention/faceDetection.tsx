@@ -12,27 +12,28 @@ import { detectionListener } from './detectionListener';
 
 export const FaceDetection = (fp: FocusProps) => {
   const context = useContext(OptionalConnectionContext);
-  const sharedMap: SharedMap = context?.sharedMap!;
   const videoRef = useRef<HTMLVideoElement>(null);
+  loadFaceModel();
+
   React.useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then((stream) => {
         // Set the video stream as the source for the video element
-        // @ts-ignore
+        if (!videoRef.current) return;
         videoRef.current.srcObject = stream;
         console.log('Accessed webcam');
-        faceapi.nets.tinyFaceDetector.loadFromUri('/').then(() => {});
       })
       .catch((error) => {
         console.error('Error accessing webcam:', error);
       });
   }, []);
 
-  if (!context || context.sharedMap) {
+  if (!context || !context.sharedMap) {
     console.log('initial Object is undefined');
     return <></>;
   }
+  const sharedMap: SharedMap = context.sharedMap!;
 
   // Get access to the webcam stream when the component mounts
 
@@ -41,8 +42,19 @@ export const FaceDetection = (fp: FocusProps) => {
     300
   );
   sharedMap.addListener('valueChanged', detectionListener(fp, context));
-  return <></>;
+  return (
+    <div>
+      <video
+        autoPlay
+        playsInline
+        muted
+        style={notVisibleStyle}
+        ref={videoRef}
+      />
+    </div>
+  );
 };
+
 const IsFocused = async (
   focus: MutableRefObject<boolean>,
   uuid: any,
@@ -113,3 +125,11 @@ async function faceDetect(img: any) {
   }
   return detection;
 }
+
+async function loadFaceModel() {
+  return await faceapi.nets.tinyFaceDetector.loadFromUri('/static').then(() => {
+    console.log('Face model loaded');
+  });
+}
+
+const notVisibleStyle = { display: 'none' };

@@ -4,6 +4,7 @@ import {
   Connect,
   type ConnectionContext,
   type DetectorProps,
+  FaceDetection,
   type FocusProps,
 } from 'thesis-library';
 import { GetDetector } from '../attention/GetDetector';
@@ -39,19 +40,13 @@ export function MultiDeviceAttention({
   };*/
   const detector = transferMethod
     ? GetDetector(DataHandler(fp, transferMethod))
-    : GetDetector(fp);
+    : GetDetector(fp, FaceDetection);
   return (
     <View>
       <Connect toOtherUsers={false} focusProp={fp}>
         {children}
         {detector}
       </Connect>
-      {/* <Connect containerSchema={initialMap} /> */}
-      <div>
-        <video autoPlay playsInline muted style={notVisibleStyle} />
-      </div>
     </View>
   );
 }
-
-const notVisibleStyle = { display: 'none' };

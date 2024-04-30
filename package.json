@@ -206,7 +206,6 @@
     "face-api.js": "^0.22.2",
     "fluid-framework": "~1.4.0",
     "guid-typescript": "^1.0.9",
-    "peerjs": "^1.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.73.4",
