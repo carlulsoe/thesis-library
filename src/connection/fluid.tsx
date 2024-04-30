@@ -23,11 +23,14 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
   const [isMain, setIsMain] = useState(false);
 
   let clientProps: TinyliciousClientProps;
-  if (process.env.EXPO_PUBLIC_TINYLICIOUS_DOMAIN) {
+  if (
+    process.env.EXPO_PUBLIC_TINYLICIOUS_DOMAIN &&
+    process.env.EXPO_PUBLIC_TINYLICIOUS_PORT
+  ) {
     clientProps = {
       connection: {
         domain: process.env.EXPO_PUBLIC_TINYLICIOUS_DOMAIN,
-        port: 443,
+        port: parseInt(process.env.EXPO_PUBLIC_TINYLICIOUS_PORT, 10),
       },
     };
   } else {
