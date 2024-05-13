@@ -15,6 +15,7 @@ export const FullyConnected = ({
   // To avoid infinite loops
   let ownJustUpdated = false;
   let sharedJustUpdated = false;
+  console.log('Fully');
 
   sharedContext.sharedMap.on('valueChanged', (changed) => {
     if (ownJustUpdated) {
