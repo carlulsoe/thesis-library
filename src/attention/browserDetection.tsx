@@ -13,10 +13,10 @@ export const BrowserDetection = (fp: FocusProps) => {
   const sharedMap = context?.sharedMap;
   if (!sharedMap) return <></>;
   const detectionListener1 = detectionListener(fp, context);
-  if (sharedMap.listeners('valueChanged').length >= 1) {
-    console.log(sharedMap.listeners('valueChanged'));
-    //sharedMap.removeAllListeners('valueChanged');
-
+  if (sharedMap.listeners('valueChanged').length < 1) {
+    setInterval(() => IsFocused(fp.focus, fp.uuid, sharedMap), 10);
+    sharedMap.on('valueChanged', detectionListener1);
+  } else {
     const listeners: Function[] = sharedMap.listeners('valueChanged');
     // @ts-ignore
     const shutUpAndTakeMyFunction: (args: any[]) => any = listeners.filter(
@@ -25,10 +25,7 @@ export const BrowserDetection = (fp: FocusProps) => {
     if (!shutUpAndTakeMyFunction) return <></>;
     sharedMap.removeListener('valueChanged', shutUpAndTakeMyFunction);
     sharedMap.addListener('valueChanged', detectionListener1);
-    return <></>;
   }
-  setInterval(() => IsFocused(fp.focus, fp.uuid, sharedMap), 10);
-  sharedMap.on('valueChanged', detectionListener1);
   return <></>;
 };
 
