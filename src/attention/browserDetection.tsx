@@ -13,7 +13,7 @@ export const BrowserDetection = (fp: FocusProps) => {
   const sharedMap = context?.sharedMap;
   if (!sharedMap) return <></>;
 
-  setInterval(() => IsFocused(fp.focus, fp.uuid, sharedMap), 300);
+  setInterval(() => IsFocused(fp.focus, fp.uuid, sharedMap), 10);
   sharedMap.addListener('valueChanged', detectionListener(fp, context));
   return <></>;
 };
