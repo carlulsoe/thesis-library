@@ -8,7 +8,7 @@ export function detectionListener(fp: FocusProps, context: ConnectionContext) {
     if (changed.key !== ATTENTION_KEY) return;
     if (local) {
       // CASE 1a: Nothing happened
-      const itIsStillThisDevice = changed.previousValue === fp.uuid;
+      const itIsStillThisDevice = changed.previousValue === fp.uuid.current;
       if (itIsStillThisDevice) return;
 
       // CASE 1b: value changed from another to this
@@ -17,7 +17,7 @@ export function detectionListener(fp: FocusProps, context: ConnectionContext) {
     } else {
       // CASE 2a: Thing happened on other devices
       const itIsAnotherDeviceToAnotherDevice =
-        changed.previousValue !== fp.uuid;
+        changed.previousValue !== fp.uuid.current;
       if (itIsAnotherDeviceToAnotherDevice) return;
 
       // CASE 2b: value changed from this to another

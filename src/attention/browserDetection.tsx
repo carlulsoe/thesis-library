@@ -12,8 +12,15 @@ export const BrowserDetection = (fp: FocusProps) => {
   const context = useContext(OptionalConnectionContext);
   const sharedMap = context?.sharedMap;
   if (!sharedMap) return <></>;
+  if (sharedMap.listeners('valueChanged').length >= 1) {
+    //console.log(sharedMap.listeners('valueChanged').length);
+    sharedMap.removeAllListeners('valueChanged');
+    sharedMap.addListener('valueChanged', detectionListener(fp, context));
 
-  setInterval(() => IsFocused(fp.focus, fp.uuid, sharedMap), 300);
+    return <></>;
+  }
+
+  setInterval(() => IsFocused(fp.focus, fp.uuid, sharedMap), 10);
   sharedMap.addListener('valueChanged', detectionListener(fp, context));
   return <></>;
 };
@@ -27,7 +34,7 @@ const IsFocused = async (
   if (focus.current !== docFocus) {
     focus.current = docFocus;
     if (focus.current) {
-      attention.set(ATTENTION_KEY, uuid);
+      attention.set(ATTENTION_KEY, uuid.current);
     }
     //console.log(`Focus changed to: ${focus.current}, with ${uuid}.`);
   }

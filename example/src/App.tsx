@@ -1,23 +1,33 @@
 import React, { useState } from 'react';
-import { Text } from 'react-native';
+import { TextInput } from 'react-native';
 import { type ConnectionContext, MultiDeviceAttention } from 'thesis-library';
 
 export default function App() {
   // Run > `npx tinylicious` before normal start
-  const [time, setTime] = useState('');
+  const [text, setText] = useState('');
+  const LOC = 'text';
 
   const sender = (context: ConnectionContext) => {
-    context.set('time', Date.now().toString());
-    setTime(context.get('time'));
+    context.set(LOC, text);
+    //setText(context.get(LOC));
   };
 
-  const receiver = async (context: ConnectionContext) => {
-    setTime(context.get('time'));
+  const receiver = (context: ConnectionContext) => {
+    const newText = context.get(LOC);
+    setText(newText);
   };
 
   return (
     <MultiDeviceAttention receivingFunction={receiver} sendingFunction={sender}>
-      <Text>{time}</Text>
+      <TextInput
+        multiline
+        numberOfLines={4}
+        maxLength={40}
+        onChangeText={(t) => {
+          setText(t);
+        }}
+        value={text}
+      />
     </MultiDeviceAttention>
   );
 }
