@@ -63,7 +63,7 @@ export function ImageController(
   async function sending(context: ConnectionContext) {
     if (!selectedImage) return;
 
-    const key = 'map.jpg';
+    const key = 'image.txt';
     const input = {
       Bucket: 'thesis',
       Key: key,

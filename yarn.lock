@@ -2421,48 +2421,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cbor-extract/cbor-extract-darwin-arm64@npm:2.2.0":
-  version: 2.2.0
-  resolution: "@cbor-extract/cbor-extract-darwin-arm64@npm:2.2.0"
-  conditions: os=darwin & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"@cbor-extract/cbor-extract-darwin-x64@npm:2.2.0":
-  version: 2.2.0
-  resolution: "@cbor-extract/cbor-extract-darwin-x64@npm:2.2.0"
-  conditions: os=darwin & cpu=x64
-  languageName: node
-  linkType: hard
-
-"@cbor-extract/cbor-extract-linux-arm64@npm:2.2.0":
-  version: 2.2.0
-  resolution: "@cbor-extract/cbor-extract-linux-arm64@npm:2.2.0"
-  conditions: os=linux & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"@cbor-extract/cbor-extract-linux-arm@npm:2.2.0":
-  version: 2.2.0
-  resolution: "@cbor-extract/cbor-extract-linux-arm@npm:2.2.0"
-  conditions: os=linux & cpu=arm
-  languageName: node
-  linkType: hard
-
-"@cbor-extract/cbor-extract-linux-x64@npm:2.2.0":
-  version: 2.2.0
-  resolution: "@cbor-extract/cbor-extract-linux-x64@npm:2.2.0"
-  conditions: os=linux & cpu=x64
-  languageName: node
-  linkType: hard
-
-"@cbor-extract/cbor-extract-win32-x64@npm:2.2.0":
-  version: 2.2.0
-  resolution: "@cbor-extract/cbor-extract-win32-x64@npm:2.2.0"
-  conditions: os=win32 & cpu=x64
-  languageName: node
-  linkType: hard
-
 "@colors/colors@npm:1.6.0, @colors/colors@npm:^1.6.0":
   version: 1.6.0
   resolution: "@colors/colors@npm:1.6.0"
@@ -6200,13 +6158,6 @@ __metadata:
   version: 2.0.4
   resolution: "@leichtgewicht/ip-codec@npm:2.0.4"
   checksum: 10/3c7ffb0afb86c731a02813aa4370da27eac037abf8a15fce211226c11b644610382c8eca7efadace9471ee1959afe72fc1d43a62227d974b9fca8eae8b8d2124
-  languageName: node
-  linkType: hard
-
-"@msgpack/msgpack@npm:^2.8.0":
-  version: 2.8.0
-  resolution: "@msgpack/msgpack@npm:2.8.0"
-  checksum: 10/d90ab780c2c96fa5af22f38e0b76871d7c77d06fcf40786b64ada4e0ae02e17b216b38a5505fb4b7d1c339d95caee0669f5ec9004a2b392ce0cbe16afdbd9333
   languageName: node
   linkType: hard
 
@@ -10054,49 +10005,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cbor-extract@npm:^2.1.1":
-  version: 2.2.0
-  resolution: "cbor-extract@npm:2.2.0"
-  dependencies:
-    "@cbor-extract/cbor-extract-darwin-arm64": "npm:2.2.0"
-    "@cbor-extract/cbor-extract-darwin-x64": "npm:2.2.0"
-    "@cbor-extract/cbor-extract-linux-arm": "npm:2.2.0"
-    "@cbor-extract/cbor-extract-linux-arm64": "npm:2.2.0"
-    "@cbor-extract/cbor-extract-linux-x64": "npm:2.2.0"
-    "@cbor-extract/cbor-extract-win32-x64": "npm:2.2.0"
-    node-gyp: "npm:latest"
-    node-gyp-build-optional-packages: "npm:5.1.1"
-  dependenciesMeta:
-    "@cbor-extract/cbor-extract-darwin-arm64":
-      optional: true
-    "@cbor-extract/cbor-extract-darwin-x64":
-      optional: true
-    "@cbor-extract/cbor-extract-linux-arm":
-      optional: true
-    "@cbor-extract/cbor-extract-linux-arm64":
-      optional: true
-    "@cbor-extract/cbor-extract-linux-x64":
-      optional: true
-    "@cbor-extract/cbor-extract-win32-x64":
-      optional: true
-  bin:
-    download-cbor-prebuilds: bin/download-prebuilds.js
-  checksum: 10/c23bb69059407c1d7847d4347e9453336d0f1dfe0c82cf4cb0e91a48feb7d2ea453244b2b5823f7fe7e699745a29bab44fcb5e341fa940d290fab41a970db3ba
-  languageName: node
-  linkType: hard
-
-"cbor-x@npm:1.5.4":
-  version: 1.5.4
-  resolution: "cbor-x@npm:1.5.4"
-  dependencies:
-    cbor-extract: "npm:^2.1.1"
-  dependenciesMeta:
-    cbor-extract:
-      optional: true
-  checksum: 10/7c31800a53bfb0c86112c2945cca13306d01c5dc31d225b63fefd90d613c52c5acd1e205d94a51d74a5fade09f791997b0009e7b6f26a5b2c7d92f12ee9eedc4
-  languageName: node
-  linkType: hard
-
 "chalk@npm:5.2.0":
   version: 5.2.0
   resolution: "chalk@npm:5.2.0"
@@ -11826,13 +11734,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"detect-libc@npm:^2.0.1":
-  version: 2.0.3
-  resolution: "detect-libc@npm:2.0.3"
-  checksum: 10/b4ea018d623e077bd395f168a9e81db77370dde36a5b01d067f2ad7989924a81d31cb547ff764acb2aa25d50bb7fdde0b0a93bec02212b0cb430621623246d39
-  languageName: node
-  linkType: hard
-
 "detect-newline@npm:^3.0.0":
   version: 3.1.0
   resolution: "detect-newline@npm:3.1.0"
@@ -12841,7 +12742,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter3@npm:^4.0.0, eventemitter3@npm:^4.0.7":
+"eventemitter3@npm:^4.0.0":
   version: 4.0.7
   resolution: "eventemitter3@npm:4.0.7"
   checksum: 10/8030029382404942c01d0037079f1b1bc8fed524b5849c237b80549b01e2fc49709e1d0c557fa65ca4498fc9e24cff1475ef7b855121fcc15f9d61f93e282346
@@ -18493,19 +18394,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-gyp-build-optional-packages@npm:5.1.1":
-  version: 5.1.1
-  resolution: "node-gyp-build-optional-packages@npm:5.1.1"
-  dependencies:
-    detect-libc: "npm:^2.0.1"
-  bin:
-    node-gyp-build-optional-packages: bin.js
-    node-gyp-build-optional-packages-optional: optional.js
-    node-gyp-build-optional-packages-test: build-test.js
-  checksum: 10/96dbeeba03fe5b9e86e1dc4491d7932cbf4c23f4ef8e63fb83bbbdcaf4553d8cbd5f23b9bc3632cb76a0739524f4b64f829daa5b608ebd72285ffdb03a9bdd81
-  languageName: node
-  linkType: hard
-
 "node-gyp-build@npm:^4.3.0":
   version: 4.8.0
   resolution: "node-gyp-build@npm:4.8.0"
@@ -19390,26 +19278,6 @@ __metadata:
   version: 4.0.0
   resolution: "path-type@npm:4.0.0"
   checksum: 10/5b1e2daa247062061325b8fdbfd1fb56dde0a448fb1455453276ea18c60685bdad23a445dc148cf87bc216be1573357509b7d4060494a6fd768c7efad833ee45
-  languageName: node
-  linkType: hard
-
-"peerjs-js-binarypack@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "peerjs-js-binarypack@npm:2.1.0"
-  checksum: 10/590e8796ffa1ac35a6a2c0d69cc8ad2173d3a720405fd5159c7801629af65cb70a9cb505fd4320c2cee4a1e485d42497cb26a82479a1300385a82406e8387a5a
-  languageName: node
-  linkType: hard
-
-"peerjs@npm:^1.5.2":
-  version: 1.5.2
-  resolution: "peerjs@npm:1.5.2"
-  dependencies:
-    "@msgpack/msgpack": "npm:^2.8.0"
-    cbor-x: "npm:1.5.4"
-    eventemitter3: "npm:^4.0.7"
-    peerjs-js-binarypack: "npm:^2.1.0"
-    webrtc-adapter: "npm:^8.0.0"
-  checksum: 10/dceede0a5d601c4bb2b5743d8a36cff3a0eb3e5d2b07d1e7158757f306f9dd1e2a8c99a5e8a14aa552a57ce45eb2b5cb632146bb5bab59cab8816d1d1b04f869
   languageName: node
   linkType: hard
 
@@ -21402,13 +21270,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sdp@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "sdp@npm:3.2.0"
-  checksum: 10/3ea337c24f91f7429c79b97f1a16c19a5abb3b6672ce7c05cc931314af1318cdf3a7a88e66ea1ee71e05bf41bf3a20d5940b1c93f3099e820cec60068ddbd9b4
-  languageName: node
-  linkType: hard
-
 "secure-keys@npm:^1.0.0":
   version: 1.0.0
   resolution: "secure-keys@npm:1.0.0"
@@ -22894,7 +22755,6 @@ __metadata:
     jest: "npm:^29.7.0"
     jest-expo: "npm:50.0.3"
     lefthook: "npm:^1.6.2"
-    peerjs: "npm:^1.5.2"
     prettier: "npm:^3.0.3"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
@@ -24034,15 +23894,6 @@ __metadata:
   bin:
     webpack: bin/webpack.js
   checksum: 10/48c9696eca950bfa7c943a24b8235fdf0575acd73a8eb1661f8189d3d1f431362f3a0e158e2941a7e4f0852ea6e32d7d4e89283149247e4389a8aad0fe6c247e
-  languageName: node
-  linkType: hard
-
-"webrtc-adapter@npm:^8.0.0":
-  version: 8.2.3
-  resolution: "webrtc-adapter@npm:8.2.3"
-  dependencies:
-    sdp: "npm:^3.2.0"
-  checksum: 10/13a988ac12e0bd89abe66aa578f3d2ba9c93d222ca1c3b0b2e00bb784b771fb964f0fa1b6a2d68663c6307d17719878b164211008a9546a57c930fecc421c2be
   languageName: node
   linkType: hard
 
