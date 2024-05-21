@@ -1,9 +1,8 @@
 import {
   GetObjectCommand,
-  type GetObjectCommandInput,
   PutObjectCommand,
-  type PutObjectCommandInput,
   S3Client,
+  type S3ClientConfig,
 } from '@aws-sdk/client-s3';
 import type { ConnectionContext } from 'thesis-library';
 
@@ -19,72 +18,65 @@ export function ImageController(
   const ACCOUNT_ID = process.env.EXPO_PUBLIC_ACCOUNT_ID;
   const ACCESS_KEY_ID = process.env.EXPO_PUBLIC_ACCESS_KEY_ID;
   const SECRET_ACCESS_KEY = process.env.EXPO_PUBLIC_SECRET_ACCESS_KEY;
-  let S3: S3Client;
+
   if (
     ACCOUNT_ID === undefined ||
     ACCESS_KEY_ID === undefined ||
     SECRET_ACCESS_KEY === undefined
   ) {
     console.log('Could not load env variables.');
-  } else {
-    S3 = new S3Client({
-      region: 'auto',
-      endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com/`,
-      credentials: {
-        accessKeyId: ACCESS_KEY_ID,
-        secretAccessKey: SECRET_ACCESS_KEY,
-      },
-    });
+    return;
   }
+
+  const config: S3ClientConfig = {
+    region: 'auto',
+    endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: {
+      accessKeyId: ACCESS_KEY_ID,
+      secretAccessKey: SECRET_ACCESS_KEY,
+    },
+  };
+
+  const S3 = new S3Client(config);
 
   const fileKeyName = 'fileKey';
 
   async function receive(context: ConnectionContext) {
     let fileKey = context.get(fileKeyName);
-    if (fileKey === null) return;
-    if (fileKey === undefined) return;
-    if (fileKey === '') return;
-    if (fileKey === 'null') return;
-    const input: GetObjectCommandInput = {
-      // GetObjectRequest
-      Bucket: 'thesis', // required
-      Key: fileKey, // required
+    if (!fileKey) return;
+
+    const input = {
+      Bucket: 'thesis',
+      Key: fileKey,
     };
-    const { Body } = await S3.send(new GetObjectCommand(input));
-    // Convert image data to Base64 encoded string
-    if (!Body) {
-      return;
+
+    try {
+      const { Body } = await S3.send(new GetObjectCommand(input));
+      if (!Body) return;
+      setSelectedImage(await Body.transformToString());
+      console.log('received');
+    } catch (error) {
+      console.error('Error receiving file:', error);
     }
-    const imageBlob = new Blob([await Body.transformToByteArray()]);
-
-    // Create FileReader to read Blob as Data URI
-    const reader = new FileReader();
-
-    // Define onload event for reader
-    reader.onload = function (event) {
-      // Get Data URI
-      const dataURI = event.target?.result;
-      if (typeof dataURI !== 'string') return;
-      setSelectedImage(dataURI);
-    };
-    reader.readAsDataURL(imageBlob);
-    console.log('received');
   }
 
   async function sending(context: ConnectionContext) {
-    if (selectedImage === undefined) {
-      return;
-    }
+    if (!selectedImage) return;
+
     const key = 'map.jpg';
-    const input: PutObjectCommandInput = {
-      // GetObjectRequest
-      Bucket: 'thesis', // required
-      Key: key, // required
+    const input = {
+      Bucket: 'thesis',
+      Key: key,
       Body: selectedImage,
     };
-    await S3.send(new PutObjectCommand(input));
-    context.set(fileKeyName, key);
-    console.log('sending');
+
+    try {
+      await S3.send(new PutObjectCommand(input));
+      context.set(fileKeyName, key);
+      console.log('sending');
+    } catch (error) {
+      console.error('Error sending file:', error);
+    }
   }
 
   return { receive, sending };
