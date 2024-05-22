@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
-import { MultiDeviceAttention } from 'thesis-library';
-import { ImageController } from './imageControllerS3';
+import { MultiDeviceAttention, ImageController } from 'thesis-library';
+import type { S3ClientConfig } from '@aws-sdk/client-s3';
 
 export default function PhotoApp() {
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
@@ -17,6 +17,28 @@ export default function PhotoApp() {
       }
     })();
   }, []);
+
+  const ACCOUNT_ID = process.env.EXPO_PUBLIC_ACCOUNT_ID;
+  const ACCESS_KEY_ID = process.env.EXPO_PUBLIC_ACCESS_KEY_ID;
+  const SECRET_ACCESS_KEY = process.env.EXPO_PUBLIC_SECRET_ACCESS_KEY;
+
+  if (
+    ACCOUNT_ID === undefined ||
+    ACCESS_KEY_ID === undefined ||
+    SECRET_ACCESS_KEY === undefined
+  ) {
+    console.log('Could not load env variables.');
+    return;
+  }
+
+  const config: S3ClientConfig = {
+    region: 'auto',
+    endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: {
+      accessKeyId: ACCESS_KEY_ID,
+      secretAccessKey: SECRET_ACCESS_KEY,
+    },
+  };
 
   const pickImage = async () => {
     try {
@@ -46,7 +68,11 @@ export default function PhotoApp() {
       console.error('Error picking an image', error);
     }
   };
-  const { receive, sending } = ImageController(selectedImage, setSelectedImage);
+  const { receive, sending } = ImageController(
+    selectedImage,
+    setSelectedImage,
+    config
+  );
 
   return (
     <View style={styles.container}>
