@@ -2697,6 +2697,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@expensify/react-native-live-markdown@npm:^0.1.76":
+  version: 0.1.76
+  resolution: "@expensify/react-native-live-markdown@npm:0.1.76"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10/e47b9df91fff518aec71b7e1ba865fe860f02404e6bbd04c80909158d6b4326a5f4fc5d41ec8843f10c2318e68aa6780bd6ac80d3aaaf95def504a3d5e8c8bf1
+  languageName: node
+  linkType: hard
+
 "@expo/bunyan@npm:^4.0.0":
   version: 4.0.0
   resolution: "@expo/bunyan@npm:4.0.0"
@@ -22701,6 +22711,7 @@ __metadata:
   resolution: "thesis-library-example@workspace:example"
   dependencies:
     "@babel/core": "npm:^7.20.0"
+    "@expensify/react-native-live-markdown": "npm:^0.1.76"
     "@expo/metro-runtime": "npm:~3.1.3"
     "@expo/webpack-config": "npm:^19.0.1"
     babel-loader: "npm:^8.1.0"
