@@ -2,11 +2,10 @@ import 'react-native-get-random-values';
 import React, { useCallback } from 'react';
 import {
   type ConnectionContext,
-  ImageController,
   MultiDeviceAttention,
+  S3ImageSetup,
 } from 'thesis-library';
 import { objEq, uniqueMerge } from '../../src/extra/tools';
-import type { S3ClientConfig } from '@aws-sdk/client-s3';
 import { Canvas, type IPath } from './canvasComponent';
 
 export default function App() {
@@ -28,16 +27,13 @@ export default function App() {
   const ACCESS_KEY_ID = '4f24e7d59e6cb1538760ff4af0ec7a3b';
   const SECRET_ACCESS_KEY =
     '7a39a7292f4d74aedbbc48deebd834bf901e045cbe2e294deea6c51cb8bee66a';
-
-  const config: S3ClientConfig = {
-    region: 'auto',
-    endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
-    credentials: {
-      accessKeyId: ACCESS_KEY_ID,
-      secretAccessKey: SECRET_ACCESS_KEY,
-    },
-  };
-  const { receive } = ImageController(imageUrl, setImageUrl, config);
+  const { receive } = S3ImageSetup(
+    ACCOUNT_ID,
+    ACCESS_KEY_ID,
+    SECRET_ACCESS_KEY,
+    imageUrl,
+    setImageUrl
+  );
 
   const receiver = (Context: ConnectionContext) => {
     setLocalPaths(mergePaths(Context));

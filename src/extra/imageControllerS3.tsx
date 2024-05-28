@@ -5,15 +5,29 @@ import {
   type S3ClientConfig,
 } from '@aws-sdk/client-s3';
 import type { ConnectionContext } from 'thesis-library';
+import type { Dispatch, SetStateAction } from 'react';
 
-export function ImageController(
+export function S3ImageSetup(
+  ACCOUNT_ID: string,
+  ACCESS_KEY_ID: string,
+  SECRET_ACCESS_KEY: string,
+  url: string,
+  setUrl: Dispatch<SetStateAction<string>>
+) {
+  const config: S3ClientConfig = {
+    region: 'auto',
+    endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: {
+      accessKeyId: ACCESS_KEY_ID,
+      secretAccessKey: SECRET_ACCESS_KEY,
+    },
+  };
+  return ImageController(url, setUrl, config);
+}
+
+function ImageController(
   selectedImage: string | undefined,
-  setSelectedImage: (
-    value:
-      | ((prevState: string | undefined) => string | undefined)
-      | string
-      | undefined
-  ) => void,
+  setSelectedImage: Dispatch<SetStateAction<string>>,
   config: S3ClientConfig
 ) {
   const S3 = new S3Client(config);

@@ -4,9 +4,8 @@ import type { MarkdownStyle } from '@expensify/react-native-live-markdown';
 import {
   type ConnectionContext,
   MultiDeviceAttention,
-  ImageController,
+  S3ImageSetup,
 } from 'thesis-library';
-import type { S3ClientConfig } from '@aws-sdk/client-s3';
 import { Canvas, type IPath } from './canvasComponent';
 import { objEq, uniqueMerge } from '../../src/extra/tools';
 
@@ -14,7 +13,7 @@ export default function App() {
   // Run > `npx tinylicious` before normal start
   const [text, setText] = useState('');
   const [paths, setPaths] = useState<IPath[]>([]);
-  const [selectedImage, setSelectedImage] = useState<string | undefined>();
+  const [selectedImage, setSelectedImage] = useState<string>('');
   const textLoc = 'text';
   const pathLoc = 'paths';
 
@@ -22,6 +21,13 @@ export default function App() {
   const ACCESS_KEY_ID = '4f24e7d59e6cb1538760ff4af0ec7a3b';
   const SECRET_ACCESS_KEY =
     '7a39a7292f4d74aedbbc48deebd834bf901e045cbe2e294deea6c51cb8bee66a';
+  const { receive } = S3ImageSetup(
+    ACCOUNT_ID,
+    ACCESS_KEY_ID,
+    SECRET_ACCESS_KEY,
+    selectedImage,
+    setSelectedImage
+  );
 
   const mergePaths = useCallback(
     (Context: ConnectionContext) => {
@@ -33,17 +39,6 @@ export default function App() {
     },
     [paths]
   );
-
-  const config: S3ClientConfig = {
-    region: 'auto',
-    endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
-    credentials: {
-      accessKeyId: ACCESS_KEY_ID,
-      secretAccessKey: SECRET_ACCESS_KEY,
-    },
-  };
-
-  const { receive } = ImageController(selectedImage, setSelectedImage, config);
 
   const sender = (context: ConnectionContext) => {
     context.set(textLoc, text);
