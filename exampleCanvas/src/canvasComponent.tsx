@@ -73,7 +73,7 @@ export const Canvas = ({
             />
           ))}
           <Path d={currentPath} stroke={currentColor} fillOpacity={0} />
-          <Image width="200" height="200" href={imageUrl} />
+          <Image width="400" height="400" href={imageUrl} />
         </Svg>
       </View>
       <View>
