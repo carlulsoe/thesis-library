@@ -1,32 +1,39 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { MarkdownTextInput } from '@expensify/react-native-live-markdown';
 import type { MarkdownStyle } from '@expensify/react-native-live-markdown';
 import {
-  Canvas,
   type ConnectionContext,
   MultiDeviceAttention,
   ImageController,
 } from 'thesis-library';
 import type { S3ClientConfig } from '@aws-sdk/client-s3';
+import { Canvas, type IPath } from './canvasComponent';
+import { objEq, uniqueMerge } from '../../src/extra/tools';
 
 export default function App() {
   // Run > `npx tinylicious` before normal start
   const [text, setText] = useState('');
+  const [paths, setPaths] = useState<IPath[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
-  const LOC = 'text';
+  const textLoc = 'text';
+  const pathLoc = 'paths';
 
-  const ACCOUNT_ID = process.env.EXPO_PUBLIC_ACCOUNT_ID;
-  const ACCESS_KEY_ID = process.env.EXPO_PUBLIC_ACCESS_KEY_ID;
-  const SECRET_ACCESS_KEY = process.env.EXPO_PUBLIC_SECRET_ACCESS_KEY;
+  const ACCOUNT_ID = 'd725e78d7ab30f5b391a57797cb0eeb5';
+  const ACCESS_KEY_ID = '4f24e7d59e6cb1538760ff4af0ec7a3b';
+  const SECRET_ACCESS_KEY =
+    '7a39a7292f4d74aedbbc48deebd834bf901e045cbe2e294deea6c51cb8bee66a';
 
-  if (
-    ACCOUNT_ID === undefined ||
-    ACCESS_KEY_ID === undefined ||
-    SECRET_ACCESS_KEY === undefined
-  ) {
-    console.log('Could not load env variables.');
-    return;
-  }
+  const mergePaths = useCallback(
+    (Context: ConnectionContext) => {
+      if (Context.sharedMap == null) return paths;
+      let remotePaths: IPath[] = Context.get(pathLoc)
+        ? JSON.parse(Context.get(pathLoc))
+        : [];
+      if (objEq(remotePaths, paths)) return paths;
+      return uniqueMerge(remotePaths, paths);
+    },
+    [paths]
+  );
 
   const config: S3ClientConfig = {
     region: 'auto',
@@ -41,27 +48,24 @@ export default function App() {
 
   const sender = (context: ConnectionContext) => {
     console.log('send', text);
-    context.set(LOC, text);
+    context.set(textLoc, text);
+    context.set(pathLoc, paths);
     //setText(context.get(LOC));
   };
 
   const receiver = (context: ConnectionContext) => {
     receive(context);
-    console.log('reci', text);
-    let newText = context.get(LOC);
-    if (selectedImage) {
-      if (selectedImage.startsWith('data:')) {
-        let img = '![image](' + selectedImage + ')';
-        newText += '\n' + img;
-        setSelectedImage(undefined);
-      }
-    }
-    setText(newText);
+    setPaths(mergePaths(context));
+    setText(context.get(textLoc));
   };
 
   return (
     <MultiDeviceAttention receivingFunction={receiver} sendingFunction={sender}>
-      <Canvas variable={'canvas'} />
+      <Canvas
+        localPaths={paths}
+        setLocalPaths={setPaths}
+        imageUrl={selectedImage}
+      />
       <MarkdownTextInput
         multiline
         onChangeText={setText}
