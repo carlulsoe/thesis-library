@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "example",
-    "slug": "example",
+    "name": "Note app example",
+    "slug": "NoteExample",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "landscape",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -14,17 +14,6 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.example"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.example"
-    },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"

@@ -27,9 +27,10 @@
     "assets"
   ],
   "scripts": {
-    "example": "yarn workspace thesis-library-example",
-    "cameraApp": "yarn workspace thesis-library-example-camera-app",
+    "example": "yarn workspace thesis-library-example-note",
+    "camera": "yarn workspace thesis-library-example-camera",
     "canvas": "yarn workspace thesis-library-example-canvas",
+    "timestamp": "yarn workspace thesis-library-example-timestamp",
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -104,9 +105,10 @@
     "react-native": "*"
   },
   "workspaces": [
-    "example",
-    "exampleCameraApp",
-    "exampleCanvas"
+    "exampleNote",
+    "exampleCamera",
+    "exampleCanvas",
+    "exampleTimestamp"
   ],
   "packageManager": "yarn@4.2.2",
   "jest": {
