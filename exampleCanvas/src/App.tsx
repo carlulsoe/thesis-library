@@ -27,6 +27,8 @@ export default function App() {
   const ACCESS_KEY_ID = '4f24e7d59e6cb1538760ff4af0ec7a3b';
   const SECRET_ACCESS_KEY =
     '7a39a7292f4d74aedbbc48deebd834bf901e045cbe2e294deea6c51cb8bee66a';
+  if (!(ACCOUNT_ID && ACCESS_KEY_ID && SECRET_ACCESS_KEY))
+    throw Error('Could not load environment variables');
   const { receive } = S3ImageSetup(
     ACCOUNT_ID,
     ACCESS_KEY_ID,
