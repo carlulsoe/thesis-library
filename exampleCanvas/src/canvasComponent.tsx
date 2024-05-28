@@ -64,6 +64,7 @@ export const Canvas = ({
         onTouchEnd={handleEnd}
       >
         <Svg width={width} height={height * (7.4 / 9)}>
+          <Image width="400" height="400" href={imageUrl} />
           {localPaths.map((path) => (
             <Path
               key={path.path}
@@ -73,7 +74,6 @@ export const Canvas = ({
             />
           ))}
           <Path d={currentPath} stroke={currentColor} fillOpacity={0} />
-          <Image width="400" height="400" href={imageUrl} />
         </Svg>
       </View>
       <View>
