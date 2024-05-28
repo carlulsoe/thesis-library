@@ -26,9 +26,8 @@ export default function App() {
   const mergePaths = useCallback(
     (Context: ConnectionContext) => {
       if (Context.sharedMap == null) return paths;
-      let remotePaths: IPath[] = Context.get(pathLoc)
-        ? JSON.parse(Context.get(pathLoc))
-        : [];
+      const JSONPaths = Context.get(pathLoc);
+      let remotePaths: IPath[] = JSONPaths ? JSON.parse(JSONPaths) : [];
       if (objEq(remotePaths, paths)) return paths;
       return uniqueMerge(remotePaths, paths);
     },
@@ -47,9 +46,8 @@ export default function App() {
   const { receive } = ImageController(selectedImage, setSelectedImage, config);
 
   const sender = (context: ConnectionContext) => {
-    console.log('send', text);
     context.set(textLoc, text);
-    context.set(pathLoc, paths);
+    context.set(pathLoc, JSON.stringify(paths));
     //setText(context.get(LOC));
   };
 
