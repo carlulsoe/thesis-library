@@ -13,6 +13,8 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import Svg, { Image, Path } from 'react-native-svg';
+import type { ConnectionContext } from 'thesis-library';
+import { objEq, uniqueMerge } from '../../src/extra/tools';
 
 interface CanvasProps {
   localPaths: IPath[];
@@ -145,4 +147,17 @@ enum Colors {
 export type IPath = {
   color: string;
   path: string;
+};
+
+export const mergePaths = (
+  localPaths: IPath[],
+  LOCATION: string,
+  Context: ConnectionContext
+) => {
+  if (Context.sharedMap == null) return localPaths;
+  let remotePaths: IPath[] = Context.get(LOCATION)
+    ? JSON.parse(Context.get(LOCATION))
+    : [];
+  if (objEq(remotePaths, localPaths)) return localPaths;
+  return uniqueMerge(remotePaths, localPaths);
 };

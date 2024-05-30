@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { MarkdownTextInput } from '@expensify/react-native-live-markdown';
 import type { MarkdownStyle } from '@expensify/react-native-live-markdown';
 import {
@@ -6,8 +6,7 @@ import {
   MultiDeviceAttention,
   S3ImageSetup,
 } from 'thesis-library';
-import { Canvas, type IPath } from './canvasComponent';
-import { objEq, uniqueMerge } from '../../src/extra/tools';
+import { Canvas, type IPath, mergePaths } from './canvasComponent';
 
 export default function App() {
   // Run > `npx tinylicious` before normal start
@@ -31,17 +30,6 @@ export default function App() {
     setSelectedImage
   );
 
-  const mergePaths = useCallback(
-    (Context: ConnectionContext) => {
-      if (Context.sharedMap == null) return paths;
-      const JSONPaths = Context.get(pathLoc);
-      let remotePaths: IPath[] = JSONPaths ? JSON.parse(JSONPaths) : [];
-      if (objEq(remotePaths, paths)) return paths;
-      return uniqueMerge(remotePaths, paths);
-    },
-    [paths]
-  );
-
   const sender = (context: ConnectionContext) => {
     context.set(textLoc, text);
     context.set(pathLoc, JSON.stringify(paths));
@@ -50,7 +38,7 @@ export default function App() {
 
   const receiver = (context: ConnectionContext) => {
     receive(context);
-    setPaths(mergePaths(context));
+    setPaths(mergePaths(paths, pathLoc, context));
     setText(context.get(textLoc));
   };
 

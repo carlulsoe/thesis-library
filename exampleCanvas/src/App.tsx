@@ -1,27 +1,15 @@
 import 'react-native-get-random-values';
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   type ConnectionContext,
   MultiDeviceAttention,
   S3ImageSetup,
 } from 'thesis-library';
-import { objEq, uniqueMerge } from '../../src/extra/tools';
-import { Canvas, type IPath } from './canvasComponent';
+import { Canvas, type IPath, mergePaths } from './canvasComponent';
 
 export default function App() {
   const [localPaths, setLocalPaths] = React.useState<IPath[]>([]);
   const [imageUrl, setImageUrl] = React.useState<any>();
-  const mergePaths = useCallback(
-    (Context: ConnectionContext) => {
-      if (Context.sharedMap == null) return localPaths;
-      let remotePaths: IPath[] = Context.get(LOC)
-        ? JSON.parse(Context.get(LOC))
-        : [];
-      if (objEq(remotePaths, localPaths)) return localPaths;
-      return uniqueMerge(remotePaths, localPaths);
-    },
-    [localPaths]
-  );
   const LOC = 'paths';
   const ACCOUNT_ID = 'd725e78d7ab30f5b391a57797cb0eeb5';
   const ACCESS_KEY_ID = '4f24e7d59e6cb1538760ff4af0ec7a3b';
@@ -38,7 +26,7 @@ export default function App() {
   );
 
   const receiver = (Context: ConnectionContext) => {
-    setLocalPaths(mergePaths(Context));
+    setLocalPaths(mergePaths(localPaths, LOC, Context));
     receive(Context);
   };
 
