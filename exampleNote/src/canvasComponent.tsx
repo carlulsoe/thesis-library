@@ -28,20 +28,20 @@ export const Canvas = ({
   const { height, width } = useWindowDimensions();
   const [currentColor, setColor] = useState(Colors.Black);
   const [currentPath, setCurrentPath] = useState('');
-  const addToPath = (s: string) => setCurrentPath(currentPath + s);
+  const addToCurrentPath = (s: string) => setCurrentPath(currentPath + s);
   const addCurrentToOldPaths = () =>
     setLocalPaths([...localPaths, { path: currentPath, color: currentColor }]);
 
   function handleStart(e: GestureResponderEvent) {
     let x = e.nativeEvent.touches[0]?.pageX;
     let y = e.nativeEvent.touches[0]?.pageY;
-    addToPath(`M${x} ${y} `);
+    addToCurrentPath(`M${x} ${y} `);
   }
 
   function handleMove(e: GestureResponderEvent) {
     let x = e.nativeEvent.touches[0]?.pageX;
     let y = e.nativeEvent.touches[0]?.pageY;
-    addToPath(`L${x} ${y} `);
+    addToCurrentPath(`L${x} ${y} `);
   }
 
   function handleEnd() {
