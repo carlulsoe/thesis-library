@@ -13,7 +13,8 @@ export default function App() {
   const [imageUrl, setImageUrl] = React.useState<any>();
   const [displayImage, setDisplayImage] = useState(false);
   const includeToggle = () => setDisplayImage(!displayImage);
-  const LOC = 'paths';
+  const pathLoc = 'paths';
+  const imageDisplayLoc = 'displayImage';
   const ACCOUNT_ID = 'd725e78d7ab30f5b391a57797cb0eeb5';
   const ACCESS_KEY_ID = '4f24e7d59e6cb1538760ff4af0ec7a3b';
   const SECRET_ACCESS_KEY =
@@ -29,12 +30,14 @@ export default function App() {
   );
 
   const receiver = (Context: ConnectionContext) => {
-    setLocalPaths(mergePaths(localPaths, LOC, Context));
+    setLocalPaths(mergePaths(localPaths, pathLoc, Context));
+    setDisplayImage(Context.get(imageDisplayLoc));
     receive(Context);
   };
 
   const sender = (Context: ConnectionContext) => {
-    Context.set(LOC, JSON.stringify(localPaths));
+    Context.set(pathLoc, JSON.stringify(localPaths));
+    Context.set(imageDisplayLoc, displayImage);
   };
 
   return (

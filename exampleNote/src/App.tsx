@@ -18,6 +18,7 @@ export default function App() {
   const includeToggle = () => setDisplayImage(!displayImage);
   const textLoc = 'text';
   const pathLoc = 'paths';
+  const imageDisplayLoc = 'displayImage';
 
   const ACCOUNT_ID = 'd725e78d7ab30f5b391a57797cb0eeb5';
   const ACCESS_KEY_ID = '4f24e7d59e6cb1538760ff4af0ec7a3b';
@@ -36,6 +37,7 @@ export default function App() {
   const sender = (context: ConnectionContext) => {
     context.set(textLoc, text);
     context.set(pathLoc, JSON.stringify(paths));
+    context.set(imageDisplayLoc, displayImage);
     //setText(context.get(LOC));
   };
 
@@ -43,6 +45,7 @@ export default function App() {
     receive(context);
     setPaths(mergePaths(paths, pathLoc, context));
     setText(context.get(textLoc));
+    setDisplayImage(context.get(imageDisplayLoc));
   };
 
   return (
