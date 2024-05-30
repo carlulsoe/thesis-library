@@ -7,12 +7,15 @@ import {
   S3ImageSetup,
 } from 'thesis-library';
 import { Canvas, type IPath, mergePaths } from './canvasComponent';
+import Preview from './Preview';
 
 export default function App() {
   // Run > `npx tinylicious` before normal start
   const [text, setText] = useState('');
   const [paths, setPaths] = useState<IPath[]>([]);
   const [selectedImage, setSelectedImage] = useState<string>('');
+  const [displayImage, setDisplayImage] = useState(false);
+  const includeToggle = () => setDisplayImage(!displayImage);
   const textLoc = 'text';
   const pathLoc = 'paths';
 
@@ -48,6 +51,12 @@ export default function App() {
         localPaths={paths}
         setLocalPaths={setPaths}
         imageUrl={selectedImage}
+        includeImage={displayImage}
+      />
+      <Preview
+        imageUrl={selectedImage}
+        include={displayImage}
+        includeToggle={includeToggle}
       />
       <MarkdownTextInput
         multiline

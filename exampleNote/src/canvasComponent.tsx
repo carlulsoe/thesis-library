@@ -19,13 +19,15 @@ import { objEq, uniqueMerge } from '../../src/extra/tools';
 interface CanvasProps {
   localPaths: IPath[];
   setLocalPaths: Dispatch<React.SetStateAction<any>>;
-  imageUrl?: string;
+  imageUrl: string;
+  includeImage: boolean;
 }
 
 export const Canvas = ({
   localPaths,
   setLocalPaths,
   imageUrl,
+  includeImage,
 }: CanvasProps) => {
   const { height, width } = useWindowDimensions();
   const [currentColor, setColor] = useState(Colors.Black);
@@ -66,7 +68,7 @@ export const Canvas = ({
         onTouchEnd={handleEnd}
       >
         <Svg width={width} height={height * (7.4 / 9)}>
-          <Image width="400" height="400" href={imageUrl} />
+          {includeImage && <Image width="400" height="400" href={imageUrl} />}
           {localPaths.map((path) => (
             <Path
               key={path.path}
