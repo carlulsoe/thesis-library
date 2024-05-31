@@ -37,14 +37,14 @@ export const Canvas = ({
     setLocalPaths([...localPaths, { path: currentPath, color: currentColor }]);
 
   function handleStart(e: GestureResponderEvent) {
-    let x = e.nativeEvent.touches[0]?.pageX;
-    let y = e.nativeEvent.touches[0]?.pageY;
+    const x = e.nativeEvent.touches[0]?.pageX;
+    const y = e.nativeEvent.touches[0]?.pageY;
     addToCurrentPath(`M${x} ${y} `);
   }
 
   function handleMove(e: GestureResponderEvent) {
-    let x = e.nativeEvent.touches[0]?.pageX;
-    let y = e.nativeEvent.touches[0]?.pageY;
+    const x = e.nativeEvent.touches[0]?.pageX;
+    const y = e.nativeEvent.touches[0]?.pageY;
     addToCurrentPath(`L${x} ${y} `);
   }
 

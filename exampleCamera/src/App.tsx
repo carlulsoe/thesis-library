@@ -6,17 +6,6 @@ import { MultiDeviceAttention, S3ImageSetup } from 'thesis-library';
 
 export default function PhotoApp() {
   const [selectedImage, setSelectedImage] = useState<string>('');
-
-  useEffect(() => {
-    (async () => {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== 'granted') {
-        //alert('Permission to access media library is required!');
-      }
-    })();
-  }, []);
-
   const ACCOUNT_ID = 'd725e78d7ab30f5b391a57797cb0eeb5';
   const ACCESS_KEY_ID = '4f24e7d59e6cb1538760ff4af0ec7a3b';
   const SECRET_ACCESS_KEY =
@@ -30,6 +19,16 @@ export default function PhotoApp() {
     selectedImage,
     setSelectedImage
   );
+
+  useEffect(() => {
+    (async () => {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        //alert('Permission to access media library is required!');
+      }
+    })();
+  }, []);
 
   const pickImage = async () => {
     try {
