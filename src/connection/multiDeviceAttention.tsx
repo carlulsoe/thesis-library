@@ -6,8 +6,8 @@ import {
   type ConnectionContext,
   type DetectorProps,
   type FocusProps,
+  BrowserDetection,
 } from 'thesis-library';
-import { GetDetector } from '../attention/GetDetector';
 
 export function MultiDeviceAttention({
   children,
@@ -27,9 +27,7 @@ export function MultiDeviceAttention({
     focus: focus,
   };
 
-  const detector = useFaceDetection
-    ? GetDetector(fp, FaceDetection)
-    : GetDetector(fp);
+  const detector = useFaceDetection ? FaceDetection(fp) : BrowserDetection(fp);
   return (
     <View>
       <Connect toOtherUsers={false} focusProp={fp}>
