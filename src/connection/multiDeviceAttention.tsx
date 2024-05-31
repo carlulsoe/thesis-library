@@ -31,7 +31,11 @@ export function MultiDeviceAttention({
     <View>
       <Connect toOtherUsers={false} focusProp={fp}>
         {children}
-        {useFaceDetection ? FaceDetection(fp) : BrowserDetection(fp)}
+        {useFaceDetection ? (
+          <FaceDetection {...fp} />
+        ) : (
+          <BrowserDetection {...fp} />
+        )}
       </Connect>
     </View>
   );
