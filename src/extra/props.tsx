@@ -3,7 +3,8 @@ import type { ConnectionContext } from './OptionalConnectionContext';
 export interface DetectorProps {
   receivingFunction: Function;
   sendingFunction: Function;
-  transferMethod?: string;
+  fileTransferringMethod?: string;
+  useFaceDetection?: boolean;
 }
 
 export interface FocusProps {

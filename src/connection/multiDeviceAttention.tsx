@@ -2,6 +2,7 @@ import React, { type PropsWithChildren, useRef } from 'react';
 import { View } from 'react-native';
 import {
   Connect,
+  FaceDetection,
   type ConnectionContext,
   type DetectorProps,
   type FocusProps,
@@ -12,6 +13,7 @@ export function MultiDeviceAttention({
   children,
   receivingFunction,
   sendingFunction,
+  useFaceDetection,
 }: PropsWithChildren<DetectorProps>) {
   const uuidRef = useRef(self.crypto.randomUUID());
   const focus = useRef(true);
@@ -25,7 +27,9 @@ export function MultiDeviceAttention({
     focus: focus,
   };
 
-  const detector = GetDetector(fp);
+  const detector = useFaceDetection
+    ? GetDetector(fp, FaceDetection)
+    : GetDetector(fp);
   return (
     <View>
       <Connect toOtherUsers={false} focusProp={fp}>
