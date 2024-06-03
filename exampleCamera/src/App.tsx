@@ -75,6 +75,10 @@ export default function PhotoApp() {
               style={styles.image}
               alt="Picked Image"
             />
+            <Button
+              title="Remove selected Photo"
+              onPress={() => setSelectedImage('')}
+            />
           </View>
         )}
       </MultiDeviceAttention>
