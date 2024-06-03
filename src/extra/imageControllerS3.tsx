@@ -46,7 +46,9 @@ function ImageController(
     try {
       const { Body } = await S3.send(new GetObjectCommand(input));
       if (!Body) return;
-      setSelectedImage(await Body.transformToString());
+      const s = await Body.transformToString();
+      console.log(s);
+      setSelectedImage(() => s);
     } catch (error) {
       console.error('Error receiving file:', error);
     }
