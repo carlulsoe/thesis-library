@@ -8,6 +8,7 @@ import {
 } from 'thesis-library';
 import { Canvas, type IPath, mergePaths } from './canvasComponent';
 import Preview from './Preview';
+import { View } from 'react-native';
 
 export default function App() {
   // Run > `npx tinylicious` before normal start
@@ -50,17 +51,21 @@ export default function App() {
 
   return (
     <MultiDeviceAttention receivingFunction={receiver} sendingFunction={sender}>
-      <Canvas
-        localPaths={paths}
-        setLocalPaths={setPaths}
-        imageUrl={selectedImage}
-        includeImage={displayImage}
-      />
-      <Preview
-        imageUrl={selectedImage}
-        include={displayImage}
-        includeToggle={includeToggle}
-      />
+      {paths.length !== 0 && (
+        <View>
+          <Canvas
+            localPaths={paths}
+            setLocalPaths={setPaths}
+            imageUrl={selectedImage}
+            includeImage={displayImage}
+          />
+          <Preview
+            imageUrl={selectedImage}
+            include={displayImage}
+            includeToggle={includeToggle}
+          />
+        </View>
+      )}
       <MarkdownTextInput
         multiline
         onChangeText={setText}
