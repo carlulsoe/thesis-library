@@ -11,8 +11,7 @@ export function S3ImageSetup(
   ACCOUNT_ID: string,
   ACCESS_KEY_ID: string,
   SECRET_ACCESS_KEY: string,
-  url: string,
-  setUrl: Dispatch<SetStateAction<string>>
+  setFile: Dispatch<SetStateAction<string>>
 ) {
   const config: S3ClientConfig = {
     region: 'auto',
@@ -22,12 +21,11 @@ export function S3ImageSetup(
       secretAccessKey: SECRET_ACCESS_KEY,
     },
   };
-  return ImageController(url, setUrl, config);
+  return FileController(setFile, config);
 }
 
-function ImageController(
-  selectedImage: string | undefined,
-  setSelectedImage: Dispatch<SetStateAction<string>>,
+function FileController(
+  setFile: Dispatch<SetStateAction<string>>,
   config: S3ClientConfig
 ) {
   const S3 = new S3Client(config);
@@ -47,21 +45,20 @@ function ImageController(
       const { Body } = await S3.send(new GetObjectCommand(input));
       if (!Body) return;
       const s = await Body.transformToString();
-      console.log(s);
-      setSelectedImage(() => s);
+      setFile(() => s);
     } catch (error) {
       console.error('Error receiving file:', error);
     }
   }
 
-  async function sending(context: ConnectionContext) {
-    if (!selectedImage) return;
+  async function sending(context: ConnectionContext, file: string) {
+    if (!file) return;
 
     const key = 'dataURL.txt';
     const input = {
       Bucket: 'thesis',
       Key: key,
-      Body: selectedImage,
+      Body: file,
     };
 
     try {

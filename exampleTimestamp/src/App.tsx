@@ -20,20 +20,16 @@ export default function App() {
     ACCOUNT_ID,
     ACCESS_KEY_ID,
     SECRET_ACCESS_KEY,
-    timestamp,
     setTimestamp
   );
 
   const sender = (context: ConnectionContext) => {
-    setTimestamp(() => Date.now().toString());
-    sending(context);
+    sending(context, Date.now().toString());
     //context.set(LOC, Date.now().toString());
   };
 
   const receiver = (context: ConnectionContext) => {
-    console.log(timestamp);
     receive(context);
-    console.log(timestamp);
     setNowTimestamp(Date.now().toString());
     //setTimestamp(context.get(LOC));
   };
