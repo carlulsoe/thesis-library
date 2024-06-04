@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
-import { MultiDeviceAttention, S3ImageSetup } from 'thesis-library';
+import {
+  MultiDeviceAttention,
+  S3ImageSetup,
+  type ConnectionContext,
+} from 'thesis-library';
 
 export default function PhotoApp() {
   const [selectedImage, setSelectedImage] = useState<string>('');
@@ -16,7 +20,6 @@ export default function PhotoApp() {
     ACCOUNT_ID,
     ACCESS_KEY_ID,
     SECRET_ACCESS_KEY,
-    selectedImage,
     setSelectedImage
   );
 
@@ -63,7 +66,9 @@ export default function PhotoApp() {
     <View style={styles.container}>
       <MultiDeviceAttention
         receivingFunction={receive}
-        sendingFunction={sending}
+        sendingFunction={(context: ConnectionContext) =>
+          sending(context, selectedImage)
+        }
         fileTransferringMethod={'S3'}
       >
         <Text style={styles.title}>Simple Photo App</Text>
