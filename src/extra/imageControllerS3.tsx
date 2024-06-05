@@ -71,5 +71,5 @@ function ImageController(
     }
   }
 
-  return { receiveImage: receive, sending };
+  return { receiveImage: receive, sendImage: sending };
 }

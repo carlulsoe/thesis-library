@@ -12,7 +12,7 @@ export default function PhotoApp() {
     '7a39a7292f4d74aedbbc48deebd834bf901e045cbe2e294deea6c51cb8bee66a';
   if (!(ACCOUNT_ID && ACCESS_KEY_ID && SECRET_ACCESS_KEY))
     throw Error('Could not load environment variables');
-  const { receiveImage, sending } = S3ImageSetup(
+  const { receiveImage, sendImage } = S3ImageSetup(
     ACCOUNT_ID,
     ACCESS_KEY_ID,
     SECRET_ACCESS_KEY,
@@ -63,7 +63,7 @@ export default function PhotoApp() {
     <View style={styles.container}>
       <MultiDeviceAttention
         receivingFunction={receiveImage}
-        sendingFunction={sending}
+        sendingFunction={sendImage}
         fileTransferringMethod={'S3'}
       >
         <Text style={styles.title}>Simple Photo App</Text>
