@@ -51,7 +51,7 @@ export default function App() {
 
   return (
     <MultiDeviceAttention receivingFunction={receiver} sendingFunction={sender}>
-      {paths.length !== 0 && (
+      {(paths.length !== 0 || displayImage) && (
         <View>
           <Canvas
             localPaths={paths}
