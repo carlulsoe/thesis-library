@@ -4,9 +4,7 @@ This is our thesis library
 
 ## Installation
 
-```sh
-npm install react-native-awesome-library
-```
+This library can currently only be installed from this repository.
 
 ## Usage
 
