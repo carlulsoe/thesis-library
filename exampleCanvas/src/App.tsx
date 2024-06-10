@@ -21,7 +21,7 @@ export default function App() {
     '7a39a7292f4d74aedbbc48deebd834bf901e045cbe2e294deea6c51cb8bee66a';
   if (!(ACCOUNT_ID && ACCESS_KEY_ID && SECRET_ACCESS_KEY))
     throw Error('Could not load environment variables');
-  const { receive } = S3ImageSetup(
+  const { receiveImage } = S3ImageSetup(
     ACCOUNT_ID,
     ACCESS_KEY_ID,
     SECRET_ACCESS_KEY,
@@ -32,7 +32,7 @@ export default function App() {
   const receiver = (Context: ConnectionContext) => {
     setLocalPaths(mergePaths(localPaths, pathLoc, Context));
     setDisplayImage(Context.get(imageDisplayLoc));
-    receive(Context);
+    receiveImage(Context);
   };
 
   const sender = (Context: ConnectionContext) => {

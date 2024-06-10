@@ -1,4 +1,5 @@
 import {
+  type ConnectionContext,
   type FullyConnectedProps,
   OptionalConnectionContext,
 } from 'thesis-library';
@@ -11,36 +12,54 @@ export const FullyConnected = ({
 }: FullyConnectedProps) => {
   const sharedContext = useContext(OptionalConnectionContext);
   if (!sharedContext?.sharedMap) return <></>;
+  if (!ownSharedContext?.sharedMap) return <></>;
   if (!receiving || !sending) return <></>;
   // To avoid infinite loops
-  let ownJustUpdated = false;
-  let sharedJustUpdated = false;
-  console.log('Fully');
+  let ownJustUpdated: Bool = { val: false };
+  let sharedJustUpdated: Bool = { val: false };
+
+  const updateContext = (
+    thisJustUpdated: Bool,
+    thisSharedContext: ConnectionContext,
+    otherJustUpdated: Bool,
+    otherSharedContext: ConnectionContext,
+    key: string,
+    developerFunction: Function
+  ) => {
+    if (thisJustUpdated.val) {
+      thisJustUpdated.val = false;
+      return;
+    }
+    otherJustUpdated.val = true;
+    thisSharedContext.set(key, otherSharedContext.get(key));
+    developerFunction(thisSharedContext);
+  };
 
   sharedContext.sharedMap.on('valueChanged', (changed) => {
-    if (ownJustUpdated) {
-      ownJustUpdated = false;
-      return;
-    }
-    sharedJustUpdated = true;
-    ownSharedContext.sharedMap?.set(
+    updateContext(
+      ownJustUpdated,
+      ownSharedContext,
+      sharedJustUpdated,
+      sharedContext,
       changed.key,
-      sharedContext.sharedMap?.get(changed.key)
+      receiving
     );
-    receiving(ownSharedContext);
   });
 
-  ownSharedContext.sharedMap?.on('valueChanged', (changed) => {
-    if (sharedJustUpdated) {
-      sharedJustUpdated = false;
-      return;
-    }
-    ownJustUpdated = true;
-    sharedContext.sharedMap?.set(
+  sharedContext.sharedMap?.on('valueChanged', (changed) => {
+    updateContext(
+      sharedJustUpdated,
+      sharedContext,
+      ownJustUpdated,
+      ownSharedContext,
       changed.key,
-      ownSharedContext.get(changed.key)
+      sending
     );
-    sending(sharedContext);
   });
   return <></>;
 };
+
+// Custom type makes it pass by reference
+interface Bool {
+  val: boolean;
+}

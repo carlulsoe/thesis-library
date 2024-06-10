@@ -8,6 +8,7 @@ import {
 } from 'thesis-library';
 import { Canvas, type IPath, mergePaths } from './canvasComponent';
 import Preview from './Preview';
+import { View } from 'react-native';
 
 export default function App() {
   // Run > `npx tinylicious` before normal start
@@ -26,7 +27,7 @@ export default function App() {
     '7a39a7292f4d74aedbbc48deebd834bf901e045cbe2e294deea6c51cb8bee66a';
   if (!(ACCOUNT_ID && ACCESS_KEY_ID && SECRET_ACCESS_KEY))
     throw Error('Could not load environment variables');
-  const { receive } = S3ImageSetup(
+  const { receiveImage } = S3ImageSetup(
     ACCOUNT_ID,
     ACCESS_KEY_ID,
     SECRET_ACCESS_KEY,
@@ -42,7 +43,7 @@ export default function App() {
   };
 
   const receiver = (context: ConnectionContext) => {
-    receive(context);
+    receiveImage(context);
     setPaths(mergePaths(paths, pathLoc, context));
     setText(context.get(textLoc));
     setDisplayImage(context.get(imageDisplayLoc));
@@ -50,17 +51,21 @@ export default function App() {
 
   return (
     <MultiDeviceAttention receivingFunction={receiver} sendingFunction={sender}>
-      <Canvas
-        localPaths={paths}
-        setLocalPaths={setPaths}
-        imageUrl={selectedImage}
-        includeImage={displayImage}
-      />
-      <Preview
-        imageUrl={selectedImage}
-        include={displayImage}
-        includeToggle={includeToggle}
-      />
+      {(paths.length !== 0 || displayImage) && (
+        <View>
+          <Canvas
+            localPaths={paths}
+            setLocalPaths={setPaths}
+            imageUrl={selectedImage}
+            includeImage={displayImage}
+          />
+          <Preview
+            imageUrl={selectedImage}
+            include={displayImage}
+            includeToggle={includeToggle}
+          />
+        </View>
+      )}
       <MarkdownTextInput
         multiline
         onChangeText={setText}
