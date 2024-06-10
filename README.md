@@ -9,14 +9,14 @@ Install and run `npx tinylicious` before start. This does not need to be restart
 
 ```tsx
 const [data, setData] = useState('');
-const LOC = 'data_location';
+const Location = 'data_location';
 
 const sender = (context: ConnectionContext) => {
-  context.set(LOC, data);
+  context.set(Location, data);
 };
 
 const receiver = (context: ConnectionContext) => {
-  setData(context.get(LOC));
+  setData(context.get(Location));
 };
 
 return (
