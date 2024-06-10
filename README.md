@@ -29,16 +29,16 @@ return (
 ## Code structure
 * `__tests__` A limited battery of tests
 * `attention` All things related to when to send or receive
-  * `browserDetection` Detection based on whether your browser thinks you use it
+  * `browserDetection` Detection is based on whether your browser thinks you use it
   * `detectionListener` Detection helper function
   * `faceDetection` (Not fully developed and tested) Detection based on whether you look at your device or not
   * `fullyConnected` The component which constantly synchronizes the shared network with the personal network
 * `connection` All components that are directly related to Fluid Framework
-  * `fluid` An adapter to Fluid Framework. This also contains the only visible components in the library, the connection setup.
+  * `fluid` An adapter to Fluid Framework. This also contains the only visible component in the library, the connection setup.
   * `multiDeviceAttention` The main function in the library. This contains two instances of the component in `fluid`, one for the internal network and one for the external.
 * `extra` A folder for tools, props
   * `imageControllerS3` The setup for transferring anything above 768KB with the library
-  * `connectionContext` The context in which the connection map, setter and getter is stored
+  * `connectionContext` The context in which the connection map, setter and getter are stored
   * `props` All the props used by the library
   * `tools` Generic tools
 
