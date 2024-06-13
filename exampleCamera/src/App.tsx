@@ -5,7 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { MultiDeviceAttention, S3FileSetup } from 'thesis-library';
 
 export default function PhotoApp() {
-  const [selectedImage, setSelectedImage] = useState<string>('');
+  const [selectedImage, setSelectedImage] = useState('');
   const ACCOUNT_ID = 'd725e78d7ab30f5b391a57797cb0eeb5';
   const ACCESS_KEY_ID = '4f24e7d59e6cb1538760ff4af0ec7a3b';
   const SECRET_ACCESS_KEY =
