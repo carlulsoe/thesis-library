@@ -58,10 +58,6 @@ export const Connect = (props: PropsWithChildren<ConnectProps>) => {
     await (containerId ? ConnectToContainer(containerId) : CreateContainer());
   };
 
-  React.useEffect(() => {
-    props.containerId?.setContainerId(containerId);
-  });
-
   const dictSetter = useCallback(
     (key: string, val: string) => {
       if (!container) throw new Error('Container not defined');
