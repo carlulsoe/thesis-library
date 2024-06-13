@@ -70,14 +70,14 @@ export default function App() {
         multiline
         onChangeText={setText}
         value={text}
-        markdownStyle={markdownStyle}
+        markdownStyle={mdStyle}
       />
     </MultiDeviceAttention>
   );
 }
 const FONT_FAMILY_MONOSPACE = 'monospace';
 
-const markdownStyle: MarkdownStyle = {
+const mdStyle: MarkdownStyle = {
   syntax: {
     color: 'gray',
   },
