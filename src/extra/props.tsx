@@ -12,12 +12,6 @@ export interface FocusProps {
   sendingFunction: Function;
   uuid: any;
   focus: any;
-  multiUserSharing?: MultiUserSharingProps;
-}
-
-export interface MultiUserSharingProps {
-  receivingFunction: Function;
-  sendingFunction: Function;
 }
 
 export const ATTENTION_KEY = 'attention';
