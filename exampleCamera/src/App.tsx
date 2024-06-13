@@ -49,7 +49,6 @@ export default function PhotoApp() {
           console.log('Uri is null');
           return;
         }
-        // Handle Android file URI format
         setSelectedImage(uri);
       }
     } catch (error) {
