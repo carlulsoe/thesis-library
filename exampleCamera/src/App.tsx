@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
-import { MultiDeviceAttention, S3ImageSetup } from 'thesis-library';
+import { MultiDeviceAttention, S3FileSetup } from 'thesis-library';
 
 export default function PhotoApp() {
   const [selectedImage, setSelectedImage] = useState<string>('');
@@ -12,7 +12,7 @@ export default function PhotoApp() {
     '7a39a7292f4d74aedbbc48deebd834bf901e045cbe2e294deea6c51cb8bee66a';
   if (!(ACCOUNT_ID && ACCESS_KEY_ID && SECRET_ACCESS_KEY))
     throw Error('Could not load environment variables');
-  const { receiveImage, sendImage } = S3ImageSetup(
+  const { receiveImage, sendImage } = S3FileSetup(
     ACCOUNT_ID,
     ACCESS_KEY_ID,
     SECRET_ACCESS_KEY,

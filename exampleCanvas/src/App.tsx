@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import {
   type ConnectionContext,
   MultiDeviceAttention,
-  S3ImageSetup,
+  S3FileSetup,
 } from 'thesis-library';
 import { Canvas, type IPath, mergePaths } from './canvasComponent';
 import Preview from './Preview';
@@ -21,7 +21,7 @@ export default function App() {
     '7a39a7292f4d74aedbbc48deebd834bf901e045cbe2e294deea6c51cb8bee66a';
   if (!(ACCOUNT_ID && ACCESS_KEY_ID && SECRET_ACCESS_KEY))
     throw Error('Could not load environment variables');
-  const { receiveImage } = S3ImageSetup(
+  const { receiveImage } = S3FileSetup(
     ACCOUNT_ID,
     ACCESS_KEY_ID,
     SECRET_ACCESS_KEY,

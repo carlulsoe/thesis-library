@@ -7,7 +7,7 @@ import {
 import type { ConnectionContext } from 'thesis-library';
 import type { Dispatch, SetStateAction } from 'react';
 
-export function S3ImageSetup(
+export function S3FileSetup(
   ACCOUNT_ID: string,
   ACCESS_KEY_ID: string,
   SECRET_ACCESS_KEY: string,
@@ -22,12 +22,12 @@ export function S3ImageSetup(
       secretAccessKey: SECRET_ACCESS_KEY,
     },
   };
-  return ImageController(url, setUrl, config);
+  return FileController(url, setUrl, config);
 }
 
-function ImageController(
-  selectedImage: string | undefined,
-  setSelectedImage: Dispatch<SetStateAction<string>>,
+function FileController(
+  selectedFile: string | undefined,
+  setSelectedFile: Dispatch<SetStateAction<string>>,
   config: S3ClientConfig
 ) {
   const S3 = new S3Client(config);
@@ -46,20 +46,20 @@ function ImageController(
     try {
       const { Body } = await S3.send(new GetObjectCommand(input));
       if (!Body) return;
-      setSelectedImage(await Body.transformToString());
+      setSelectedFile(await Body.transformToString());
     } catch (error) {
       console.error('Error receiving file:', error);
     }
   }
 
   async function sending(context: ConnectionContext) {
-    if (!selectedImage) return;
+    if (!selectedFile) return;
 
     const key = 'dataURL.txt';
     const input = {
       Bucket: 'thesis',
       Key: key,
-      Body: selectedImage,
+      Body: selectedFile,
     };
 
     try {
