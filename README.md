@@ -37,7 +37,7 @@ return (
   * `fluid` An adapter to Fluid Framework. This also contains the only visible component in the library, the connection setup.
   * `multiDeviceAttention` The main function in the library. This contains two instances of the component in `fluid`, one for the internal network and one for the external.
 * `extra` A folder for tools, props
-  * `imageControllerS3` The setup for transferring anything above 768KB with the library
+  * `fileControllerS3` The setup for transferring anything above 768KB with the library
   * `connectionContext` The context in which the connection map, setter and getter are stored
   * `props` All the props used by the library
   * `tools` Generic tools
