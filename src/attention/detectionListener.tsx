@@ -13,7 +13,6 @@ export function detectionListener(fp: FocusProps, context: ConnectionContext) {
 
       // CASE 1b: value changed from another to this
       fp.receivingFunction(context);
-      fp.multiUserSharing?.receivingFunction();
     } else {
       // CASE 2a: Thing happened on other devices
       const itIsAnotherDeviceToAnotherDevice =
@@ -23,7 +22,6 @@ export function detectionListener(fp: FocusProps, context: ConnectionContext) {
       // CASE 2b: value changed from this to another
       try {
         fp.sendingFunction(context);
-        fp.multiUserSharing?.sendingFunction();
       } catch (error) {
         console.error(error);
       }
