@@ -42,7 +42,6 @@ export default function PhotoApp() {
         console.log('Result is null');
         return;
       }
-      console.log(result);
       if (!result.canceled) {
         console.log('Set picked photo as source');
         const uri = result.assets[0] && result.assets[0].uri;
@@ -50,7 +49,6 @@ export default function PhotoApp() {
           console.log('Uri is null');
           return;
         }
-        console.log(uri);
         // Handle Android file URI format
         setSelectedImage(uri);
       }
